@@ -1,0 +1,30 @@
+{
+  "name": "air.js",
+  "version": "0.0.1",
+  "description": "\"Lightweight SPA framework focused on Convention over Configuration\"",
+  "main": "air.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegocard/air.js.git"
+  },
+  "keywords": [
+    "Lightweight",
+    "SPA",
+    "Framework"
+  ],
+  "author": "Diego Cardozo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diegocard/air.js/issues"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.7",
+    "gulp-uglify": "~0.3.1",
+    "gulp-concat": "~2.3.4",
+    "gulp-rename": "~1.2.0",
+    "gulp-filesize": "0.0.6"
+  }
+}
