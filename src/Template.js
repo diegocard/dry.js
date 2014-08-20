@@ -5,10 +5,11 @@ air.Template = function(name, domId) {
 };
 
 air.Template.prototype.compile = function(data) {
-    // TODO: Implement, test
-    var templateStr, prop;
+    // TODO: Finish, test
+    var templateStr = this.ray,
+        prop;
     for (prop in data) {
-        str = str.replace(new RegExp('{{' + prop + '}}', 'g'), data[prop]);
+        templateStr = templateStr.replace(new RegExp('{{' + prop + '}}', 'g'), data[prop]);
     }
     return templateStr;
 };

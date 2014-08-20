@@ -12,12 +12,12 @@ air.App = function(name, options) {
     this.views = this.options.views || {};
 };
 
-air.App.prototype.Controller = function(name) {
-    this.controllers[name] = new air.Controller(name);
+air.App.prototype.controller = function(name, methods) {
+    this.controllers[name] = new air.Controller(name, methods);
     //TODO: Register routes for each controller method
 };
 
-air.App.prototype.View = function(name, templateData) {
+air.App.prototype.view = function(name, templateData) {
     this.views[name] = new air.View(name, templateData);
 };
 
@@ -25,11 +25,29 @@ air.App.prototype.init = function() {
     this.router = new air.Router(this.routes);
 };
 air.Router = function(name) {
-    // TODO: Implement
+    // TODO: Implement using vendor component
 };
 air.Controller = function(name, methods) {
     this.name = name;
     this.methods = methods || {};
+};
+
+air.Controller.prototype.invokeMethod = function(methodName, params) {
+    var method = this.methods[methodName],
+        result, defaultView;
+    if (method) {
+        // Invoke the method with the given parameters
+        result = method(params);
+        // If a view was returned, render it
+        if (typeof result === air.View) {
+            result.render();
+        }
+    } else {
+        // Default behavior: check if a template exists with the same ID as the controller name.
+        // If it does, create a view and then render it.
+        // TODO: Finish and test
+        new air.View(name, {templateData: params}).render();
+    }
 };
 air.Template = function(name, domId) {
     this.name = name;
@@ -38,10 +56,11 @@ air.Template = function(name, domId) {
 };
 
 air.Template.prototype.compile = function(data) {
-    // TODO: Implement, test
-    var templateStr, prop;
+    // TODO: Finish, test
+    var templateStr = this.ray,
+        prop;
     for (prop in data) {
-        str = str.replace(new RegExp('{{' + prop + '}}', 'g'), data[prop]);
+        templateStr = templateStr.replace(new RegExp('{{' + prop + '}}', 'g'), data[prop]);
     }
     return templateStr;
 };

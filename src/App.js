@@ -6,12 +6,12 @@ air.App = function(name, options) {
     this.views = this.options.views || {};
 };
 
-air.App.prototype.Controller = function(name) {
-    this.controllers[name] = new air.Controller(name);
+air.App.prototype.controller = function(name, methods) {
+    this.controllers[name] = new air.Controller(name, methods);
     //TODO: Register routes for each controller method
 };
 
-air.App.prototype.View = function(name, templateData) {
+air.App.prototype.view = function(name, templateData) {
     this.views[name] = new air.View(name, templateData);
 };
 
