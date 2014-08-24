@@ -8,6 +8,7 @@ gulp.task('default', function() {
     gulp.src([
         './vendor/*.js',
         './src/Core.js',
+        './src/Dom.js',
         './src/App.js',
         './src/Router.js',
         './src/Controller.js',

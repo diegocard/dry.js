@@ -7,17 +7,19 @@ air.App = function(name, options) {
 };
 
 air.App.prototype.controller = function(name, methods) {
-	var methodName, method;
-    this.controllers[name] = new air.Controller(name, methods);
+    var controller, methodName, method;
+    controller = new air.Controller(name, methods);
+    this.controllers[name] = controller;
     // Register routes for each controller method
     // TODO: Test, finish
-    if (methods && methods.length) {
-	    for (methodName in methods) {
-	    	if (methods.hasOwnProperty(methodName)) {
-    			this.routes.push(methodName);
-	    	}
-	    }
+    if (methods) {
+        for (methodName in methods) {
+            if (methods.hasOwnProperty(methodName)) {
+                this.routes.push(name + '/' + methodName);
+            }
+        }
     }
+    return controller;
 };
 
 air.App.prototype.view = function(name, templateData) {

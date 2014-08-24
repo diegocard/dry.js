@@ -3,22 +3,23 @@ air.Router = function(controllers, routes) {
     // TODO: Test
     var i, len, route, controllerName, controllerMethod;
     for (i=0, len=routes.length; i<len; i++) {
-        route = routie[i];
+        route = routes[i];
         controllerName = this.getControllerName(route);
-        controllerMethod = this.getControllerName(route);
+        controllerMethod = this.getControllerMethod(route);
+        controller = controllers[controllerName];
         if (controller) {
             routie(route, function(params) {
                 // TODO: Convert params to object?
-                controllers[controllerName].invokeMethod(controllerMethod, params);
+                controller.invokeMethod(controllerMethod, params);
             });
         }
     }
 };
 
 air.Router.prototype.getControllerName = function(route) {
-
+    return route.split('/')[0];
 };
 
 air.Router.prototype.getControllerMethod = function(route) {
-
+    return route.split('/')[1].split('?')[0];
 };

@@ -1,0 +1,4 @@
+- Change naming convention to avoid conflicts (tmplControllerMethod, #ControllerMethod)
+- Add models
+- Implement tests (QUnit, etc)
+- Try RLite instead of routie
