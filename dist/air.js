@@ -48,13 +48,16 @@ air.App.prototype.controller = function(name, methods) {
     this.controllers[name] = controller;
     // Register routes for each controller method
     // TODO: Test, finish
-    if (methods) {
-        for (methodName in methods) {
-            if (methods.hasOwnProperty(methodName)) {
+    for (methodName in methods) {
+        if (methods.hasOwnProperty(methodName)) {
+            if (methodName.toLowerCase() === 'default') {
+                this.routes.push(name);
+            } else {
                 this.routes.push(name + '/' + methodName);
             }
         }
     }
+    // TODO: Add default route
     return controller;
 };
 
@@ -89,7 +92,8 @@ air.Router.prototype.getControllerName = function(route) {
 };
 
 air.Router.prototype.getControllerMethod = function(route) {
-    return route.split('/')[1].split('?')[0];
+    var split = route.split('/');
+    return split[1] ? split[1].split('?')[0] : 'default';
 };
 air.Controller = function(name, methods) {
     this.name = name;
@@ -110,14 +114,14 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
         // Default behavior: check if a template exists with the same ID as the controller name.
         // If it does, create a view and then render it.
         // TODO: Finish and test
-        defaultViewName = this.name + '-' + methodName;
+        defaultViewName = this.name + '/' + methodName;
         new air.View(defaultViewName, {templateData: params}).render();
     }
 };
 
 air.Template = function(name, domId) {
     this.name = name;
-    this.domId = domId || ('#' + name);
+    this.domId = domId || ('script[data-air="' + name + '"]');
     this.raw = air.$(this.domId).element.innerHTML.trim();
 };
 
@@ -134,7 +138,7 @@ air.Template.prototype.compile = function(data) {
 air.View = function(name, options) {
     options = options || {};
     this.name = name;
-    this.el = options.el || ('#' + name);   
+    this.el = options.el || (':not(script)[data-air="' + name + '"]');   
     this.templateData = options.templateData || {};
     this.template = new air.Template(name);
 };

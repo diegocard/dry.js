@@ -17,7 +17,7 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
         // Default behavior: check if a template exists with the same ID as the controller name.
         // If it does, create a view and then render it.
         // TODO: Finish and test
-        defaultViewName = this.name + '-' + methodName;
+        defaultViewName = this.name + '/' + methodName;
         new air.View(defaultViewName, {templateData: params}).render();
     }
 };

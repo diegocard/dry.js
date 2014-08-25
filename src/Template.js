@@ -1,6 +1,6 @@
 air.Template = function(name, domId) {
     this.name = name;
-    this.domId = domId || ('#' + name);
+    this.domId = domId || ('script[data-air="' + name + '"]');
     this.raw = air.$(this.domId).element.innerHTML.trim();
 };
 

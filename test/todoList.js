@@ -3,7 +3,10 @@ var mainApp = air.app('app');
 
 // Register a controller
 mainApp.controller('main', {
-    'index': null
+    'default': function() {
+        console.log('Method working');
+    },
+    'hello': null
 });
 
 // Start the app

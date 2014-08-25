@@ -21,5 +21,6 @@ air.Router.prototype.getControllerName = function(route) {
 };
 
 air.Router.prototype.getControllerMethod = function(route) {
-    return route.split('/')[1].split('?')[0];
+    var split = route.split('/');
+    return split[1] ? split[1].split('?')[0] : 'default';
 };

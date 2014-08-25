@@ -12,13 +12,16 @@ air.App.prototype.controller = function(name, methods) {
     this.controllers[name] = controller;
     // Register routes for each controller method
     // TODO: Test, finish
-    if (methods) {
-        for (methodName in methods) {
-            if (methods.hasOwnProperty(methodName)) {
+    for (methodName in methods) {
+        if (methods.hasOwnProperty(methodName)) {
+            if (methodName.toLowerCase() === 'default') {
+                this.routes.push(name);
+            } else {
                 this.routes.push(name + '/' + methodName);
             }
         }
     }
+    // TODO: Add default route
     return controller;
 };
 
