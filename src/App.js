@@ -30,5 +30,6 @@ air.App.prototype.view = function(name, templateData) {
 };
 
 air.App.prototype.init = function() {
-    this.router = new air.Router(this.controllers, this.routes);
+    this.router = new air.Router(this.name, this.routes);
+    this.router.init();
 };

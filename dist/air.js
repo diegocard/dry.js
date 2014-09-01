@@ -1,11 +1,7 @@
-/*!
- * routie - a tiny hash router
- * v0.3.2
- * http://projects.jga.me/routie
- * copyright Greg Allen 2013
- * MIT License
+function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};
+/*
+//# sourceMappingURL=rlite.min.js.map
 */
-(function(n){var e=[],t={},r="routie",o=n[r],i=function(n,e){this.name=e,this.path=n,this.keys=[],this.fns=[],this.params={},this.regex=a(this.path,this.keys,!1,!1)};i.prototype.addHandler=function(n){this.fns.push(n)},i.prototype.removeHandler=function(n){for(var e=0,t=this.fns.length;t>e;e++){var r=this.fns[e];if(n==r)return this.fns.splice(e,1),void 0}},i.prototype.run=function(n){for(var e=0,t=this.fns.length;t>e;e++)this.fns[e].apply(this,n)},i.prototype.match=function(n,e){var t=this.regex.exec(n);if(!t)return!1;for(var r=1,o=t.length;o>r;++r){var i=this.keys[r-1],a="string"==typeof t[r]?decodeURIComponent(t[r]):t[r];i&&(this.params[i.name]=a),e.push(a)}return!0},i.prototype.toURL=function(n){var e=this.path;for(var t in n)e=e.replace("/:"+t,"/"+n[t]);if(e=e.replace(/\/:.*\?/g,"/").replace(/\?/g,""),-1!=e.indexOf(":"))throw Error("missing parameters for url: "+e);return e};var a=function(n,e,t,r){return n instanceof RegExp?n:(n instanceof Array&&(n="("+n.join("|")+")"),n=n.concat(r?"":"/?").replace(/\/\(/g,"(?:/").replace(/\+/g,"__plus__").replace(/(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g,function(n,t,r,o,i,a){return e.push({name:o,optional:!!a}),t=t||"",""+(a?"":t)+"(?:"+(a?t:"")+(r||"")+(i||r&&"([^/.]+?)"||"([^/]+?)")+")"+(a||"")}).replace(/([\/.])/g,"\\$1").replace(/__plus__/g,"(.+)").replace(/\*/g,"(.*)"),RegExp("^"+n+"$",t?"":"i"))},s=function(n,r){var o=n.split(" "),a=2==o.length?o[0]:null;n=2==o.length?o[1]:o[0],t[n]||(t[n]=new i(n,a),e.push(t[n])),t[n].addHandler(r)},h=function(n,e){if("function"==typeof e)s(n,e),h.reload();else if("object"==typeof n){for(var t in n)s(t,n[t]);h.reload()}else e===void 0&&h.navigate(n)};h.lookup=function(n,t){for(var r=0,o=e.length;o>r;r++){var i=e[r];if(i.name==n)return i.toURL(t)}},h.remove=function(n,e){var r=t[n];r&&r.removeHandler(e)},h.removeAll=function(){t={},e=[]},h.navigate=function(n,e){e=e||{};var t=e.silent||!1;t&&l(),setTimeout(function(){window.location.hash=n,t&&setTimeout(function(){p()},1)},1)},h.noConflict=function(){return n[r]=o,h};var f=function(){return window.location.hash.substring(1)},c=function(n,e){var t=[];return e.match(n,t)?(e.run(t),!0):!1},u=h.reload=function(){for(var n=f(),t=0,r=e.length;r>t;t++){var o=e[t];if(c(n,o))return}},p=function(){n.addEventListener?n.addEventListener("hashchange",u,!1):n.attachEvent("onhashchange",u)},l=function(){n.removeEventListener?n.removeEventListener("hashchange",u):n.detachEvent("onhashchange",u)};p(),n[r]=h})(window);
 air = {
     $: function(element) {
         return new air.Dom(element);
@@ -66,24 +62,24 @@ air.App.prototype.view = function(name, templateData) {
 };
 
 air.App.prototype.init = function() {
-    this.router = new air.Router(this.controllers, this.routes);
+    this.router = new air.Router(this.name, this.routes);
+    this.router.init();
 };
 
-air.Router = function(controllers, routes) {
-    // Implemented using vendor component (Routie)
+air.Router = function(appName, routes) {
     // TODO: Test
-    var i, len, route, controllerName, controllerMethod;
+    var self = this,
+        routeCallback = function(route) {
+            self.execRouteLogic(route);
+        },
+        i, len, route;
+    this.appName = appName;
+    if (!this.r) {
+        this.rlite = new Rlite();
+    }
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
-        controllerName = this.getControllerName(route);
-        controllerMethod = this.getControllerMethod(route);
-        controller = controllers[controllerName];
-        if (controller) {
-            routie(route, function(params) {
-                // TODO: Convert params to object?
-                controller.invokeMethod(controllerMethod, params);
-            });
-        }
+        this.rlite.add(route, routeCallback);
     }
 };
 
@@ -94,6 +90,25 @@ air.Router.prototype.getControllerName = function(route) {
 air.Router.prototype.getControllerMethod = function(route) {
     var split = route.split('/');
     return split[1] ? split[1].split('?')[0] : 'default';
+};
+
+air.Router.prototype.execRouteLogic = function(route) {
+    var controllerName = this.getControllerName(route.url),
+        controllerMethod = this.getControllerMethod(route.url),
+        controller = air.apps[this.appName].controllers[controllerName];
+    controller.invokeMethod(controllerMethod, route.params);
+};
+
+air.Router.prototype.init = function() {
+    // Hash-based routing
+    var self = this,
+        processHash = function() {
+            var hash = location.hash || '#';
+            self.rlite.run(hash.substr(1));
+        };
+
+    window.addEventListener('hashchange', processHash);
+    processHash();
 };
 air.Controller = function(name, methods) {
     this.name = name;

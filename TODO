@@ -1,4 +1,3 @@
-- Issue: triggering multiple routes (issue with routie?)
 - Add default routes
 - Add models
 - Implement tests (QUnit, etc)

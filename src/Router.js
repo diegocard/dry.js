@@ -1,18 +1,17 @@
-air.Router = function(controllers, routes) {
-    // Implemented using vendor component (Routie)
+air.Router = function(appName, routes) {
     // TODO: Test
-    var i, len, route, controllerName, controllerMethod;
+    var self = this,
+        routeCallback = function(route) {
+            self.execRouteLogic(route);
+        },
+        i, len, route;
+    this.appName = appName;
+    if (!this.r) {
+        this.rlite = new Rlite();
+    }
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
-        controllerName = this.getControllerName(route);
-        controllerMethod = this.getControllerMethod(route);
-        controller = controllers[controllerName];
-        if (controller) {
-            routie(route, function(params) {
-                // TODO: Convert params to object?
-                controller.invokeMethod(controllerMethod, params);
-            });
-        }
+        this.rlite.add(route, routeCallback);
     }
 };
 
@@ -23,4 +22,23 @@ air.Router.prototype.getControllerName = function(route) {
 air.Router.prototype.getControllerMethod = function(route) {
     var split = route.split('/');
     return split[1] ? split[1].split('?')[0] : 'default';
+};
+
+air.Router.prototype.execRouteLogic = function(route) {
+    var controllerName = this.getControllerName(route.url),
+        controllerMethod = this.getControllerMethod(route.url),
+        controller = air.apps[this.appName].controllers[controllerName];
+    controller.invokeMethod(controllerMethod, route.params);
+};
+
+air.Router.prototype.init = function() {
+    // Hash-based routing
+    var self = this,
+        processHash = function() {
+            var hash = location.hash || '#';
+            self.rlite.run(hash.substr(1));
+        };
+
+    window.addEventListener('hashchange', processHash);
+    processHash();
 };

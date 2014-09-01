@@ -14,4 +14,4 @@ UNDER CONSTRUCTION
 
 ## Thanks To
 
-- [jgallen23](https://github.com/jgallen23/) for his implementation of [routie](https://github.com/jgallen23/routie) (used as default router behind the secenes)
+- [chrisdavies](https://github.com/chrisdavies/) for his implementation of [rlite](https://github.com/chrisdavies/rlite) (used as default router behind the secenes)
