@@ -1,4 +1,2 @@
-- Add default routes
 - Add models
-- Implement tests (QUnit, etc)
-- Try RLite instead of routie
+- Implement tests (Jasmine)

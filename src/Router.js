@@ -2,7 +2,7 @@ air.Router = function(appName, routes) {
     // TODO: Test
     var self = this,
         routeCallback = function(route) {
-            self.execRouteLogic(route);
+            self.navigate(route);
         },
         i, len, route;
     this.appName = appName;
@@ -24,7 +24,7 @@ air.Router.prototype.getControllerMethod = function(route) {
     return split[1] ? split[1].split('?')[0] : 'default';
 };
 
-air.Router.prototype.execRouteLogic = function(route) {
+air.Router.prototype.navigate = function(route) {
     var controllerName = this.getControllerName(route.url),
         controllerMethod = this.getControllerMethod(route.url),
         controller = air.apps[this.appName].controllers[controllerName];
