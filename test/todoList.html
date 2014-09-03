@@ -9,12 +9,21 @@
 <body>
     <div data-air="main/hello"></div>
 
+    <div data-air="body/hello"></div>
+
+    <a href="#main/hello">Main</a>
+    <a href="#body/hello">Body</a>
+
     <!-- Dependencies -->
     <script src="../dist/air.js"></script>
 
     <!-- Templates -->
     <script data-air="main/hello" type="text/template">
       <h1>Hello world</h1>
+    </script>
+
+    <script data-air="body/hello" type="text/template">
+      <span>Lorem ipsum</span>
     </script>
 
     <!-- Source -->

@@ -1,13 +1,24 @@
 // Create new app
-var mainApp = air.app('app');
+var app1 = air.app('app1'),
+    app2 = air.app('app2');
 
 // Register a controller
-mainApp.controller('main', {
+app1.controller('main', {
     'default': function() {
-        console.log('Method working');
+        console.log('Method working on main');
     },
     'hello': null
 });
 
-// Start the app
-mainApp.init();
+
+// Register another controller
+app2.controller('body', {
+    'default': function() {
+        console.log('Method working on body');
+    },
+    'hello': null
+});
+
+// Start the apps
+app1.init();
+app2.init();
