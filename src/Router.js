@@ -25,6 +25,7 @@ air.Router.prototype.getControllerMethod = function(route) {
 };
 
 air.Router.prototype.navigate = function(route) {
+    // Todo: add route for default controllers
     var controllerName = this.getControllerName(route.url),
         controllerMethod = this.getControllerMethod(route.url),
         controller = air.apps[this.appName].controllers[controllerName];
