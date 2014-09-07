@@ -1,2 +1,3 @@
+- Improve documentation, add Docco support
 - Add models
 - Implement tests (Jasmine)

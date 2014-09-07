@@ -14,7 +14,7 @@ air.App.prototype.controller = function(name, methods) {
     // TODO: Test, finish
     for (methodName in methods) {
         if (methods.hasOwnProperty(methodName)) {
-            if (methodName.toLowerCase() === 'default') {
+            if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
                 this.routes.push(name);
             } else {
                 this.routes.push(name + '/' + methodName);
@@ -30,6 +30,7 @@ air.App.prototype.view = function(name, templateData) {
 };
 
 air.App.prototype.init = function() {
+    // Create and initialize the app's router
     this.router = new air.Router(this.name, this.routes);
     this.router.init();
 };

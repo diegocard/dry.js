@@ -7,17 +7,23 @@ air = {
         return new air.Dom(element);
     },
     apps: {},
-    app : function(name, options) {
-      var app = this.apps[name];
-      if (!app) {
-        // TODO: Is using the app variable needed here?
-        app = new air.App(name, options);
-        this.apps[name] = app;
-      }
-      return app;
-    }
+    app: function(name, options) {
+        var app = this.apps[name];
+        if (!app) {
+            // TODO: Is using the app variable needed here?
+            app = new air.App(name, options);
+            this.apps[name] = app;
+        }
+        return app;
+    },
 };
 
+air.settings = {
+    // When a route is left empty, the router will look for this controller
+    DEFAULT_CONTROLLER_NAME: "default",
+    // When a route doesn't target any specific method, it will look for this one
+    DEFAULT_CONTROLLER_METHOD: "default"
+};
 air.Dom = function(name) {
     this.element = document.querySelector(name);
 };
@@ -46,7 +52,7 @@ air.App.prototype.controller = function(name, methods) {
     // TODO: Test, finish
     for (methodName in methods) {
         if (methods.hasOwnProperty(methodName)) {
-            if (methodName.toLowerCase() === 'default') {
+            if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
                 this.routes.push(name);
             } else {
                 this.routes.push(name + '/' + methodName);
@@ -62,6 +68,7 @@ air.App.prototype.view = function(name, templateData) {
 };
 
 air.App.prototype.init = function() {
+    // Create and initialize the app's router
     this.router = new air.Router(this.name, this.routes);
     this.router.init();
 };
@@ -77,6 +84,9 @@ air.Router = function(appName, routes) {
     if (!this.r) {
         this.rlite = new Rlite();
     }
+    if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
+        routes.push('');
+    }
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
         this.rlite.add(route, routeCallback);
@@ -84,12 +94,12 @@ air.Router = function(appName, routes) {
 };
 
 air.Router.prototype.getControllerName = function(route) {
-    return route.split('/')[0];
+    return route.split('/')[0] || air.settings.DEFAULT_CONTROLLER_NAME;
 };
 
 air.Router.prototype.getControllerMethod = function(route) {
     var split = route.split('/');
-    return split[1] ? split[1].split('?')[0] : 'default';
+    return split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD;
 };
 
 air.Router.prototype.navigate = function(route) {
@@ -130,7 +140,10 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
         // Default behavior: check if a template exists with the same ID as the controller name.
         // If it does, create a view and then render it.
         // TODO: Finish and test
-        defaultViewName = this.name + '/' + methodName;
+        defaultViewName = this.name;
+        if (methodName && methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
+            defaultViewName += '/' + methodName;
+        }
         new air.View(defaultViewName, {templateData: params}).render();
     }
 };

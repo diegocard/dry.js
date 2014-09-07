@@ -9,6 +9,9 @@ air.Router = function(appName, routes) {
     if (!this.r) {
         this.rlite = new Rlite();
     }
+    if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
+        routes.push('');
+    }
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
         this.rlite.add(route, routeCallback);
@@ -16,12 +19,12 @@ air.Router = function(appName, routes) {
 };
 
 air.Router.prototype.getControllerName = function(route) {
-    return route.split('/')[0];
+    return route.split('/')[0] || air.settings.DEFAULT_CONTROLLER_NAME;
 };
 
 air.Router.prototype.getControllerMethod = function(route) {
     var split = route.split('/');
-    return split[1] ? split[1].split('?')[0] : 'default';
+    return split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD;
 };
 
 air.Router.prototype.navigate = function(route) {
