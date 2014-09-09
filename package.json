@@ -25,6 +25,7 @@
     "gulp-uglify": "~0.3.1",
     "gulp-concat": "~2.3.4",
     "gulp-rename": "~1.2.0",
-    "gulp-filesize": "0.0.6"
+    "gulp-filesize": "0.0.6",
+    "gulp-docco": "0.0.4"
   }
 }

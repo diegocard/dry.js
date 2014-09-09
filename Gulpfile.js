@@ -2,7 +2,8 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
-    filesize = require('gulp-filesize');
+    filesize = require('gulp-filesize'),
+    docco = require("gulp-docco");
 
 gulp.task('default', function() {
     gulp.src([
@@ -25,6 +26,12 @@ gulp.task('default', function() {
         .pipe(filesize());
 });
 
+gulp.task('doc', function() {
+    gulp.src("./dist/air.js")
+        .pipe(docco())
+        .pipe(gulp.dest('./docs'));
+});
+
 gulp.task('watch', function() {
-    gulp.watch('src/*.js', ['default']);
+    gulp.watch('src/*.js', ['default', 'doc']);
 });

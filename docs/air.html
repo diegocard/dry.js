@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>air.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>air.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Rlite</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">this</span>.rules={}}Rlite.prototype={add:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n,t)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> r,u,e=n.split(<span class="hljs-string">"/"</span>),i=<span class="hljs-keyword">this</span>.rules,f=<span class="hljs-number">0</span>;f&lt;e.length;++f)r=e[f],u=r.length&amp;&amp;r.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">":"</span>?<span class="hljs-string">":"</span>:r,i[u]?i=i[u]:(i=i[u]={},u==<span class="hljs-string">":"</span>&amp;&amp;(i[<span class="hljs-string">"@name"</span>]=r.substr(<span class="hljs-number">1</span>,r.length-<span class="hljs-number">1</span>)));i[<span class="hljs-string">"@"</span>]=t},run:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{n&amp;&amp;n.length&amp;&amp;(n=n.replace(<span class="hljs-string">"/?"</span>,<span class="hljs-string">"?"</span>),n.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">1</span>,n.length)),n.length&amp;&amp;n.charAt(n.length-<span class="hljs-number">1</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">0</span>,n.length-<span class="hljs-number">1</span>)));<span class="hljs-keyword">var</span> t=<span class="hljs-keyword">this</span>.rules,i=n.split(<span class="hljs-string">"?"</span>,<span class="hljs-number">2</span>),u=i[<span class="hljs-number">0</span>].split(<span class="hljs-string">"/"</span>,<span class="hljs-number">50</span>),r={};<span class="hljs-keyword">return</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> n=<span class="hljs-number">0</span>;n&lt;u.length&amp;&amp;t;++n){<span class="hljs-keyword">var</span> f=u[n],e=f.toLowerCase(),i=t[e];!i&amp;&amp;(i=t[<span class="hljs-string">":"</span>])&amp;&amp;(r[i[<span class="hljs-string">"@name"</span>]]=f);t=i}}(),<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> t,u=n.split(<span class="hljs-string">"&amp;"</span>,<span class="hljs-number">50</span>),i=<span class="hljs-number">0</span>;i&lt;u.length;++i)t=u[i].split(<span class="hljs-string">"="</span>,<span class="hljs-number">2</span>),t.length==<span class="hljs-number">2</span>&amp;&amp;(r[t[<span class="hljs-number">0</span>]]=t[<span class="hljs-number">1</span>])}(i.length==<span class="hljs-number">2</span>?i[<span class="hljs-number">1</span>]:<span class="hljs-string">""</span>),t&amp;&amp;t[<span class="hljs-string">"@"</span>])?(t[<span class="hljs-string">"@"</span>]({url:n,params:r}),!<span class="hljs-number">0</span>):!<span class="hljs-number">1</span>}};
+<span class="hljs-comment">/*
+</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h1 id="sourcemappingurl-rlite-min-js-map">sourceMappingURL=rlite.min.js.map</h1>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>*/
+air = {
+    $: function(element) {
+        return new air.Dom(element);
+    },
+    apps: {},
+    app: function(name, options) {
+        var app = this.apps[name];
+        if (!app) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>TODO: Is using the app variable needed here?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            app = <span class="hljs-keyword">new</span> air.App(name, options);
+            <span class="hljs-keyword">this</span>.apps[name] = app;
+        }
+        <span class="hljs-keyword">return</span> app;
+    },
+};
+
+air.settings = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>When a route is left empty, the router will look for this controller</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_NAME: <span class="hljs-string">"default"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>When a route doesn’t target any specific method, it will look for this one</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_METHOD: <span class="hljs-string">"default"</span>
+};
+air.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> </span>{
+    <span class="hljs-keyword">this</span>.element = <span class="hljs-built_in">document</span>.querySelector(name);
+};
+
+air.Dom.prototype.html = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(content)</span> </span>{
+    <span class="hljs-keyword">if</span> (content) {
+        <span class="hljs-keyword">this</span>.element.innerHTML = content;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.element.innerHTML;
+    }
+};
+air.App = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+    <span class="hljs-keyword">this</span>.options = options || {};
+    <span class="hljs-keyword">this</span>.routes = <span class="hljs-keyword">this</span>.options.routes || [];
+    <span class="hljs-keyword">this</span>.controllers = <span class="hljs-keyword">this</span>.options.controllers || {};
+    <span class="hljs-keyword">this</span>.views = <span class="hljs-keyword">this</span>.options.views || {};
+};
+
+air.App.prototype.controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
+    <span class="hljs-keyword">var</span> controller, methodName, method;
+    controller = <span class="hljs-keyword">new</span> air.Controller(name, methods);
+    <span class="hljs-keyword">this</span>.controllers[name] = controller;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Register routes for each controller method
+TODO: Test, finish</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">for</span> (methodName <span class="hljs-keyword">in</span> methods) {
+        <span class="hljs-keyword">if</span> (methods.hasOwnProperty(methodName)) {
+            <span class="hljs-keyword">if</span> (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
+                <span class="hljs-keyword">this</span>.routes.push(name);
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">this</span>.routes.push(name + <span class="hljs-string">'/'</span> + methodName);
+            }
+        }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>TODO: Add default route</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> controller;
+};
+
+air.App.prototype.view = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, templateData)</span> </span>{
+    <span class="hljs-keyword">this</span>.views[name] = <span class="hljs-keyword">new</span> air.View(name, templateData);
+};
+
+air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Create and initialize the app’s router</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.router = <span class="hljs-keyword">new</span> air.Router(<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.routes);
+    <span class="hljs-keyword">this</span>.router.init();
+};
+
+air.Router = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(appName, routes)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>TODO: Test</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+        routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+            self.navigate(route);
+        },
+        i, len, route;
+    <span class="hljs-keyword">this</span>.appName = appName;
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.r) {
+        <span class="hljs-keyword">this</span>.rlite = <span class="hljs-keyword">new</span> Rlite();
+    }
+    <span class="hljs-keyword">if</span> (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) &gt; -<span class="hljs-number">1</span>){
+        routes.push(<span class="hljs-string">''</span>);
+    }
+    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>, len=routes.length; i&lt;len; i++) {
+        route = routes[i];
+        <span class="hljs-keyword">this</span>.rlite.add(route, routeCallback);
+    }
+};
+
+air.Router.prototype.getControllerName = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+    <span class="hljs-keyword">return</span> route.split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">0</span>] || air.settings.DEFAULT_CONTROLLER_NAME;
+};
+
+air.Router.prototype.getControllerMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+    <span class="hljs-keyword">var</span> split = route.split(<span class="hljs-string">'/'</span>);
+    <span class="hljs-keyword">return</span> split[<span class="hljs-number">1</span>] ? split[<span class="hljs-number">1</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] : air.settings.DEFAULT_CONTROLLER_METHOD;
+};
+
+air.Router.prototype.navigate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Todo: add route for default controllers</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> controllerName = <span class="hljs-keyword">this</span>.getControllerName(route.url),
+        controllerMethod = <span class="hljs-keyword">this</span>.getControllerMethod(route.url),
+        controller = air.apps[<span class="hljs-keyword">this</span>.appName].controllers[controllerName];
+    controller.invokeMethod(controllerMethod, route.params);
+};
+
+air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Hash-based routing</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+        processHash = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">var</span> hash = location.hash || <span class="hljs-string">'#'</span>;
+            self.rlite.run(hash.substr(<span class="hljs-number">1</span>));
+        };
+
+    <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'hashchange'</span>, processHash);
+    processHash();
+};
+air.Controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+    <span class="hljs-keyword">this</span>.methods = methods || {};
+};
+
+air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName, params)</span> </span>{
+    <span class="hljs-keyword">var</span> method = <span class="hljs-keyword">this</span>.methods[methodName],
+        result, defaultView, defaultViewName;
+    <span class="hljs-keyword">if</span> (method) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Invoke the method with the given parameters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        result = method.apply(<span class="hljs-keyword">this</span>,params);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>If a view was returned, render it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> result === air.View) {
+            result.render();
+        }
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Default behavior: check if a template exists with the same ID as the controller name.
+If it does, create a view and then render it.
+TODO: Finish and test</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        defaultViewName = <span class="hljs-keyword">this</span>.name;
+        <span class="hljs-keyword">if</span> (methodName &amp;&amp; methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
+            defaultViewName += <span class="hljs-string">'/'</span> + methodName;
+        }
+        <span class="hljs-keyword">new</span> air.View(defaultViewName, {templateData: params}).render();
+    }
+};
+
+air.Template = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, domId)</span> </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+    <span class="hljs-keyword">this</span>.domId = domId || (<span class="hljs-string">'script[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);
+    <span class="hljs-keyword">this</span>.raw = air.$(<span class="hljs-keyword">this</span>.domId).element.innerHTML.trim();
+};
+
+air.Template.prototype.cache = [];
+
+air.Template.prototype.compile = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">tmpl</span><span class="hljs-params">(data)</span> </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Figure out if we’re getting a template, or if we need to
+load the template - and be sure to cache the result.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    data = data || {};
+    <span class="hljs-keyword">var</span> str = <span class="hljs-keyword">this</span>.raw,
+        cache = air.Template.prototype.cache,
+        fn = !<span class="hljs-regexp">/\W/</span>.test(str) ?
+        cache[str] = cache[str] ||
+        tmpl(<span class="hljs-built_in">document</span>.getElementById(str).innerHTML) :</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Generate a reusable function that will serve as a template
+generator (and which will be cached).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span>(<span class="hljs-string">"obj"</span>,
+            <span class="hljs-string">"var p=[],print=function(){p.push.apply(p,arguments);};"</span> +</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Introduce the data as local variables using with(){}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-string">"with(obj){p.push('"</span> +</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Convert the template into pure JavaScript</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            str
+            .replace(<span class="hljs-regexp">/[\r\t\n]/g</span>, <span class="hljs-string">" "</span>)
+            .split(<span class="hljs-string">"&lt;%"</span>).join(<span class="hljs-string">"\t"</span>)
+            .replace(<span class="hljs-regexp">/((^|%&gt;)[^\t]*)'/g</span>, <span class="hljs-string">"$1\r"</span>)
+            .replace(<span class="hljs-regexp">/\t=(.*?)%&gt;/g</span>, <span class="hljs-string">"',$1,'"</span>)
+            .split(<span class="hljs-string">"\t"</span>).join(<span class="hljs-string">"');"</span>)
+            .split(<span class="hljs-string">"%&gt;"</span>).join(<span class="hljs-string">"p.push('"</span>)
+            .split(<span class="hljs-string">"\r"</span>).join(<span class="hljs-string">"\\'"</span>) + <span class="hljs-string">"');}return p.join('');"</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Provide some basic currying to the user</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> data ? fn(data) : fn;
+};
+
+air.View = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
+    options = options || {};
+    <span class="hljs-keyword">this</span>.name = name;
+    <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);   
+    <span class="hljs-keyword">this</span>.templateData = options.templateData || {};
+    <span class="hljs-keyword">this</span>.template = <span class="hljs-keyword">new</span> air.Template(name);
+};
+
+air.View.prototype.render = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> viewElement = air.$(<span class="hljs-keyword">this</span>.el),
+        compiledTemplate = <span class="hljs-keyword">this</span>.template.compile(<span class="hljs-keyword">this</span>.templateData);
+    viewElement.html(compiledTemplate);
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
