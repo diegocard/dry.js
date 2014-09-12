@@ -1,12 +1,16 @@
-function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};
-/*
-//# sourceMappingURL=rlite.min.js.map
-*/
+// AIR.JS
+// ------
+
 air = {
+    // jQuery-like function
     $: function(element) {
         return new air.Dom(element);
     },
+
+    // Apps container
     apps: {},
+
+    // Returns an app or create it if it doesn't exist (Singleton)
     app: function(name, options) {
         var app = this.apps[name];
         if (!app) {
@@ -18,16 +22,23 @@ air = {
     },
 };
 
+// Settings
+// --------
 air.settings = {
     // When a route is left empty, the router will look for this controller
     DEFAULT_CONTROLLER_NAME: "default",
     // When a route doesn't target any specific method, it will look for this one
     DEFAULT_CONTROLLER_METHOD: "default"
 };
+
+// DOM Management Utilities
+// ------------------------
+
 air.Dom = function(name) {
     this.element = document.querySelector(name);
 };
 
+// jQuery-like html function
 air.Dom.prototype.html = function(content) {
     if (content) {
         this.element.innerHTML = content;
@@ -36,6 +47,7 @@ air.Dom.prototype.html = function(content) {
         return this.element.innerHTML;
     }
 };
+
 air.App = function(name, options) {
     this.name = name;
     this.options = options || {};
@@ -73,30 +85,39 @@ air.App.prototype.init = function() {
     this.router.init();
 };
 
+// Router
+// ------
 air.Router = function(appName, routes) {
-    // TODO: Test
     var self = this,
         routeCallback = function(route) {
             self.navigate(route);
         },
         i, len, route;
     this.appName = appName;
+
+    // Initialize RLite (routing engine)
     if (!this.r) {
         this.rlite = new Rlite();
     }
+
+    // Empty routes are handled through the default action in the default controller
     if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
         routes.push('');
     }
+
+    // Register each route
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
         this.rlite.add(route, routeCallback);
     }
 };
 
+// Find which controller should handle a given route
 air.Router.prototype.getControllerName = function(route) {
     return route.split('/')[0] || air.settings.DEFAULT_CONTROLLER_NAME;
 };
 
+// Find which method should be invoked in the controller that handles the given route
 air.Router.prototype.getControllerMethod = function(route) {
     var split = route.split('/');
     return split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD;
@@ -121,6 +142,7 @@ air.Router.prototype.init = function() {
     window.addEventListener('hashchange', processHash);
     processHash();
 };
+
 air.Controller = function(name, methods) {
     this.name = name;
     this.methods = methods || {};
@@ -201,3 +223,7 @@ air.View.prototype.render = function() {
         compiledTemplate = this.template.compile(this.templateData);
     viewElement.html(compiledTemplate);
 };
+function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};
+/*
+//# sourceMappingURL=rlite.min.js.map
+*/

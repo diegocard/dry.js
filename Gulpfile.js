@@ -7,7 +7,6 @@ var gulp = require('gulp'),
 
 gulp.task('default', function() {
     gulp.src([
-        './vendor/*.js',
         './src/Core.js',
         './src/Settings.js',
         './src/Dom.js',
@@ -15,7 +14,8 @@ gulp.task('default', function() {
         './src/Router.js',
         './src/Controller.js',
         './src/Template.js',
-        './src/View.js'
+        './src/View.js',
+        './vendor/*.js'
     ])
         .pipe(concat('air.js'))
         .pipe(gulp.dest('dist'))
@@ -28,7 +28,9 @@ gulp.task('default', function() {
 
 gulp.task('doc', function() {
     gulp.src("./dist/air.js")
-        .pipe(docco())
+        .pipe(docco({
+            layout: 'linear'
+        }))
         .pipe(gulp.dest('./docs'));
 });
 

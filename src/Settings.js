@@ -1,3 +1,5 @@
+// Settings
+// --------
 air.settings = {
     // When a route is left empty, the router will look for this controller
     DEFAULT_CONTROLLER_NAME: "default",

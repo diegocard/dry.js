@@ -1,27 +1,36 @@
+// Router
+// ------
 air.Router = function(appName, routes) {
-    // TODO: Test
     var self = this,
         routeCallback = function(route) {
             self.navigate(route);
         },
         i, len, route;
     this.appName = appName;
+
+    // Initialize RLite (routing engine)
     if (!this.r) {
         this.rlite = new Rlite();
     }
+
+    // Empty routes are handled through the default action in the default controller
     if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
         routes.push('');
     }
+
+    // Register each route
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
         this.rlite.add(route, routeCallback);
     }
 };
 
+// Find which controller should handle a given route
 air.Router.prototype.getControllerName = function(route) {
     return route.split('/')[0] || air.settings.DEFAULT_CONTROLLER_NAME;
 };
 
+// Find which method should be invoked in the controller that handles the given route
 air.Router.prototype.getControllerMethod = function(route) {
     var split = route.split('/');
     return split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD;
