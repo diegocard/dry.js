@@ -143,6 +143,8 @@ air.Router.prototype.init = function() {
     processHash();
 };
 
+// Controller
+// ----------
 air.Controller = function(name, methods) {
     this.name = name;
     this.methods = methods || {};
@@ -214,13 +216,13 @@ air.View = function(name, options) {
     options = options || {};
     this.name = name;
     this.el = options.el || (':not(script)[data-air="' + name + '"]');   
-    this.templateData = options.templateData || {};
+    this.model = options.model || new air.Model(name);
     this.template = new air.Template(name);
 };
 
 air.View.prototype.render = function() {
     var viewElement = air.$(this.el),
-        compiledTemplate = this.template.compile(this.templateData);
+        compiledTemplate = this.template.compile(this.model);
     viewElement.html(compiledTemplate);
 };
 function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};
