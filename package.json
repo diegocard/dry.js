@@ -22,10 +22,11 @@
   },
   "devDependencies": {
     "gulp": "~3.8.7",
-    "gulp-uglify": "~0.3.1",
     "gulp-concat": "~2.3.4",
-    "gulp-rename": "~1.2.0",
+    "gulp-docco": "0.0.4",
     "gulp-filesize": "0.0.6",
-    "gulp-docco": "0.0.4"
+    "gulp-qunit": "^0.3.3",
+    "gulp-rename": "~1.2.0",
+    "gulp-uglify": "~0.3.1"
   }
 }

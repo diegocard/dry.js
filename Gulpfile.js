@@ -3,7 +3,8 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     filesize = require('gulp-filesize'),
-    docco = require("gulp-docco");
+    docco = require("gulp-docco"),
+    qunit = require('gulp-qunit');;
 
 gulp.task('default', function() {
     gulp.src([
@@ -27,7 +28,7 @@ gulp.task('default', function() {
 });
 
 gulp.task('doc', function() {
-    gulp.src("./dist/air.js")
+    return gulp.src("./dist/air.js")
         .pipe(docco({
             layout: 'linear'
         }))
@@ -35,5 +36,10 @@ gulp.task('doc', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('src/*.js', ['default', 'doc']);
+    return gulp.watch('src/*.js', ['default', 'doc']);
+});
+
+gulp.task('test', function() {
+    return gulp.src('./test/tests.html')
+        .pipe(qunit());
 });
