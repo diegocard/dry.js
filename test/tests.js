@@ -1,26 +1,33 @@
-// Create new app
-var app1 = air.app('app1'),
-    app2 = air.app('app2');
+// Test Setup
+// ----------
 
-// Default controller (root directory)
-app1.controller('default', {
-    'default': null
+// Before each test
+var testSetup = function() {
+    // window.location.href = 'tests.html';
+};
+QUnit.testStart(testSetup);
+
+// Test 1
+QUnit.test("Default route", function(assert) {
+    assert.expect(1);
+    // Create new app
+    var app1 = air.app('app1');
+
+    // Default controller (root directory)
+    app1.controller('default', {
+        'default': function() {
+            assert.ok(true, "default route was called");
+        }
+    });
+
+    // Register another dummy controller which should not be used
+    app1.controller('main', {
+        'default': function() {
+            assert.ok(false, "this route should not be called");
+        },
+        'hello': null
+    });
+
+    // Start the app
+    app1.init();
 });
-
-// Register a controller
-app1.controller('main', {
-    'default': function() {
-        console.log('Method working on main');
-    },
-    'hello': null
-});
-
-// Register another controller
-app2.controller('body', {
-    'default': null
-});
-
-
-// Start the apps
-app1.init();
-app2.init();

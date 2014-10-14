@@ -4,7 +4,7 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     filesize = require('gulp-filesize'),
     docco = require("gulp-docco"),
-    qunit = require('gulp-qunit');;
+    qunit = require('gulp-qunit');
 
 gulp.task('default', function() {
     gulp.src([

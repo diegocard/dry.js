@@ -20,6 +20,12 @@ air = {
         }
         return app;
     },
+
+    // Navigate to a certain url
+    navigate: function(url) {
+        url = url || '';
+        window.location.href = url;
+    }
 };
 
 // Settings
