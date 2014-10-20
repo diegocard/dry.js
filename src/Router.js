@@ -2,13 +2,23 @@
 // ------
 air.Router = function(appName, routes) {
     var self = this,
+        // Main logic behind the execution of a route
         routeCallback = function(route) {
-            debugger;
-            return self.navigate(route);
+            var split = route.url.split('/'),
+                // Find which controller should handle a given route
+                controllerName = split[0] || air.settings.DEFAULT_CONTROLLER_NAME,
+                // Find which method should be invoked in the controller that handles the given route
+                controllerMethod = split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD,
+                controller = air.apps[self.appName].controllers[controllerName];
+            controller.invokeMethod(controllerMethod, route.params);
         },
         i, len, route;
     this.appName = appName;
 
+    // Initialize RLite (routing engine)
+    if (!this.r) {
+        this.rlite = new Rlite();
+    }
 
     // Empty routes are handled through the default action in the default controller
     if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
@@ -18,25 +28,22 @@ air.Router = function(appName, routes) {
     // Register each route
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
-        routie(route, routeCallback);
+        this.rlite.add(route, routeCallback);
     }
 };
 
-// Find which controller should handle a given route
-air.Router.prototype.getControllerName = function(route) {
-    return route.split('/')[0] || air.settings.DEFAULT_CONTROLLER_NAME;
+air.Router.prototype.run = function(route) {
+    this.rlite.run(route);
 };
 
-// Find which method should be invoked in the controller that handles the given route
-air.Router.prototype.getControllerMethod = function(route) {
-    var split = route.split('/');
-    return split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD;
-};
+air.Router.prototype.init = function() {
+    // Hash-based routing
+    var self = this,
+        processHash = function() {
+            var hash = location.hash || '#';
+            self.rlite.run(hash.substr(1));
+        };
 
-air.Router.prototype.navigate = function(route) {
-    // Todo: add route for default controllers
-    var controllerName = this.getControllerName(route.url),
-        controllerMethod = this.getControllerMethod(route.url),
-        controller = air.apps[this.appName].controllers[controllerName];
-    controller.invokeMethod(controllerMethod, route.params);
+    window.addEventListener('hashchange', processHash);
+    processHash();
 };

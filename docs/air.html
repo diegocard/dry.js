@@ -61,7 +61,102 @@ air = {</pre></div>
             <span class="hljs-keyword">this</span>.apps[name] = app;
         }
         <span class="hljs-keyword">return</span> app;
+    },</pre></div>
+        
+      
+        
+        <p>Navigate to a certain url</p>
+
+        
+          <div class='highlight'><pre>    navigate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url)</span> </span>{
+        url = url || <span class="hljs-string">''</span>;
+        <span class="hljs-built_in">window</span>.location.href = url;
+    },</pre></div>
+        
+      
+        
+        <p>Exexute a route without navigating</p>
+
+        
+          <div class='highlight'><pre>    run: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+        <span class="hljs-keyword">var</span> a;
+        <span class="hljs-keyword">for</span> (a <span class="hljs-keyword">in</span> air.apps) {
+            a.router.run(route);
+        }
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is an array</p>
+
+        
+          <div class='highlight'><pre>    isArray: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arr)</span> </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(arr) === <span class="hljs-string">"[object Array]"</span>;
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is an object</p>
+
+        
+          <div class='highlight'><pre>    isObject: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
+      <span class="hljs-keyword">return</span> obj === <span class="hljs-built_in">Object</span>(obj) &amp;&amp; !air.isFunction(obj);
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is strictly an object</p>
+
+        
+          <div class='highlight'><pre>    isStrictlyObject: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
+      <span class="hljs-keyword">return</span> air.isObject(obj) &amp;&amp; !air.isArray(obj);
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is boolean</p>
+
+        
+          <div class='highlight'><pre>    isBoolean: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(bool)</span> </span>{
+      <span class="hljs-keyword">return</span> bool === <span class="hljs-literal">true</span> || bool === <span class="hljs-literal">false</span>;
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is a string</p>
+
+        
+          <div class='highlight'><pre>    isString: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(str)</span> </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(str) === <span class="hljs-string">"[object String]"</span>;
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is a function</p>
+
+        
+          <div class='highlight'><pre>    isFunction: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fun)</span> </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(fun) === <span class="hljs-string">"[object Function]"</span>;
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is undefined</p>
+
+        
+          <div class='highlight'><pre>    isUndefined: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> obj === <span class="hljs-string">"undefined"</span>;
+    },</pre></div>
+        
+      
+        
+        <p>Check if the given parameter is numeric</p>
+
+        
+          <div class='highlight'><pre>    isNumeric: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(num)</span></span>{
+      <span class="hljs-keyword">return</span> !<span class="hljs-built_in">isNaN</span>(<span class="hljs-built_in">parseFloat</span>(num)) &amp;&amp; <span class="hljs-built_in">isFinite</span>(num);
     },
+
 };</pre></div>
         
       
@@ -168,9 +263,31 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
 
         
           <div class='highlight'><pre>air.Router = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(appName, routes)</span> </span>{
-    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
-        routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
-            self.navigate(route);
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,</pre></div>
+        
+      
+        
+        <p>Main logic behind the execution of a route</p>
+
+        
+          <div class='highlight'><pre>        routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+            <span class="hljs-keyword">var</span> split = route.url.split(<span class="hljs-string">'/'</span>),</pre></div>
+        
+      
+        
+        <p>Find which controller should handle a given route</p>
+
+        
+          <div class='highlight'><pre>                controllerName = split[<span class="hljs-number">0</span>] || air.settings.DEFAULT_CONTROLLER_NAME,</pre></div>
+        
+      
+        
+        <p>Find which method should be invoked in the controller that handles the given route</p>
+
+        
+          <div class='highlight'><pre>                controllerMethod = split[<span class="hljs-number">1</span>] ? split[<span class="hljs-number">1</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] : air.settings.DEFAULT_CONTROLLER_METHOD,
+                controller = air.apps[self.appName].controllers[controllerName];
+            controller.invokeMethod(controllerMethod, route.params);
         },
         i, len, route;
     <span class="hljs-keyword">this</span>.appName = appName;</pre></div>
@@ -202,38 +319,10 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         route = routes[i];
         <span class="hljs-keyword">this</span>.rlite.add(route, routeCallback);
     }
-};</pre></div>
-        
-      
-        
-        <p>Find which controller should handle a given route</p>
-
-        
-          <div class='highlight'><pre>air.Router.prototype.getControllerName = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
-    <span class="hljs-keyword">return</span> route.split(<span class="hljs-string">'/'</span>)[<span class="hljs-number">0</span>] || air.settings.DEFAULT_CONTROLLER_NAME;
-};</pre></div>
-        
-      
-        
-        <p>Find which method should be invoked in the controller that handles the given route</p>
-
-        
-          <div class='highlight'><pre>air.Router.prototype.getControllerMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
-    <span class="hljs-keyword">var</span> split = route.split(<span class="hljs-string">'/'</span>);
-    <span class="hljs-keyword">return</span> split[<span class="hljs-number">1</span>] ? split[<span class="hljs-number">1</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] : air.settings.DEFAULT_CONTROLLER_METHOD;
 };
 
-air.Router.prototype.navigate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{</pre></div>
-        
-      
-        
-        <p>Todo: add route for default controllers</p>
-
-        
-          <div class='highlight'><pre>    <span class="hljs-keyword">var</span> controllerName = <span class="hljs-keyword">this</span>.getControllerName(route.url),
-        controllerMethod = <span class="hljs-keyword">this</span>.getControllerMethod(route.url),
-        controller = air.apps[<span class="hljs-keyword">this</span>.appName].controllers[controllerName];
-    controller.invokeMethod(controllerMethod, route.params);
+air.Router.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+    <span class="hljs-keyword">this</span>.rlite.run(route);
 };
 
 air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{</pre></div>
@@ -251,9 +340,14 @@ air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
 
     <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'hashchange'</span>, processHash);
     processHash();
-};
+};</pre></div>
+        
+      
+        
+        <h2 id="controller">Controller</h2>
 
-air.Controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
+        
+          <div class='highlight'><pre>air.Controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.methods = methods || {};
 };
@@ -282,7 +376,7 @@ air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         
       
         
-        <p>Default behavior: check if a template exists with the same ID as the controller name.
+        <p>Default behavior: check if a template exists with the following ID: controller/method.
 If it does, create a view and then render it.
 TODO: Finish and test</p>
 
@@ -295,10 +389,20 @@ TODO: Finish and test</p>
     }
 };
 
-air.Template = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, domId)</span> </span>{
+air.Template = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, tmpl)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
-    <span class="hljs-keyword">this</span>.domId = domId || (<span class="hljs-string">'script[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);
-    <span class="hljs-keyword">this</span>.raw = air.$(<span class="hljs-keyword">this</span>.domId).element.innerHTML.trim();
+    <span class="hljs-keyword">if</span> (air.isFunction(tmpl)){</pre></div>
+        
+      
+        
+        <p>Allow for pre-compiled funcions</p>
+
+        
+          <div class='highlight'><pre>        <span class="hljs-keyword">this</span>.compile = tmpl;
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">this</span>.domId = tmpl || (<span class="hljs-string">'script[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);
+        <span class="hljs-keyword">this</span>.element = air.$(<span class="hljs-keyword">this</span>.domId).element;
+    }
 };
 
 air.Template.prototype.cache = [];
@@ -312,10 +416,10 @@ load the template - and be sure to cache the result.</p>
 
         
           <div class='highlight'><pre>    data = data || {};
-    <span class="hljs-keyword">var</span> str = <span class="hljs-keyword">this</span>.raw,
+    <span class="hljs-keyword">var</span> str = <span class="hljs-keyword">this</span>.elment.innerHTML.trim(),
         cache = air.Template.prototype.cache,
         fn = !<span class="hljs-regexp">/\W/</span>.test(str) ?
-        cache[str] = cache[str] ||
+        cache[<span class="hljs-keyword">this</span>.name] = cache[<span class="hljs-keyword">this</span>.name] ||
         tmpl(<span class="hljs-built_in">document</span>.getElementById(str).innerHTML) :</pre></div>
         
       
@@ -360,13 +464,13 @@ air.View = <span class="hljs-function"><span class="hljs-keyword">function</span
     options = options || {};
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);   
-    <span class="hljs-keyword">this</span>.templateData = options.templateData || {};
+    <span class="hljs-keyword">this</span>.model = options.model || <span class="hljs-keyword">new</span> air.Model(name);
     <span class="hljs-keyword">this</span>.template = <span class="hljs-keyword">new</span> air.Template(name);
 };
 
 air.View.prototype.render = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">var</span> viewElement = air.$(<span class="hljs-keyword">this</span>.el),
-        compiledTemplate = <span class="hljs-keyword">this</span>.template.compile(<span class="hljs-keyword">this</span>.templateData);
+        compiledTemplate = <span class="hljs-keyword">this</span>.template.compile(<span class="hljs-keyword">this</span>.model);
     viewElement.html(compiledTemplate);
 };
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Rlite</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">this</span>.rules={}}Rlite.prototype={add:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n,t)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> r,u,e=n.split(<span class="hljs-string">"/"</span>),i=<span class="hljs-keyword">this</span>.rules,f=<span class="hljs-number">0</span>;f&lt;e.length;++f)r=e[f],u=r.length&amp;&amp;r.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">":"</span>?<span class="hljs-string">":"</span>:r,i[u]?i=i[u]:(i=i[u]={},u==<span class="hljs-string">":"</span>&amp;&amp;(i[<span class="hljs-string">"@name"</span>]=r.substr(<span class="hljs-number">1</span>,r.length-<span class="hljs-number">1</span>)));i[<span class="hljs-string">"@"</span>]=t},run:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{n&amp;&amp;n.length&amp;&amp;(n=n.replace(<span class="hljs-string">"/?"</span>,<span class="hljs-string">"?"</span>),n.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">1</span>,n.length)),n.length&amp;&amp;n.charAt(n.length-<span class="hljs-number">1</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">0</span>,n.length-<span class="hljs-number">1</span>)));<span class="hljs-keyword">var</span> t=<span class="hljs-keyword">this</span>.rules,i=n.split(<span class="hljs-string">"?"</span>,<span class="hljs-number">2</span>),u=i[<span class="hljs-number">0</span>].split(<span class="hljs-string">"/"</span>,<span class="hljs-number">50</span>),r={};<span class="hljs-keyword">return</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> n=<span class="hljs-number">0</span>;n&lt;u.length&amp;&amp;t;++n){<span class="hljs-keyword">var</span> f=u[n],e=f.toLowerCase(),i=t[e];!i&amp;&amp;(i=t[<span class="hljs-string">":"</span>])&amp;&amp;(r[i[<span class="hljs-string">"@name"</span>]]=f);t=i}}(),<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> t,u=n.split(<span class="hljs-string">"&amp;"</span>,<span class="hljs-number">50</span>),i=<span class="hljs-number">0</span>;i&lt;u.length;++i)t=u[i].split(<span class="hljs-string">"="</span>,<span class="hljs-number">2</span>),t.length==<span class="hljs-number">2</span>&amp;&amp;(r[t[<span class="hljs-number">0</span>]]=t[<span class="hljs-number">1</span>])}(i.length==<span class="hljs-number">2</span>?i[<span class="hljs-number">1</span>]:<span class="hljs-string">""</span>),t&amp;&amp;t[<span class="hljs-string">"@"</span>])?(t[<span class="hljs-string">"@"</span>]({url:n,params:r}),!<span class="hljs-number">0</span>):!<span class="hljs-number">1</span>}};

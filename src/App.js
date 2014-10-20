@@ -32,4 +32,5 @@ air.App.prototype.view = function(name, templateData) {
 air.App.prototype.init = function() {
     // Create and initialize the app's router
     this.router = new air.Router(this.name, this.routes);
+    this.router.init();
 };

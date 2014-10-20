@@ -27,6 +27,14 @@ air = {
         window.location.href = url;
     },
 
+    // Exexute a route without navigating
+    run: function(route) {
+        var app;
+        for (app in air.apps) {
+            air.apps[app].router.run(route);
+        }
+    },
+
     // Check if the given parameter is an array
     isArray: function(arr) {
       return Object.prototype.toString.call(arr) === "[object Array]";
