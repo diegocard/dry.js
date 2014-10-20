@@ -3,15 +3,12 @@
 air.Router = function(appName, routes) {
     var self = this,
         routeCallback = function(route) {
-            self.navigate(route);
+            debugger;
+            return self.navigate(route);
         },
         i, len, route;
     this.appName = appName;
 
-    // Initialize RLite (routing engine)
-    if (!this.r) {
-        this.rlite = new Rlite();
-    }
 
     // Empty routes are handled through the default action in the default controller
     if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
@@ -21,7 +18,7 @@ air.Router = function(appName, routes) {
     // Register each route
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
-        this.rlite.add(route, routeCallback);
+        routie(route, routeCallback);
     }
 };
 
@@ -42,16 +39,4 @@ air.Router.prototype.navigate = function(route) {
         controllerMethod = this.getControllerMethod(route.url),
         controller = air.apps[this.appName].controllers[controllerName];
     controller.invokeMethod(controllerMethod, route.params);
-};
-
-air.Router.prototype.init = function() {
-    // Hash-based routing
-    var self = this,
-        processHash = function() {
-            var hash = location.hash || '#';
-            self.rlite.run(hash.substr(1));
-        };
-
-    window.addEventListener('hashchange', processHash);
-    processHash();
 };

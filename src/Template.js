@@ -1,7 +1,12 @@
-air.Template = function(name, domId) {
+air.Template = function(name, tmpl) {
     this.name = name;
-    this.domId = domId || ('script[data-air="' + name + '"]');
-    this.raw = air.$(this.domId).element.innerHTML.trim();
+    if (air.isFunction(tmpl)){
+        // Allow for pre-compiled funcions
+        this.compile = tmpl;
+    } else {
+        this.domId = tmpl || ('script[data-air="' + name + '"]');
+        this.element = air.$(this.domId).element;
+    }
 };
 
 air.Template.prototype.cache = [];
@@ -10,10 +15,10 @@ air.Template.prototype.compile = function tmpl(data) {
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
     data = data || {};
-    var str = this.raw,
+    var str = this.elment.innerHTML.trim(),
         cache = air.Template.prototype.cache,
         fn = !/\W/.test(str) ?
-        cache[str] = cache[str] ||
+        cache[this.name] = cache[this.name] ||
         tmpl(document.getElementById(str).innerHTML) :
 
         // Generate a reusable function that will serve as a template

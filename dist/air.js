@@ -25,7 +25,48 @@ air = {
     navigate: function(url) {
         url = url || '';
         window.location.href = url;
-    }
+    },
+
+    // Check if the given parameter is an array
+    isArray: function(arr) {
+      return Object.prototype.toString.call(arr) === "[object Array]";
+    },
+
+    // Check if the given parameter is an object
+    isObject: function(obj) {
+      return obj === Object(obj) && !air.isFunction(obj);
+    },
+
+    // Check if the given parameter is strictly an object
+    isStrictlyObject: function(obj) {
+      return air.isObject(obj) && !air.isArray(obj);
+    },
+
+    // Check if the given parameter is boolean
+    isBoolean: function(bool) {
+      return bool === true || bool === false;
+    },
+
+    // Check if the given parameter is a string
+    isString: function(str) {
+      return Object.prototype.toString.call(str) === "[object String]";
+    },
+
+    // Check if the given parameter is a function
+    isFunction: function(fun) {
+      return Object.prototype.toString.call(fun) === "[object Function]";
+    },
+
+    // Check if the given parameter is undefined
+    isUndefined: function(obj) {
+      return typeof obj === "undefined";
+    },
+
+    // Check if the given parameter is numeric
+    isNumeric: function(num){
+      return !isNaN(parseFloat(num)) && isFinite(num);
+    },
+
 };
 
 // Settings
@@ -88,7 +129,6 @@ air.App.prototype.view = function(name, templateData) {
 air.App.prototype.init = function() {
     // Create and initialize the app's router
     this.router = new air.Router(this.name, this.routes);
-    this.router.init();
 };
 
 // Router
@@ -96,15 +136,12 @@ air.App.prototype.init = function() {
 air.Router = function(appName, routes) {
     var self = this,
         routeCallback = function(route) {
-            self.navigate(route);
+            debugger;
+            return self.navigate(route);
         },
         i, len, route;
     this.appName = appName;
 
-    // Initialize RLite (routing engine)
-    if (!this.r) {
-        this.rlite = new Rlite();
-    }
 
     // Empty routes are handled through the default action in the default controller
     if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
@@ -114,7 +151,7 @@ air.Router = function(appName, routes) {
     // Register each route
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
-        this.rlite.add(route, routeCallback);
+        routie(route, routeCallback);
     }
 };
 
@@ -136,19 +173,6 @@ air.Router.prototype.navigate = function(route) {
         controller = air.apps[this.appName].controllers[controllerName];
     controller.invokeMethod(controllerMethod, route.params);
 };
-
-air.Router.prototype.init = function() {
-    // Hash-based routing
-    var self = this,
-        processHash = function() {
-            var hash = location.hash || '#';
-            self.rlite.run(hash.substr(1));
-        };
-
-    window.addEventListener('hashchange', processHash);
-    processHash();
-};
-
 // Controller
 // ----------
 air.Controller = function(name, methods) {
@@ -178,10 +202,15 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
     }
 };
 
-air.Template = function(name, domId) {
+air.Template = function(name, tmpl) {
     this.name = name;
-    this.domId = domId || ('script[data-air="' + name + '"]');
-    this.raw = air.$(this.domId).element.innerHTML.trim();
+    if (air.isFunction(tmpl)){
+        // Allow for pre-compiled funcions
+        this.compile = tmpl;
+    } else {
+        this.domId = tmpl || ('script[data-air="' + name + '"]');
+        this.element = air.$(this.domId).element;
+    }
 };
 
 air.Template.prototype.cache = [];
@@ -190,10 +219,10 @@ air.Template.prototype.compile = function tmpl(data) {
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
     data = data || {};
-    var str = this.raw,
+    var str = this.elment.innerHTML.trim(),
         cache = air.Template.prototype.cache,
         fn = !/\W/.test(str) ?
-        cache[str] = cache[str] ||
+        cache[this.name] = cache[this.name] ||
         tmpl(document.getElementById(str).innerHTML) :
 
         // Generate a reusable function that will serve as a template
@@ -231,7 +260,11 @@ air.View.prototype.render = function() {
         compiledTemplate = this.template.compile(this.model);
     viewElement.html(compiledTemplate);
 };
-function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};
-/*
-//# sourceMappingURL=rlite.min.js.map
+/*!
+ * routie - a tiny hash router
+ * v0.3.2
+ * http://projects.jga.me/routie
+ * copyright Greg Allen 2013
+ * MIT License
 */
+(function(n){var e=[],t={},r="routie",o=n[r],i=function(n,e){this.name=e,this.path=n,this.keys=[],this.fns=[],this.params={},this.regex=a(this.path,this.keys,!1,!1)};i.prototype.addHandler=function(n){this.fns.push(n)},i.prototype.removeHandler=function(n){for(var e=0,t=this.fns.length;t>e;e++){var r=this.fns[e];if(n==r)return this.fns.splice(e,1),void 0}},i.prototype.run=function(n){for(var e=0,t=this.fns.length;t>e;e++)this.fns[e].apply(this,n)},i.prototype.match=function(n,e){var t=this.regex.exec(n);if(!t)return!1;for(var r=1,o=t.length;o>r;++r){var i=this.keys[r-1],a="string"==typeof t[r]?decodeURIComponent(t[r]):t[r];i&&(this.params[i.name]=a),e.push(a)}return!0},i.prototype.toURL=function(n){var e=this.path;for(var t in n)e=e.replace("/:"+t,"/"+n[t]);if(e=e.replace(/\/:.*\?/g,"/").replace(/\?/g,""),-1!=e.indexOf(":"))throw Error("missing parameters for url: "+e);return e};var a=function(n,e,t,r){return n instanceof RegExp?n:(n instanceof Array&&(n="("+n.join("|")+")"),n=n.concat(r?"":"/?").replace(/\/\(/g,"(?:/").replace(/\+/g,"__plus__").replace(/(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g,function(n,t,r,o,i,a){return e.push({name:o,optional:!!a}),t=t||"",""+(a?"":t)+"(?:"+(a?t:"")+(r||"")+(i||r&&"([^/.]+?)"||"([^/]+?)")+")"+(a||"")}).replace(/([\/.])/g,"\\$1").replace(/__plus__/g,"(.+)").replace(/\*/g,"(.*)"),RegExp("^"+n+"$",t?"":"i"))},s=function(n,r){var o=n.split(" "),a=2==o.length?o[0]:null;n=2==o.length?o[1]:o[0],t[n]||(t[n]=new i(n,a),e.push(t[n])),t[n].addHandler(r)},h=function(n,e){if("function"==typeof e)s(n,e),h.reload();else if("object"==typeof n){for(var t in n)s(t,n[t]);h.reload()}else e===void 0&&h.navigate(n)};h.lookup=function(n,t){for(var r=0,o=e.length;o>r;r++){var i=e[r];if(i.name==n)return i.toURL(t)}},h.remove=function(n,e){var r=t[n];r&&r.removeHandler(e)},h.removeAll=function(){t={},e=[]},h.navigate=function(n,e){e=e||{};var t=e.silent||!1;t&&l(),setTimeout(function(){window.location.hash=n,t&&setTimeout(function(){p()},1)},1)},h.noConflict=function(){return n[r]=o,h};var f=function(){return window.location.hash.substring(1)},c=function(n,e){var t=[];return e.match(n,t)?(e.run(t),!0):!1},u=h.reload=function(){for(var n=f(),t=0,r=e.length;r>t;t++){var o=e[t];if(c(n,o))return}},p=function(){n.addEventListener?n.addEventListener("hashchange",u,!1):n.attachEvent("onhashchange",u)},l=function(){n.removeEventListener?n.removeEventListener("hashchange",u):n.detachEvent("onhashchange",u)};p(),n[r]=h})(window);

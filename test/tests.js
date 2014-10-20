@@ -2,13 +2,20 @@
 // ----------
 
 // Before each test
-var testSetup = function() {
-    // window.location.href = 'tests.html';
-};
-QUnit.testStart(testSetup);
+var contains = function(str, element) {
+        return str.indexOf(element) > -1;
+    },
+    beforeTest = function() {
+        // urlBeforeTest = window.location.href;
+    },
+    afterTest = function() {
+        // window.location.href = urlBeforeTest;
+    };
 
-// Test 1
-QUnit.test("Default route", function(assert) {
+QUnit.testStart(beforeTest);
+QUnit.testDone(afterTest);
+
+QUnit.test("Default route is called on application start", function(assert) {
     assert.expect(1);
     // Create new app
     var app1 = air.app('app1');
@@ -16,18 +23,30 @@ QUnit.test("Default route", function(assert) {
     // Default controller (root directory)
     app1.controller('default', {
         'default': function() {
-            assert.ok(true, "default route was called");
+            assert.ok(true, "default route was called and rendered the correct content");
         }
-    });
-
-    // Register another dummy controller which should not be used
-    app1.controller('main', {
-        'default': function() {
-            assert.ok(false, "this route should not be called");
-        },
-        'hello': null
     });
 
     // Start the app
     app1.init();
 });
+
+// QUnit.test("Default controller method renders appropriate content", function(assert) {
+//     assert.expect(1);
+//     // Create new app
+//     var app2 = air.app('app2');
+
+//     // Default controller (root directory)
+//     app2.controller('default', {
+//         'default': null
+//     });
+
+//     jQuery(document).ready(function() {
+//         var htmlContent = jQuery('body').html();
+//         debugger;
+//         assert.ok(contains(htmlContent, 'Air.js test page'), "default route was called and rendered the correct content");
+//     });
+
+//     // Start the app
+//     app2.init();
+// });
