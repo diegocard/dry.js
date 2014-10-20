@@ -6,7 +6,7 @@ var contains = function(str, element) {
         return str.indexOf(element) > -1;
     },
     beforeTest = function() {
-        // urlBeforeTest = window.location.href;
+        air.apps = {};
     },
     afterTest = function() {
         // window.location.href = urlBeforeTest;
@@ -31,22 +31,19 @@ QUnit.test("Default route is called on application start", function(assert) {
     app1.init();
 });
 
-// QUnit.test("Default controller method renders appropriate content", function(assert) {
-//     assert.expect(1);
-//     // Create new app
-//     var app2 = air.app('app2');
+QUnit.test("Default controller method renders appropriate content", function(assert) {
+    assert.expect(1);
+    // Create new app
+    var app2 = air.app('app2');
 
-//     // Default controller (root directory)
-//     app2.controller('default', {
-//         'default': null
-//     });
+    // Default controller (root directory)
+    app2.controller('default', {
+        'default': null
+    });
 
-//     jQuery(document).ready(function() {
-//         var htmlContent = jQuery('body').html();
-//         debugger;
-//         assert.ok(contains(htmlContent, 'Air.js test page'), "default route was called and rendered the correct content");
-//     });
+    // Start the app
+    app2.init();
 
-//     // Start the app
-//     app2.init();
-// });
+    var htmlContent = jQuery('#qunit-fixture').html();
+    assert.ok(contains(htmlContent, 'Air.js test page'), "default route was called and rendered the correct content");
+});

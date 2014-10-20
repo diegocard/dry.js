@@ -189,6 +189,13 @@ air.Router.prototype.init = function() {
     processHash();
 };
 
+// Model
+// -----
+air.Model = function(name, data) {
+    data = data || {};
+    this.name = name;
+    this.data = data;
+};
 // Controller
 // ----------
 air.Controller = function(name, methods) {
@@ -207,40 +214,33 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
             result.render();
         }
     } else {
-        // Default behavior: check if a template exists with the following ID: controller/method.
-        // If it does, create a view and then render it.
-        // TODO: Finish and test
-        defaultViewName = this.name + methodName;
+        // Default behavior: check for a default template and render it.
+        // The default template should be called controllerName/methodName or
+        // simply controllerName if methodName is the default one.
+        defaultViewName = this.name;
+        if (methodName && methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
+            defaultViewName += '/' + methodName;
+        }
         new air.View(defaultViewName, {templateData: params}).render();
     }
 };
-
 air.Template = function(name, tmpl) {
     this.name = name;
-    if (air.isFunction(tmpl)){
+    if (air.isFunction(tmpl)) {
         // Allow for pre-compiled funcions
         this.compile = tmpl;
     } else {
-        this.domId = tmpl || ('script[data-air="' + name + '"]');
-        this.element = air.$(this.domId).element;
+        this.templateId = tmpl || ('script[data-air="' + name + '"]');
     }
 };
 
 air.Template.prototype.cache = [];
 
-air.Template.prototype.compile = function tmpl(data) {
+air.Template.prototype.compile = function compile(model) {
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
-    data = data || {};
-    var str = this.elment.innerHTML.trim(),
-        cache = air.Template.prototype.cache,
-        fn = !/\W/.test(str) ?
-        cache[this.name] = cache[this.name] ||
-        tmpl(document.getElementById(str).innerHTML) :
-
-        // Generate a reusable function that will serve as a template
-        // generator (and which will be cached).
-        new Function("obj",
+    var str = this.cache[this.name] || air.$(this.templateId).element.innerHTML,
+        fn = new Function("obj",
             "var p=[],print=function(){p.push.apply(p,arguments);};" +
 
             // Introduce the data as local variables using with(){}
@@ -257,15 +257,15 @@ air.Template.prototype.compile = function tmpl(data) {
             .split("\r").join("\\'") + "');}return p.join('');");
 
     // Provide some basic currying to the user
-    return data ? fn(data) : fn;
+    return fn(model.data);
 };
 
 air.View = function(name, options) {
     options = options || {};
     this.name = name;
-    this.el = options.el || (':not(script)[data-air="' + name + '"]');   
+    this.el = options.el || (':not(script)[data-air="' + name + '"]');
     this.model = options.model || new air.Model(name);
-    this.template = new air.Template(name);
+    this.template = new air.Template(name, options.template);
 };
 
 air.View.prototype.render = function() {

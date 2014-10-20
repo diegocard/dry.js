@@ -16,10 +16,13 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
             result.render();
         }
     } else {
-        // Default behavior: check if a template exists with the following ID: controller/method.
-        // If it does, create a view and then render it.
-        // TODO: Finish and test
-        defaultViewName = this.name + methodName;
+        // Default behavior: check for a default template and render it.
+        // The default template should be called controllerName/methodName or
+        // simply controllerName if methodName is the default one.
+        defaultViewName = this.name;
+        if (methodName && methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
+            defaultViewName += '/' + methodName;
+        }
         new air.View(defaultViewName, {templateData: params}).render();
     }
 };

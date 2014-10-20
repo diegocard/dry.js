@@ -13,6 +13,7 @@ gulp.task('default', function() {
         './src/Dom.js',
         './src/App.js',
         './src/Router.js',
+        './src/Model.js',
         './src/Controller.js',
         './src/Template.js',
         './src/View.js',
@@ -30,7 +31,7 @@ gulp.task('default', function() {
 gulp.task('doc', function() {
     return gulp.src("./dist/air.js")
         .pipe(docco({
-            layout: 'linear'
+            // layout: 'linear'
         }))
         .pipe(gulp.dest('./docs'));
 });

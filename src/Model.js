@@ -1,6 +1,7 @@
 // Model
 // -----
-air.Model = function(name, options) {
-    options = options || {};
+air.Model = function(name, data) {
+    data = data || {};
     this.name = name;
+    this.data = data;
 };
