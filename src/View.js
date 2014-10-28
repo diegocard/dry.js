@@ -1,3 +1,5 @@
+// View
+// ----
 air.View = function(name, options) {
     options = options || {};
     this.name = name;

@@ -154,7 +154,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    isArray: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arr)</span> </span>{
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(arr) === <span class="hljs-string">"[object Array]"</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(arr) === <span class="hljs-string">"[object Array]"</span>;
     },</pre></div></div>
             
         </li>
@@ -171,7 +171,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    isObject: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
-      <span class="hljs-keyword">return</span> obj === <span class="hljs-built_in">Object</span>(obj) &amp;&amp; !air.isFunction(obj);
+        <span class="hljs-keyword">return</span> obj === <span class="hljs-built_in">Object</span>(obj) &amp;&amp; !air.isFunction(obj);
     },</pre></div></div>
             
         </li>
@@ -188,7 +188,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    isStrictlyObject: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
-      <span class="hljs-keyword">return</span> air.isObject(obj) &amp;&amp; !air.isArray(obj);
+        <span class="hljs-keyword">return</span> air.isObject(obj) &amp;&amp; !air.isArray(obj);
     },</pre></div></div>
             
         </li>
@@ -205,7 +205,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    isBoolean: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(bool)</span> </span>{
-      <span class="hljs-keyword">return</span> bool === <span class="hljs-literal">true</span> || bool === <span class="hljs-literal">false</span>;
+        <span class="hljs-keyword">return</span> bool === <span class="hljs-literal">true</span> || bool === <span class="hljs-literal">false</span>;
     },</pre></div></div>
             
         </li>
@@ -222,7 +222,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    isString: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(str)</span> </span>{
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(str) === <span class="hljs-string">"[object String]"</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(str) === <span class="hljs-string">"[object String]"</span>;
     },</pre></div></div>
             
         </li>
@@ -239,7 +239,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    isFunction: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fun)</span> </span>{
-      <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(fun) === <span class="hljs-string">"[object Function]"</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(fun) === <span class="hljs-string">"[object Function]"</span>;
     },</pre></div></div>
             
         </li>
@@ -256,7 +256,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    isUndefined: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
-      <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> obj === <span class="hljs-string">"undefined"</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> obj === <span class="hljs-string">"undefined"</span>;
     },</pre></div></div>
             
         </li>
@@ -272,11 +272,9 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    isNumeric: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(num)</span></span>{
-      <span class="hljs-keyword">return</span> !<span class="hljs-built_in">isNaN</span>(<span class="hljs-built_in">parseFloat</span>(num)) &amp;&amp; <span class="hljs-built_in">isFinite</span>(num);
-    },
-
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    isNumeric: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(num)</span> </span>{
+        <span class="hljs-keyword">return</span> !<span class="hljs-built_in">isNaN</span>(<span class="hljs-built_in">parseFloat</span>(num)) &amp;&amp; <span class="hljs-built_in">isFinite</span>(num);
+    },</pre></div></div>
             
         </li>
         
@@ -287,11 +285,39 @@ air = {</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
-              <h2 id="settings">Settings</h2>
+              <p>Simple jQuery-like ajax implementation</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.settings = {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    ajax: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
+        <span class="hljs-keyword">var</span> type = options.type || <span class="hljs-string">'GET'</span>,
+            upperCaseType = type.toUpperCase() || <span class="hljs-string">'GET'</span>,
+            xhr = <span class="hljs-keyword">new</span> XMLHttpRequest();
+        xhr.open(upperCaseType, options.url, <span class="hljs-literal">true</span>);
+
+        xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.readyState === <span class="hljs-number">4</span>) {
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.status &gt;= <span class="hljs-number">200</span> &amp;&amp; <span class="hljs-keyword">this</span>.status &lt; <span class="hljs-number">400</span> &amp;&amp; options.success) {
+                    options.success(<span class="hljs-keyword">this</span>.responseText);
+                } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (options.error) {
+                    options.error(<span class="hljs-keyword">this</span>);
+                }
+            }
+        };
+
+        <span class="hljs-keyword">if</span> (upperCaseType === <span class="hljs-string">'GET'</span>) {
+            xhr.send();
+        }
+        <span class="hljs-keyword">if</span> (upperCaseType === <span class="hljs-string">'PUT'</span> || upperCaseType === <span class="hljs-string">'DELETE'</span>) {
+            xhr.setRequestHeader(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/plain'</span>);
+            xhr.send();
+        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (upperCaseType === <span class="hljs-string">'POST'</span>) {
+            xhr.setRequestHeader(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'application/x-www-form-urlencoded; charset=UTF-8'</span>);
+            xhr.send(options.data);
+        }
+        xhr = <span class="hljs-literal">null</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    },</pre></div></div>
             
         </li>
         
@@ -302,11 +328,19 @@ air = {</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
-              <p>When a route is left empty, the router will look for this controller</p>
+              <p>Send a GET request to retrieve JSON from a given URL</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_NAME: <span class="hljs-string">"default"</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    getJSON: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, callback)</span> </span>{
+        <span class="hljs-keyword">return</span> air.ajax({
+            type: <span class="hljs-string">'GET'</span>,
+            url: url,
+            success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
+                callback(<span class="hljs-built_in">JSON</span>.parse(data));
+            }
+        });
+    },</pre></div></div>
             
         </li>
         
@@ -316,6 +350,83 @@ air = {</pre></div></div>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Send a POST request to a given URL</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    post: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, data, success, error)</span> </span>{
+        <span class="hljs-keyword">return</span> air.ajax({
+            type: <span class="hljs-string">'POST'</span>,
+            url: url,
+            data: data,
+            success: success,
+            error: error
+        });
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Send a GET request to a given URL</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    get: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, success, error)</span> </span>{
+        <span class="hljs-keyword">return</span> air.ajax({
+            type: <span class="hljs-string">'GET'</span>,
+            url: url,
+            success: success,
+            error: error
+        });
+    }
+
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <h2 id="settings">Settings</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>air.settings = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>When a route is left empty, the router will look for this controller</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_NAME: <span class="hljs-string">"default"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>When a route doesn’t target any specific method, it will look for this one</p>
 
@@ -327,11 +438,11 @@ air = {</pre></div></div>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <h2 id="dom-management-utilities">DOM Management Utilities</h2>
 
@@ -345,11 +456,11 @@ air.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>jQuery-like html function</p>
 
@@ -362,9 +473,22 @@ air.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
     } <span class="hljs-keyword">else</span> {
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.element.innerHTML;
     }
-};
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <h2 id="app">App</h2>
 
-air.App = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>air.App = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.options = options || {};
     <span class="hljs-keyword">this</span>.routes = <span class="hljs-keyword">this</span>.options.routes || [];
@@ -380,11 +504,11 @@ air.App.prototype.controller = <span class="hljs-function"><span class="hljs-key
         </li>
         
         
-        <li id="section-21">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Register routes for each controller method
 TODO: Test, finish</p>
@@ -404,11 +528,11 @@ TODO: Test, finish</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>TODO: Add default route</p>
 
@@ -426,11 +550,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-23">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Create and initialize the app’s router</p>
 
@@ -443,11 +567,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-24">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="router">Router</h2>
 
@@ -459,11 +583,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-25">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Main logic behind the execution of a route</p>
 
@@ -475,11 +599,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-26">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Find which controller should handle a given route</p>
 
@@ -490,11 +614,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-27">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Find which method should be invoked in the controller that handles the given route</p>
 
@@ -510,11 +634,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-28">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <p>Initialize RLite (routing engine)</p>
 
@@ -527,11 +651,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-29">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Empty routes are handled through the default action in the default controller</p>
 
@@ -544,11 +668,11 @@ air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">
         </li>
         
         
-        <li id="section-30">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Register each route</p>
 
@@ -569,11 +693,11 @@ air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-31">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Hash-based routing</p>
 
@@ -592,11 +716,11 @@ air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-32">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h2 id="model">Model</h2>
 
@@ -611,11 +735,11 @@ air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-33">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <h2 id="controller">Controller</h2>
 
@@ -634,11 +758,11 @@ air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         </li>
         
         
-        <li id="section-34">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Invoke the method with the given parameters</p>
 
@@ -649,11 +773,11 @@ air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         </li>
         
         
-        <li id="section-35">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>If a view was returned, render it</p>
 
@@ -667,11 +791,11 @@ air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         </li>
         
         
-        <li id="section-36">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Default behavior: check for a default template and render it.
 The default template should be called controllerName/methodName or
@@ -685,19 +809,33 @@ simply controllerName if methodName is the default one.</p>
         }
         <span class="hljs-keyword">new</span> air.View(defaultViewName, {templateData: params}).render();
     }
-};
-air.Template = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, tmpl)</span> </span>{
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <h2 id="template">Template</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>air.Template = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, tmpl)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">if</span> (air.isFunction(tmpl)) {</pre></div></div>
             
         </li>
         
         
-        <li id="section-37">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <p>Allow for pre-compiled funcions</p>
 
@@ -716,30 +854,29 @@ air.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
         </li>
         
         
-        <li id="section-38">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Figure out if we’re getting a template, or if we need to
 load the template - and be sure to cache the result.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    debugger;
-    <span class="hljs-keyword">var</span> str = <span class="hljs-keyword">this</span>.cache[<span class="hljs-keyword">this</span>.name] || air.$(<span class="hljs-keyword">this</span>.templateId).element.innerHTML,
-        <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span>(<span class="hljs-string">"obj"</span>,
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> str = <span class="hljs-keyword">this</span>.cache[<span class="hljs-keyword">this</span>.name] || air.$(<span class="hljs-keyword">this</span>.templateId).element.innerHTML,
+        fn = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span>(<span class="hljs-string">"obj"</span>,
             <span class="hljs-string">"var p=[],print=function(){p.push.apply(p,arguments);};"</span> +</pre></div></div>
             
         </li>
         
         
-        <li id="section-39">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Introduce the data as local variables using with(){}</p>
 
@@ -750,11 +887,11 @@ load the template - and be sure to cache the result.</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>Convert the template into pure JavaScript</p>
 
@@ -767,26 +904,38 @@ load the template - and be sure to cache the result.</p>
             .replace(<span class="hljs-regexp">/\t=(.*?)%&gt;/g</span>, <span class="hljs-string">"',$1,'"</span>)
             .split(<span class="hljs-string">"\t"</span>).join(<span class="hljs-string">"');"</span>)
             .split(<span class="hljs-string">"%&gt;"</span>).join(<span class="hljs-string">"p.push('"</span>)
-            .split(<span class="hljs-string">"\r"</span>).join(<span class="hljs-string">"\\'"</span>) + <span class="hljs-string">"');}return p.join('');"</span>
-        );</pre></div></div>
+            .split(<span class="hljs-string">"\r"</span>).join(<span class="hljs-string">"\\'"</span>) + <span class="hljs-string">"');}return p.join('');"</span>);</pre></div></div>
             
         </li>
         
         
-        <li id="section-41">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>Provide some basic currying to the user</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> fn(model.data);
-};
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <h2 id="view">View</h2>
 
-air.View = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>air.View = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
     options = options || {};
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);
@@ -799,24 +948,8 @@ air.View.prototype.render = <span class="hljs-function"><span class="hljs-keywor
         compiledTemplate = <span class="hljs-keyword">this</span>.template.compile(<span class="hljs-keyword">this</span>.model);
     viewElement.html(compiledTemplate);
 };
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Rlite</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">this</span>.rules={}}Rlite.prototype={add:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n,t)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> r,u,e=n.split(<span class="hljs-string">"/"</span>),i=<span class="hljs-keyword">this</span>.rules,f=<span class="hljs-number">0</span>;f&lt;e.length;++f)r=e[f],u=r.length&amp;&amp;r.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">":"</span>?<span class="hljs-string">":"</span>:r,i[u]?i=i[u]:(i=i[u]={},u==<span class="hljs-string">":"</span>&amp;&amp;(i[<span class="hljs-string">"@name"</span>]=r.substr(<span class="hljs-number">1</span>,r.length-<span class="hljs-number">1</span>)));i[<span class="hljs-string">"@"</span>]=t},run:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{n&amp;&amp;n.length&amp;&amp;(n=n.replace(<span class="hljs-string">"/?"</span>,<span class="hljs-string">"?"</span>),n.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">1</span>,n.length)),n.length&amp;&amp;n.charAt(n.length-<span class="hljs-number">1</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">0</span>,n.length-<span class="hljs-number">1</span>)));<span class="hljs-keyword">var</span> t=<span class="hljs-keyword">this</span>.rules,i=n.split(<span class="hljs-string">"?"</span>,<span class="hljs-number">2</span>),u=i[<span class="hljs-number">0</span>].split(<span class="hljs-string">"/"</span>,<span class="hljs-number">50</span>),r={};<span class="hljs-keyword">return</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> n=<span class="hljs-number">0</span>;n&lt;u.length&amp;&amp;t;++n){<span class="hljs-keyword">var</span> f=u[n],e=f.toLowerCase(),i=t[e];!i&amp;&amp;(i=t[<span class="hljs-string">":"</span>])&amp;&amp;(r[i[<span class="hljs-string">"@name"</span>]]=f);t=i}}(),<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> t,u=n.split(<span class="hljs-string">"&amp;"</span>,<span class="hljs-number">50</span>),i=<span class="hljs-number">0</span>;i&lt;u.length;++i)t=u[i].split(<span class="hljs-string">"="</span>,<span class="hljs-number">2</span>),t.length==<span class="hljs-number">2</span>&amp;&amp;(r[t[<span class="hljs-number">0</span>]]=t[<span class="hljs-number">1</span>])}(i.length==<span class="hljs-number">2</span>?i[<span class="hljs-number">1</span>]:<span class="hljs-string">""</span>),t&amp;&amp;t[<span class="hljs-string">"@"</span>])?(t[<span class="hljs-string">"@"</span>]({url:n,params:r}),!<span class="hljs-number">0</span>):!<span class="hljs-number">1</span>}};
-<span class="hljs-comment">/*
-</span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-42">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
-              </div>
-              <h1 id="sourcemappingurl-rlite-min-js-map">sourceMappingURL=rlite.min.js.map</h1>
 
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>*/</pre></div></div>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Rlite</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">this</span>.rules={}}Rlite.prototype={add:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n,t)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> r,u,e=n.split(<span class="hljs-string">"/"</span>),i=<span class="hljs-keyword">this</span>.rules,f=<span class="hljs-number">0</span>;f&lt;e.length;++f)r=e[f],u=r.length&amp;&amp;r.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">":"</span>?<span class="hljs-string">":"</span>:r,i[u]?i=i[u]:(i=i[u]={},u==<span class="hljs-string">":"</span>&amp;&amp;(i[<span class="hljs-string">"@name"</span>]=r.substr(<span class="hljs-number">1</span>,r.length-<span class="hljs-number">1</span>)));i[<span class="hljs-string">"@"</span>]=t},run:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{n&amp;&amp;n.length&amp;&amp;(n=n.replace(<span class="hljs-string">"/?"</span>,<span class="hljs-string">"?"</span>),n.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">1</span>,n.length)),n.length&amp;&amp;n.charAt(n.length-<span class="hljs-number">1</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">0</span>,n.length-<span class="hljs-number">1</span>)));<span class="hljs-keyword">var</span> t=<span class="hljs-keyword">this</span>.rules,i=n.split(<span class="hljs-string">"?"</span>,<span class="hljs-number">2</span>),u=i[<span class="hljs-number">0</span>].split(<span class="hljs-string">"/"</span>,<span class="hljs-number">50</span>),r={};<span class="hljs-keyword">return</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> n=<span class="hljs-number">0</span>;n&lt;u.length&amp;&amp;t;++n){<span class="hljs-keyword">var</span> f=u[n],e=f.toLowerCase(),i=t[e];!i&amp;&amp;(i=t[<span class="hljs-string">":"</span>])&amp;&amp;(r[i[<span class="hljs-string">"@name"</span>]]=f);t=i}}(),<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> t,u=n.split(<span class="hljs-string">"&amp;"</span>,<span class="hljs-number">50</span>),i=<span class="hljs-number">0</span>;i&lt;u.length;++i)t=u[i].split(<span class="hljs-string">"="</span>,<span class="hljs-number">2</span>),t.length==<span class="hljs-number">2</span>&amp;&amp;(r[t[<span class="hljs-number">0</span>]]=t[<span class="hljs-number">1</span>])}(i.length==<span class="hljs-number">2</span>?i[<span class="hljs-number">1</span>]:<span class="hljs-string">""</span>),t&amp;&amp;t[<span class="hljs-string">"@"</span>])?(t[<span class="hljs-string">"@"</span>]({url:n,params:r}),!<span class="hljs-number">0</span>):!<span class="hljs-number">1</span>}};</pre></div></div>
             
         </li>
         

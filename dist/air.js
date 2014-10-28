@@ -37,43 +37,106 @@ air = {
 
     // Check if the given parameter is an array
     isArray: function(arr) {
-      return Object.prototype.toString.call(arr) === "[object Array]";
+        return Object.prototype.toString.call(arr) === "[object Array]";
     },
 
     // Check if the given parameter is an object
     isObject: function(obj) {
-      return obj === Object(obj) && !air.isFunction(obj);
+        return obj === Object(obj) && !air.isFunction(obj);
     },
 
     // Check if the given parameter is strictly an object
     isStrictlyObject: function(obj) {
-      return air.isObject(obj) && !air.isArray(obj);
+        return air.isObject(obj) && !air.isArray(obj);
     },
 
     // Check if the given parameter is boolean
     isBoolean: function(bool) {
-      return bool === true || bool === false;
+        return bool === true || bool === false;
     },
 
     // Check if the given parameter is a string
     isString: function(str) {
-      return Object.prototype.toString.call(str) === "[object String]";
+        return Object.prototype.toString.call(str) === "[object String]";
     },
 
     // Check if the given parameter is a function
     isFunction: function(fun) {
-      return Object.prototype.toString.call(fun) === "[object Function]";
+        return Object.prototype.toString.call(fun) === "[object Function]";
     },
 
     // Check if the given parameter is undefined
     isUndefined: function(obj) {
-      return typeof obj === "undefined";
+        return typeof obj === "undefined";
     },
 
     // Check if the given parameter is numeric
-    isNumeric: function(num){
-      return !isNaN(parseFloat(num)) && isFinite(num);
+    isNumeric: function(num) {
+        return !isNaN(parseFloat(num)) && isFinite(num);
     },
+
+    // Simple jQuery-like ajax implementation
+    ajax: function(options) {
+        var type = options.type || 'GET',
+            upperCaseType = type.toUpperCase() || 'GET',
+            xhr = new XMLHttpRequest();
+        xhr.open(upperCaseType, options.url, true);
+
+        xhr.onreadystatechange = function() {
+            if (this.readyState === 4) {
+                if (this.status >= 200 && this.status < 400 && options.success) {
+                    options.success(this.responseText);
+                } else if (options.error) {
+                    options.error(this);
+                }
+            }
+        };
+
+        if (upperCaseType === 'GET') {
+            xhr.send();
+        }
+        if (upperCaseType === 'PUT' || upperCaseType === 'DELETE') {
+            xhr.setRequestHeader('Content-Type', 'text/plain');
+            xhr.send();
+        } else if (upperCaseType === 'POST') {
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+            xhr.send(options.data);
+        }
+        xhr = null;
+        return this;
+    },
+
+    // Send a GET request to retrieve JSON from a given URL
+    getJSON: function(url, callback) {
+        return air.ajax({
+            type: 'GET',
+            url: url,
+            success: function(data) {
+                callback(JSON.parse(data));
+            }
+        });
+    },
+
+    // Send a POST request to a given URL
+    post: function(url, data, success, error) {
+        return air.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: success,
+            error: error
+        });
+    },
+
+    // Send a GET request to a given URL
+    get: function(url, success, error) {
+        return air.ajax({
+            type: 'GET',
+            url: url,
+            success: success,
+            error: error
+        });
+    }
 
 };
 
@@ -103,6 +166,8 @@ air.Dom.prototype.html = function(content) {
     }
 };
 
+// App
+// ---
 air.App = function(name, options) {
     this.name = name;
     this.options = options || {};
@@ -139,6 +204,7 @@ air.App.prototype.init = function() {
     this.router = new air.Router(this.name, this.routes);
     this.router.init();
 };
+
 // Router
 // ------
 air.Router = function(appName, routes) {
@@ -224,6 +290,8 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
         new air.View(defaultViewName, {templateData: params}).render();
     }
 };
+// Template
+// --------
 air.Template = function(name, tmpl) {
     this.name = name;
     if (air.isFunction(tmpl)) {
@@ -260,6 +328,8 @@ air.Template.prototype.compile = function compile(model) {
     return fn(model.data);
 };
 
+// View
+// ----
 air.View = function(name, options) {
     options = options || {};
     this.name = name;
@@ -273,7 +343,5 @@ air.View.prototype.render = function() {
         compiledTemplate = this.template.compile(this.model);
     viewElement.html(compiledTemplate);
 };
+
 function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};
-/*
-//# sourceMappingURL=rlite.min.js.map
-*/

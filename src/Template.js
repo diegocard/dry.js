@@ -1,3 +1,5 @@
+// Template
+// --------
 air.Template = function(name, tmpl) {
     this.name = name;
     if (air.isFunction(tmpl)) {
