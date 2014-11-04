@@ -10,25 +10,31 @@ air.App = function(name, options) {
 
 air.App.prototype.controller = function(name, methods) {
     var controller, methodName, method;
-    controller = new air.Controller(name, methods);
-    this.controllers[name] = controller;
-    // Register routes for each controller method
-    // TODO: Test, finish
-    for (methodName in methods) {
-        if (methods.hasOwnProperty(methodName)) {
-            if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
-                this.routes.push(name);
-            } else {
-                this.routes.push(name + '/' + methodName);
+    if (air.isUndefined(methods)) {
+        controller = this.controllers[name];
+    } else {
+        controller = new air.Controller(name, methods);
+        this.controllers[name] = controller;
+        // Register routes for each controller method
+        for (methodName in methods) {
+            if (methods.hasOwnProperty(methodName)) {
+                if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
+                    this.routes.push(name);
+                } else {
+                    this.routes.push(name + '/' + methodName);
+                }
             }
         }
     }
-    // TODO: Add default route
     return controller;
 };
 
 air.App.prototype.view = function(name, templateData) {
-    this.views[name] = new air.View(name, templateData);
+    if (air.isUndefined(templateData)) {
+        return this.views[name];
+    } else {
+        this.views[name] = new air.View(name, templateData);
+    }
 };
 
 air.App.prototype.init = function() {

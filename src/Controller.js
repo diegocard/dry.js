@@ -7,13 +7,13 @@ air.Controller = function(name, methods) {
 
 air.Controller.prototype.invokeMethod = function(methodName, params) {
     var method = this.methods[methodName],
-        result, defaultView, defaultViewName;
+        result, defaultView, defaultViewName, view;
     if (method) {
         // Invoke the method with the given parameters
         result = method.apply(this,params);
         // If a view was returned, render it
         if (typeof result === air.View) {
-            result.render();
+            view = result;
         }
     } else {
         // Default behavior: check for a default template and render it.
@@ -23,6 +23,10 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
         if (methodName && methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
             defaultViewName += '/' + methodName;
         }
-        new air.View(defaultViewName, {templateData: params}).render();
+        view = new air.View(defaultViewName, {templateData: params, controller: this});
     }
+    if (!view.controller) {
+        view.controller = this;
+    }
+    view.render();
 };
