@@ -302,7 +302,7 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
         result, defaultView, defaultViewName;
     if (method) {
         // Invoke the method with the given parameters
-        result = method.apply(this, params);
+        result = method.call(this, params);
     } else {
         // Default behavior: check for a default template and render it.
         // The default template should be called controllerName/methodName or
