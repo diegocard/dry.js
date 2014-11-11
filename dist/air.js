@@ -45,6 +45,109 @@ air.settings = {
     DEFAULT_CONTROLLER_METHOD: "default"
 };
 
+// Check if the given parameter is an array
+air.isArray = function(arr) {
+    return Object.prototype.toString.call(arr) === "[object Array]";
+};
+
+// Check if the given parameter is an object
+air.isObject = function(obj) {
+    return obj === Object(obj) && !air.isFunction(obj);
+};
+
+// Check if the given parameter is strictly an object
+air.isStrictlyObject = function(obj) {
+    return air.isObject(obj) && !air.isArray(obj);
+};
+
+// Check if the given parameter is boolean
+air.isBoolean = function(bool) {
+    return bool === true || bool === false;
+};
+
+// Check if the given parameter is a string
+air.isString = function(str) {
+    return Object.prototype.toString.call(str) === "[object String]";
+};
+
+// Check if the given parameter is a function
+air.isFunction = function(fun) {
+    return Object.prototype.toString.call(fun) === "[object Function]";
+};
+
+// Check if the given parameter is undefined
+air.isUndefined = function(obj) {
+    return typeof obj === "undefined";
+};
+
+// Check if the given parameter is numeric
+air.isNumeric = function(num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+};
+
+// Simple jQuery-like ajax implementation
+air.ajax = function(options) {
+    var type = options.type || 'GET',
+        upperCaseType = type.toUpperCase() || 'GET',
+        xhr = new XMLHttpRequest();
+    xhr.open(upperCaseType, options.url, true);
+
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            if (this.status >= 200 && this.status < 400 && options.success) {
+                options.success(this.responseText);
+            } else if (options.error) {
+                options.error(this);
+            }
+        }
+    };
+
+    if (upperCaseType === 'GET') {
+        xhr.send();
+    }
+    if (upperCaseType === 'PUT' || upperCaseType === 'DELETE') {
+        xhr.setRequestHeader('Content-Type', 'text/plain');
+        xhr.send();
+    } else if (upperCaseType === 'POST') {
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send(options.data);
+    }
+    xhr = null;
+    return this;
+};
+
+// Send a GET request to retrieve JSON from a given URL
+air.getJSON = function(url, callback) {
+    return air.ajax({
+        type: 'GET',
+        url: url,
+        success: function(data) {
+            callback(JSON.parse(data));
+        }
+    });
+};
+
+// Send a POST request to a given URL
+air.post = function(url, data, success, error) {
+    return air.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        success: success,
+        error: error
+    });
+};
+
+// Send a GET request to a given URL
+air.get = function(url, success, error) {
+    return air.ajax({
+        type: 'GET',
+        url: url,
+        success: success,
+        error: error
+    });
+};
+
 // DOM Management Utilities
 // ------------------------
 
@@ -196,14 +299,10 @@ air.Controller = function(name, methods) {
 
 air.Controller.prototype.invokeMethod = function(methodName, params) {
     var method = this.methods[methodName],
-        result, defaultView, defaultViewName, view;
+        result, defaultView, defaultViewName;
     if (method) {
         // Invoke the method with the given parameters
-        result = method.apply(this,params);
-        // If a view was returned, render it
-        if (typeof result === air.View) {
-            view = result;
-        }
+        result = method.apply(this, params);
     } else {
         // Default behavior: check for a default template and render it.
         // The default template should be called controllerName/methodName or
@@ -212,12 +311,15 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
         if (methodName && methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
             defaultViewName += '/' + methodName;
         }
-        view = new air.View(defaultViewName, {templateData: params, controller: this});
+        result = new air.View(defaultViewName, {templateData: params, controller: this});
     }
-    if (!view.controller) {
-        view.controller = this;
+    // If a view was returned, render it
+    if (result && result.constructor === air.View) {
+        // If the controller's method execution resulted in the creation of a view,
+        // store this information in the view itself.
+        result.controller = result.controller || this;
+        result.render();
     }
-    view.render();
 };
 
 // Template
@@ -274,17 +376,27 @@ air.View.prototype.render = function() {
     var viewElement = air.$(this.el),
         compiledTemplate = this.template.compile(this.model),
         events = this.events,
-        eventKey, eventKeySplit, eventElement, eventTrigger, eventAction;
+        eventKey;
     viewElement.html(compiledTemplate);
     for (eventKey in events) {
         if (events.hasOwnProperty(eventKey)){
-            eventKeySplit = eventKey.split(' ');
-            eventElement = eventKeySplit[1];
-            eventTrigger = eventKeySplit[0];
-            eventAction = events[eventKey];
-            air.$(eventElement).on(eventTrigger, eventAction);
+            this.addEvent(eventKey, events[eventKey]);
         }
     }
+};
+
+air.View.prototype.addEvent = function(eventKey, eventAction) {
+    var eventKeySplit, eventElement, eventTrigger;
+    eventKeySplit = eventKey.split(' ');
+    eventElement = eventKeySplit[1];
+    eventTrigger = eventKeySplit[0];
+    if (air.isString(eventAction)) {
+        // TODO: Finish, test
+        eventAction = function(params) {
+            this.controller.invokeMethod(eventAction, params);
+        };
+    }
+    air.$(eventElement).on(eventTrigger, eventAction);
 };
 
 function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};

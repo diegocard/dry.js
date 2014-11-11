@@ -10,6 +10,7 @@ gulp.task('default', function() {
     gulp.src([
         './src/Core.js',
         './src/Settings.js',
+        './src/Utilities.js',
         './src/Dom.js',
         './src/App.js',
         './src/Router.js',
