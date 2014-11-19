@@ -12,13 +12,7 @@ air = {
 
     // Returns an app or create it if it doesn't exist (Singleton)
     app: function(name, options) {
-        var app = this.apps[name];
-        if (!app) {
-            // TODO: Is using the app variable needed here?
-            app = new air.App(name, options);
-            this.apps[name] = app;
-        }
-        return app;
+        return this.apps[name] || (this.apps[name] = new air.App(name, options));
     },
 
     // Navigate to a certain url
