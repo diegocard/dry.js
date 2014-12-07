@@ -33,5 +33,5 @@ air.Template.prototype.compile = function compile(model) {
             .split("\r").join("\\'") + "');}return p.join('');");
 
     // Provide some basic currying to the user
-    return fn(model.data);
+    return fn(model.attributes);
 };
