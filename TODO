@@ -1,4 +1,4 @@
-- AJAX tests, and more tests in general
+- air.ajax tests (DELETE, PUT, POST, air.post), and more tests in general
 - Test models with ajax endpoints
 - Finish and test events
 - Improve documentation and create site

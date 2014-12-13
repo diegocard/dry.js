@@ -163,3 +163,88 @@ QUnit.test("isNumeric", function (assert) {
         assert.ok(!air.isNumeric(invalidTests[i]));
     }
 });
+
+QUnit.test("ajax with GET", function (assert) {
+    // This test will retrieve my user's information from GitHub's user API.
+    assert.expect(1);
+    var done = assert.async(),
+        url = 'https://api.github.com/users/diegocard',
+        gitHubUserId = 4444386,
+        checkDataFormat = function(data) {
+            return data && (typeof data === "object") && data.id === gitHubUserId;
+        };
+    // Request with all parameters
+    air.ajax({
+        type: 'GET',
+        url: url,
+        timeout: 5000,
+        success: function(data){
+            if (checkDataFormat(data)) {
+                assert.ok(true, "ajax: correct request with all parameters");
+            }
+            done();
+        },
+        error: function() {
+            assert.ok(false, "ajax: entered error callback function");
+        }
+    });
+    // Request with only the required parameters
+    air.ajax({
+        url: url
+    });
+});
+
+QUnit.test("getJSON", function (assert) {
+    // This test will retrieve my user's information from GitHub's user API.
+    assert.expect(1);
+    var done = assert.async(),
+        url = 'https://api.github.com/users/diegocard',
+        gitHubUserId = 4444386,
+        checkDataFormat = function(data) {
+            return data && (typeof data === "object") && data.id === gitHubUserId;
+        };
+    // Request with all parameters
+    air.getJSON(
+        url,
+        function(data){
+            if (checkDataFormat(data)) {
+                assert.ok(true, "getJSON: correct request with all parameters");
+            }
+            done();
+        },
+        function() {
+            assert.ok(false, "getJSON: entered error callback function");
+        }
+    );
+    // Request with only the required parameters
+    air.getJSON(url);
+});
+
+// get
+QUnit.test("get", function (assert) {
+    // This test will retrieve my user's information from GitHub's user API.
+    assert.expect(1);
+    var done = assert.async(),
+    url = 'https://api.github.com/users/diegocard',
+    gitHubUserId = 4444386,
+    checkDataFormat = function(data) {
+        return data && (typeof data === "object") && data.id === gitHubUserId;
+    };
+    // Request with all parameters
+    air.get(
+        url,
+        function(data){
+            if (checkDataFormat(data)) {
+                assert.ok(true, "get: correct request with all parameters");
+            }
+            done();
+        },
+        function() {
+            assert.ok(false, "get: entered error callback function");
+        }
+    );
+    // Request with only the required parameters
+    air.get(url);
+});
+
+// post http://httpbin.org/post
