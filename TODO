@@ -1,3 +1,4 @@
+- Refactor methods using air.each
 - air.ajax tests (DELETE, PUT, POST, air.post), and more tests in general
 - Test models with ajax endpoints
 - Finish and test events

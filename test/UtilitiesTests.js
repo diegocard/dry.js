@@ -164,6 +164,48 @@ QUnit.test("isNumeric", function (assert) {
     }
 });
 
+QUnit.test("keys", function (assert) {
+    var obj1 = {},
+        obj2 = {
+            prop1: 1,
+            prop2: {},
+            prop3: [1, 2, 3],
+            prop4: function () {
+                return null;
+            },
+        },
+        obj2Props = ['prop1', ];
+    assert.ok(air.keys(obj1).length === 0, "keys: Empty object");
+    assert.ok(function () {
+        var result2 = air.keys(obj2);
+        return (
+            result2[0] === 'prop1' &&
+            result2[1] === 'prop2' &&
+            result2[2] === 'prop3' &&
+            result2[3] === 'prop4'
+        );
+    }, "keys: Several types of properties");
+});
+
+QUnit.test("each", function (assert) {
+    var arr = [1, 2, 3, 4],
+        sum1 = 0,
+        sum2 = 0,
+        obj = {
+            a: 1,
+            b: 2,
+            c: 3,
+        };
+    air.each(arr, function (val) {
+        sum1 += val;
+    });
+    air.each(obj, function (val) {
+        sum2 += val;
+    });
+    assert.ok(sum1 === 10, "forEach: numeric array");
+    assert.ok(sum2 === 6, "forEach: object properties");
+});
+
 QUnit.test("ajax with GET", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
@@ -247,4 +289,43 @@ QUnit.test("get", function (assert) {
     air.get(url);
 });
 
-// post http://httpbin.org/post
+QUnit.test("post", function (assert) {
+    // This test will post to a service which returns the same data posted
+    assert.expect(1);
+    var done = assert.async(),
+        url = 'http://httpbin.org/post',
+        data = {
+            name: "John",
+            time: "2pm",
+            nested:{
+                a:1, b:2, c: {d:4}
+            }
+        },
+        checkDataFormat = function(data) {
+            return (
+                data &&
+                (typeof data === "object") &&
+                data.form.name === "John" &&
+                data.form['nested[a]'] === "1" &&
+                data.form['nested[b]'] === "2" &&
+                data.form['nested[c][d]'] === "4" &&
+                data.form.time === "2pm"
+            );
+        };
+    // Request with all parameters
+    air.post(
+        url,
+        data,
+        function(data){
+            if (checkDataFormat(data)) {
+                assert.ok(true, "post: correct request with all parameters");
+            }
+            done();
+        },
+        function() {
+            assert.ok(false, "get: entered error callback function");
+        }
+    );
+    // Request with only the required parameters
+    air.post(url, data);
+});

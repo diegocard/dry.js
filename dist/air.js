@@ -78,6 +78,33 @@ air.isNumeric = function(num) {
     return !isNaN(parseFloat(num)) && isFinite(num);
 };
 
+// Returns an array with the property names for the given object
+air.keys = function (obj) {
+    var keys = [],
+        key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            keys.push(key);
+        }
+    }
+    return keys;
+};
+
+// Concise and efficient forEach implementation
+air.each = function (obj, func, context) {
+    var i, len, keys;
+    if (air.isStrictlyObject(obj)) {
+        keys = air.keys(obj);
+        for (i=0, len=keys.length; i<len; i++) {
+            func.call(context, obj[keys[i]], keys[i], obj);
+        }
+    } else {
+        for (i=0, len=obj.length; i<len; i++) {
+            func.call(context, obj[i], i, obj);
+        }
+    }
+};
+
 // Simple jQuery-like ajax implementation
 air.ajax = function(options) {
     var type = options.type || 'GET',
@@ -116,42 +143,8 @@ air.ajax = function(options) {
         xhr.setRequestHeader('Content-Type', 'text/plain');
         xhr.send();
     } else if (upperCaseType === 'POST') {
-        if (air.isString(options.data)) {
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-            xhr.send(options.data);
-        } else {
-            // TODO
-            // function serializeData(data) {
-            //
-            //     // If this is not an object, defer to native stringification.
-            //     if (!air.isObject(data)) {
-            //         return ((data === null) ? "" : data.toString());
-            //     }
-            //
-            //     var buffer = [];
-            //
-            //     // Serialize each key in the object.
-            //     for (var name in data) {
-            //         if (data.hasOwnProperty(name)) {
-            //             var value = data[name];
-            //
-            //             buffer.push(
-            //                 encodeURIComponent(name) +
-            //                 "=" +
-            //                 encodeURIComponent((value === null) ? "" : value)
-            //             );
-            //         }
-            //     }
-            //
-            //     // Serialize the buffer and clean it up for transportation.
-            //     var source = buffer
-            //     .join("&")
-            //     .replace(/%20/g, "+");
-            //     return (source);
-            // }
-            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-            xhr.send(options.data);
-        }
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send(air.param(options.data));
     }
     xhr = null;
     return this;
@@ -190,6 +183,64 @@ air.get = function(url, success, error) {
         success: success,
         error: error
     });
+};
+
+// Serialize an array of form elements or a set of
+// key/values into a query string
+air.param = function(obj) {
+    var r20 = /%20/g,
+        rbracket = /\[\]$/,
+        rCRLF = /\r?\n/g,
+        rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
+        rsubmittable = /^(?:input|select|textarea|keygen)/i,
+        arr = [],
+        prefix,
+        add = function(key, value) {
+            // If value is a function, invoke it and return its value
+            value = air.isFunction(value) ? value() : (value == null ? "" : value);
+            arr[arr.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        },
+        buildParams = function (prefix, obj, add) {
+            var name;
+
+            if (air.isArray(obj)) {
+                // Serialize array item.
+                air.each(obj, function(value, index) {
+                    if (rbracket.test(prefix)) {
+                        // Treat each array item as a scalar.
+                        add(prefix, value);
+                    } else {
+                        // Item is non-scalar (array or object), encode its numeric index.
+                        buildParams(prefix + "[" + (typeof value === "object" ? index : "") + "]", value, add);
+                    }
+                });
+
+            } else if (air.isObject(obj)) {
+                // Serialize object item.
+                for (name in obj) {
+                    buildParams(prefix + "[" + name + "]", obj[name], add);
+                }
+            } else {
+                // Serialize scalar item.
+                add(prefix, obj);
+            }
+        };
+
+    // if an array was passed in, assume that it is an array of form elements.
+    if (air.isArray(obj) || (!air.isStrictlyObject(obj))) {
+        // Serialize the form elements
+        air.each(obj, function() {
+            add(this.name, this.value);
+        });
+    } else {
+        // Encode params recursively
+        for (prefix in obj) {
+            buildParams(prefix, obj[prefix], add);
+        }
+    }
+
+    // Return the resulting serialization
+    return arr.join("&").replace(r20, "+");
 };
 
 // DOM Management Utilities
