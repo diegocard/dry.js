@@ -206,7 +206,7 @@ QUnit.test("each", function (assert) {
     assert.ok(sum2 === 6, "forEach: object properties");
 });
 
-QUnit.test("ajax with GET", function (assert) {
+QUnit.test("Ajax: get", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -236,7 +236,7 @@ QUnit.test("ajax with GET", function (assert) {
     });
 });
 
-QUnit.test("getJSON", function (assert) {
+QUnit.test("Ajax: getJSON", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -263,7 +263,7 @@ QUnit.test("getJSON", function (assert) {
 });
 
 // get
-QUnit.test("get", function (assert) {
+QUnit.test("Ajax: get shortcut method", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -289,7 +289,7 @@ QUnit.test("get", function (assert) {
     air.get(url);
 });
 
-QUnit.test("post", function (assert) {
+QUnit.test("Ajax: post shortcut method", function (assert) {
     // This test will post to a service which returns the same data posted
     assert.expect(1);
     var done = assert.async(),
@@ -323,9 +323,91 @@ QUnit.test("post", function (assert) {
             done();
         },
         function() {
-            assert.ok(false, "get: entered error callback function");
+            assert.ok(false, "post: entered error callback function");
         }
     );
     // Request with only the required parameters
     air.post(url, data);
+});
+
+QUnit.test("Ajax: put shortcut method", function (assert) {
+    // This test will send a PUT to a service which returns the same data sent
+    assert.expect(1);
+    var done = assert.async(),
+    url = 'http://httpbin.org/put',
+    data = {
+        name: "John",
+        time: "2pm",
+        nested:{
+            a:1, b:2, c: {d:4}
+        }
+    },
+    checkDataFormat = function(data) {
+        return (
+            data &&
+            (typeof data === "object") &&
+            data.form.name === "John" &&
+            data.form['nested[a]'] === "1" &&
+            data.form['nested[b]'] === "2" &&
+            data.form['nested[c][d]'] === "4" &&
+            data.form.time === "2pm"
+        );
+    };
+    // Request with all parameters
+    air.put(
+        url,
+        data,
+        function(data){
+            if (checkDataFormat(data)) {
+                assert.ok(true, "put: correct request with all parameters");
+            }
+            done();
+        },
+        function() {
+            assert.ok(false, "put: entered error callback function");
+        }
+    );
+    // Request with only the required parameters
+    air.put(url, data);
+});
+
+QUnit.test("Ajax: delete shortcut method", function (assert) {
+    // This test will send a DELETE to a service which returns the same data sent
+    assert.expect(1);
+    var done = assert.async(),
+    url = 'http://httpbin.org/delete',
+    data = {
+        name: "John",
+        time: "2pm",
+        nested:{
+            a:1, b:2, c: {d:4}
+        }
+    },
+    checkDataFormat = function(data) {
+        return (
+            data &&
+            (typeof data === "object") &&
+            data.form.name === "John" &&
+            data.form['nested[a]'] === "1" &&
+            data.form['nested[b]'] === "2" &&
+            data.form['nested[c][d]'] === "4" &&
+            data.form.time === "2pm"
+        );
+    };
+    // Request with all parameters
+    air.delete(
+        url,
+        data,
+        function(data){
+            if (checkDataFormat(data)) {
+                assert.ok(true, "delete: correct request with all parameters");
+            }
+            done();
+        },
+        function() {
+            assert.ok(false, "delete: entered error callback function");
+        }
+    );
+    // Request with only the required parameters
+    air.delete(url, data);
 });

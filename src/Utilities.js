@@ -98,11 +98,7 @@ air.ajax = function(options) {
 
     if (upperCaseType === 'GET') {
         xhr.send();
-    }
-    if (upperCaseType === 'PUT' || upperCaseType === 'DELETE') {
-        xhr.setRequestHeader('Content-Type', 'text/plain');
-        xhr.send();
-    } else if (upperCaseType === 'POST') {
+    } else if (upperCaseType) { // POST, PUT, DELETE
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         xhr.send(air.param(options.data));
     }
@@ -124,18 +120,7 @@ air.getJSON = function(url, callback, error) {
     });
 };
 
-// Send a POST request to a given URL
-air.post = function(url, data, success, error) {
-    return air.ajax({
-        type: 'POST',
-        url: url,
-        data: data,
-        success: success,
-        error: error
-    });
-};
-
-// Send a GET request to a given URL
+// Utility ajax method shortcut for GET requests
 air.get = function(url, success, error) {
     return air.ajax({
         type: 'GET',
@@ -144,6 +129,19 @@ air.get = function(url, success, error) {
         error: error
     });
 };
+
+// Utility ajax method shortcuts for POST, PUT and DELETE requests
+air.each(['post', 'put', 'delete'], function(method){
+    air[method] = function(url, data, success, error) {
+        return air.ajax({
+            type: method,
+            url: url,
+            data: data,
+            success: success,
+            error: error
+        });
+    };
+});
 
 // Serialize an array of form elements or a set of
 // key/values into a query string
