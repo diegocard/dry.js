@@ -1,3 +1,6 @@
+// Utilities
+// ---------
+
 // Check if the given parameter is an array
 air.isArray = function(arr) {
     return Object.prototype.toString.call(arr) === "[object Array]";
@@ -77,11 +80,11 @@ air.ajax = function(options) {
         if (this.readyState === 4) {
             if (this.status >= 200 && this.status < 400 && options.success) {
                 try {
-                    // Try to convert the output to JSON
+                    /* Try to convert the output to JSON */
                     jsonResponse = JSON.parse(this.responseText);
                     options.success(jsonResponse);
                 } catch(e) {
-                    // If it fails, return the output as-is
+                    /* If it fails, return the output as-is */
                     options.success(this.responseText);
                 }
             } else if (options.error) {
@@ -98,7 +101,7 @@ air.ajax = function(options) {
 
     if (upperCaseType === 'GET') {
         xhr.send();
-    } else if (upperCaseType) { // POST, PUT, DELETE
+    } else if (upperCaseType) { /* POST, PUT, DELETE */
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         xhr.send(air.param(options.data));
     }
@@ -154,7 +157,7 @@ air.param = function(obj) {
         arr = [],
         prefix,
         add = function(key, value) {
-            // If value is a function, invoke it and return its value
+            /* If value is a function, invoke it and return its value */
             value = air.isFunction(value) ? value() : (value == null ? "" : value);
             arr[arr.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
         },
@@ -162,41 +165,41 @@ air.param = function(obj) {
             var name;
 
             if (air.isArray(obj)) {
-                // Serialize array item.
+                /* Serialize array item */
                 air.each(obj, function(value, index) {
                     if (rbracket.test(prefix)) {
-                        // Treat each array item as a scalar.
+                        /* Treat each array item as a scalar */
                         add(prefix, value);
                     } else {
-                        // Item is non-scalar (array or object), encode its numeric index.
+                        /* Item is non-scalar (array or object), encode its numeric index */
                         buildParams(prefix + "[" + (typeof value === "object" ? index : "") + "]", value, add);
                     }
                 });
 
             } else if (air.isObject(obj)) {
-                // Serialize object item.
+                /* Serialize object item */
                 for (name in obj) {
                     buildParams(prefix + "[" + name + "]", obj[name], add);
                 }
             } else {
-                // Serialize scalar item.
+                /* Serialize scalar item */
                 add(prefix, obj);
             }
         };
 
-    // if an array was passed in, assume that it is an array of form elements.
+    /* If an array was passed in, assume that it is an array of form elements */
     if (air.isArray(obj) || (!air.isStrictlyObject(obj))) {
-        // Serialize the form elements
+        /* Serialize the form elements */
         air.each(obj, function() {
             add(this.name, this.value);
         });
     } else {
-        // Encode params recursively
+        /* Encode params recursively */
         for (prefix in obj) {
             buildParams(prefix, obj[prefix], add);
         }
     }
 
-    // Return the resulting serialization
+    /* Return the resulting serialization */
     return arr.join("&").replace(r20, "+");
 };

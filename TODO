@@ -1,7 +1,7 @@
-- air.ajax tests (DELETE, PUT, POST, air.post), and more tests in general
+- Add more tests in general
 - Test models with ajax endpoints
 - Finish and test events
-- Improve documentation and create site
+- Improve documentation (check each source file) and create site
     - Philosophy
         - Minimal
         - Lightweight

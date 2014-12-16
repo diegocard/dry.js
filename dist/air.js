@@ -38,6 +38,9 @@ air.settings = {
     DEFAULT_CONTROLLER_METHOD: "default"
 };
 
+// Utilities
+// ---------
+
 // Check if the given parameter is an array
 air.isArray = function(arr) {
     return Object.prototype.toString.call(arr) === "[object Array]";
@@ -117,11 +120,11 @@ air.ajax = function(options) {
         if (this.readyState === 4) {
             if (this.status >= 200 && this.status < 400 && options.success) {
                 try {
-                    // Try to convert the output to JSON
+                    /* Try to convert the output to JSON */
                     jsonResponse = JSON.parse(this.responseText);
                     options.success(jsonResponse);
                 } catch(e) {
-                    // If it fails, return the output as-is
+                    /* If it fails, return the output as-is */
                     options.success(this.responseText);
                 }
             } else if (options.error) {
@@ -138,7 +141,7 @@ air.ajax = function(options) {
 
     if (upperCaseType === 'GET') {
         xhr.send();
-    } else if (upperCaseType) { // POST, PUT, DELETE
+    } else if (upperCaseType) { /* POST, PUT, DELETE */
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
         xhr.send(air.param(options.data));
     }
@@ -194,7 +197,7 @@ air.param = function(obj) {
         arr = [],
         prefix,
         add = function(key, value) {
-            // If value is a function, invoke it and return its value
+            /* If value is a function, invoke it and return its value */
             value = air.isFunction(value) ? value() : (value == null ? "" : value);
             arr[arr.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
         },
@@ -202,42 +205,42 @@ air.param = function(obj) {
             var name;
 
             if (air.isArray(obj)) {
-                // Serialize array item.
+                /* Serialize array item */
                 air.each(obj, function(value, index) {
                     if (rbracket.test(prefix)) {
-                        // Treat each array item as a scalar.
+                        /* Treat each array item as a scalar */
                         add(prefix, value);
                     } else {
-                        // Item is non-scalar (array or object), encode its numeric index.
+                        /* Item is non-scalar (array or object), encode its numeric index */
                         buildParams(prefix + "[" + (typeof value === "object" ? index : "") + "]", value, add);
                     }
                 });
 
             } else if (air.isObject(obj)) {
-                // Serialize object item.
+                /* Serialize object item */
                 for (name in obj) {
                     buildParams(prefix + "[" + name + "]", obj[name], add);
                 }
             } else {
-                // Serialize scalar item.
+                /* Serialize scalar item */
                 add(prefix, obj);
             }
         };
 
-    // if an array was passed in, assume that it is an array of form elements.
+    /* If an array was passed in, assume that it is an array of form elements */
     if (air.isArray(obj) || (!air.isStrictlyObject(obj))) {
-        // Serialize the form elements
+        /* Serialize the form elements */
         air.each(obj, function() {
             add(this.name, this.value);
         });
     } else {
-        // Encode params recursively
+        /* Encode params recursively */
         for (prefix in obj) {
             buildParams(prefix, obj[prefix], add);
         }
     }
 
-    // Return the resulting serialization
+    /* Return the resulting serialization */
     return arr.join("&").replace(r20, "+");
 };
 
@@ -299,7 +302,7 @@ air.App.prototype.controller = function(name, methods) {
     } else {
         controller = new air.Controller(name, methods);
         this.controllers[name] = controller;
-        // Register routes for each controller method
+        /* Register routes for each controller method */
         air.each(methods, function(method, methodName){
             if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
                 self.routes.push(name);
@@ -320,7 +323,7 @@ air.App.prototype.view = function(name, templateData) {
 };
 
 air.App.prototype.init = function() {
-    // Create and initialize the app's router
+    /* Create and initialize the app's router */
     this.router = new air.Router(this.name, this.routes);
     this.router.init();
 };
@@ -329,12 +332,12 @@ air.App.prototype.init = function() {
 // ------
 air.Router = function(appName, routes) {
     var self = this,
-        // Main logic behind the execution of a route
+        /* Main logic behind the execution of a route */
         routeCallback = function(route) {
             var split = route.url.split('/'),
-                // Find which controller should handle a given route
+                /* Find which controller should handle a given route */
                 controllerName = split[0] || air.settings.DEFAULT_CONTROLLER_NAME,
-                // Find which method should be invoked in the controller that handles the given route
+                /* Find which method should be invoked in the controller that handles the given route */
                 controllerMethod = split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD,
                 controller = air.apps[self.appName].controllers[controllerName];
             controller.invokeMethod(controllerMethod, route.params);
@@ -342,17 +345,17 @@ air.Router = function(appName, routes) {
         i, len, route;
     this.appName = appName;
 
-    // Initialize RLite (routing engine)
+    /* Initialize RLite (routing engine) */
     if (!this.r) {
         this.rlite = new Rlite();
     }
 
-    // Empty routes are handled through the default action in the default controller
+    /* Empty routes are handled through the default action in the default controller */
     if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
         routes.push('');
     }
 
-    // Register each route
+    /* Register each route */
     for (i=0, len=routes.length; i<len; i++) {
         route = routes[i];
         this.rlite.add(route, routeCallback);
@@ -364,7 +367,7 @@ air.Router.prototype.run = function(route) {
 };
 
 air.Router.prototype.init = function() {
-    // Hash-based routing
+    /* Hash-based routing */
     var self = this,
         processHash = function() {
             var hash = location.hash || '#';
@@ -382,7 +385,7 @@ air.Model = function(name, params) {
     this.name = name;
     this.attributes = params.attributes || {};
 
-    // Generate model methods for each given endpoint
+    /* Generate model methods for each given endpoint */
     air.each(params, function(value, property){
         var split, httpMethod, url;
         if (air.isString(value)){
@@ -401,11 +404,11 @@ air.Model.prototype.endpointMethod = function(httpMethod, url) {
         var urlAfterReplacement = url,
             attributes = this.attributes,
             attribute, param;
-        // Replace attributes in URL
+        /* Replace attributes in URL */
         for (attribute in attributes) {
             urlAfterReplacement = urlAfterReplacement.replace('{' + attribute + '}', attributes[attribute]);
         }
-        // Replace params in URL
+        /* Replace params in URL */
         for (param in params) {
             urlAfterReplacement = urlAfterReplacement.replace('{' + param + '}', params[param]);
         }
@@ -430,22 +433,24 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
     var method = this.methods[methodName],
         result, defaultView, defaultViewName;
     if (method) {
-        // Invoke the method with the given parameters
+        /* Invoke the method with the given parameters */
         result = method.call(this, params);
     } else {
-        // Default behavior: check for a default template and render it.
-        // The default template should be called controllerName/methodName or
-        // simply controllerName if methodName is the default one.
+        /* Default behavior: check for a default template and render it.
+         * The default template should be called controllerName/methodName or
+         * simply controllerName if methodName is the default one.
+         */
         defaultViewName = this.name;
         if (methodName && methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
             defaultViewName += '/' + methodName;
         }
         result = new air.View(defaultViewName, {templateData: params, controller: this});
     }
-    // If a view was returned, render it
+    /* If a view was returned, render it */
     if (result && result.constructor === air.View) {
-        // If the controller's method execution resulted in the creation of a view,
-        // store this information in the view itself.
+        /* If the controller's method execution resulted in the creation of a view,
+         * store this information in the view itself.
+         */
         result.controller = result.controller || this;
         result.render();
     }
@@ -466,16 +471,17 @@ air.Template = function(name, tmpl) {
 air.Template.prototype.cache = [];
 
 air.Template.prototype.compile = function compile(model) {
-    // Figure out if we're getting a template, or if we need to
-    // load the template - and be sure to cache the result.
+    /* Figure out if we're getting a template, or if we need to
+     * load the template - and be sure to cache the result.
+     */
     var str = this.cache[this.name] || air.$(this.templateId).element.innerHTML,
         fn = new Function("obj",
             "var p=[],print=function(){p.push.apply(p,arguments);};" +
 
-            // Introduce the data as local variables using with(){}
+            /* Introduce the data as local variables using with(){} */
             "with(obj){p.push('" +
 
-            // Convert the template into pure JavaScript
+            /* Convert the template into pure JavaScript */
             str
             .replace(/[\r\t\n]/g, " ")
             .split("<%").join("\t")
@@ -485,7 +491,7 @@ air.Template.prototype.compile = function compile(model) {
             .split("%>").join("p.push('")
             .split("\r").join("\\'") + "');}return p.join('');");
 
-    // Provide some basic currying to the user
+    /* Provide some basic currying to the user */
     return fn(model.attributes);
 };
 

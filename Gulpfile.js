@@ -6,7 +6,7 @@ var gulp = require('gulp'),
     docco = require("gulp-docco"),
     qunit = require('gulp-qunit');
 
-gulp.task('default', function() {
+gulp.task('compile', function() {
     gulp.src([
         './src/Core.js',
         './src/Settings.js',
@@ -46,3 +46,5 @@ gulp.task('test', function() {
     return gulp.src('./test/UnitTests.html')
         .pipe(qunit());
 });
+
+gulp.task('default', ['compile', 'doc']);

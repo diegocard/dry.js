@@ -16,7 +16,7 @@ air.App.prototype.controller = function(name, methods) {
     } else {
         controller = new air.Controller(name, methods);
         this.controllers[name] = controller;
-        // Register routes for each controller method
+        /* Register routes for each controller method */
         air.each(methods, function(method, methodName){
             if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
                 self.routes.push(name);
@@ -37,7 +37,7 @@ air.App.prototype.view = function(name, templateData) {
 };
 
 air.App.prototype.init = function() {
-    // Create and initialize the app's router
+    /* Create and initialize the app's router */
     this.router = new air.Router(this.name, this.routes);
     this.router.init();
 };

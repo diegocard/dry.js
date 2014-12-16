@@ -5,7 +5,7 @@ air.Model = function(name, params) {
     this.name = name;
     this.attributes = params.attributes || {};
 
-    // Generate model methods for each given endpoint
+    /* Generate model methods for each given endpoint */
     air.each(params, function(value, property){
         var split, httpMethod, url;
         if (air.isString(value)){
@@ -24,11 +24,11 @@ air.Model.prototype.endpointMethod = function(httpMethod, url) {
         var urlAfterReplacement = url,
             attributes = this.attributes,
             attribute, param;
-        // Replace attributes in URL
+        /* Replace attributes in URL */
         for (attribute in attributes) {
             urlAfterReplacement = urlAfterReplacement.replace('{' + attribute + '}', attributes[attribute]);
         }
-        // Replace params in URL
+        /* Replace params in URL */
         for (param in params) {
             urlAfterReplacement = urlAfterReplacement.replace('{' + param + '}', params[param]);
         }
