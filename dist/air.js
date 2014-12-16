@@ -384,6 +384,7 @@ air.Model = function(name, params) {
     params = params || {};
     this.name = name;
     this.attributes = params.attributes || {};
+    var self = this;
 
     /* Generate model methods for each given endpoint */
     air.each(params, function(value, property){
@@ -392,7 +393,7 @@ air.Model = function(name, params) {
             split = value.split(' ');
             httpMethod = split[0];
             url = split[1];
-            this[property] = this.endpointMethod(method, url);
+            self[property] = self.endpointMethod(httpMethod, url);
         }
     });
 };
