@@ -294,22 +294,21 @@ air.App = function(name, options) {
 };
 
 air.App.prototype.controller = function(name, methods) {
-    var controller, methodName, method;
+    var self = this,
+        controller;
     if (air.isUndefined(methods)) {
         controller = this.controllers[name];
     } else {
         controller = new air.Controller(name, methods);
         this.controllers[name] = controller;
         // Register routes for each controller method
-        for (methodName in methods) {
-            if (methods.hasOwnProperty(methodName)) {
-                if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
-                    this.routes.push(name);
-                } else {
-                    this.routes.push(name + '/' + methodName);
-                }
+        air.each(methods, function(method, methodName){
+            if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
+                self.routes.push(name);
+            } else {
+                self.routes.push(name + '/' + methodName);
             }
-        }
+        });
     }
     return controller;
 };
@@ -381,19 +380,20 @@ air.Router.prototype.init = function() {
 // Model
 // -----
 air.Model = function(name, params) {
-    var property, value, split, httpMethod, url;
     params = params || {};
     this.name = name;
     this.attributes = params.attributes || {};
-    for (property in params) {
-        value = params[property];
-        if (params.hasOwnProperty(property) && air.isString(value)){
+
+    // Generate model methods for each given endpoint
+    air.each(params, function(value, property){
+        var split, httpMethod, url;
+        if (air.isString(value)){
             split = value.split(' ');
             httpMethod = split[0];
             url = split[1];
             this[property] = this.endpointMethod(method, url);
         }
-    }
+    });
 };
 
 // Generate a model method which will perform an ajax request
@@ -507,13 +507,11 @@ air.View.prototype.render = function() {
     var viewElement = air.$(this.el),
         compiledTemplate = this.template.compile(this.model),
         events = this.events,
-        eventKey;
+        self = this;
     viewElement.html(compiledTemplate);
-    for (eventKey in events) {
-        if (events.hasOwnProperty(eventKey)){
-            this.addEvent(eventKey, events[eventKey]);
-        }
-    }
+    air.each(events, function(eventKey, event){
+        self.addEvent(eventKey, event);
+    });
 };
 
 air.View.prototype.addEvent = function(eventKey, eventAction) {

@@ -9,22 +9,21 @@ air.App = function(name, options) {
 };
 
 air.App.prototype.controller = function(name, methods) {
-    var controller, methodName, method;
+    var self = this,
+        controller;
     if (air.isUndefined(methods)) {
         controller = this.controllers[name];
     } else {
         controller = new air.Controller(name, methods);
         this.controllers[name] = controller;
         // Register routes for each controller method
-        for (methodName in methods) {
-            if (methods.hasOwnProperty(methodName)) {
-                if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
-                    this.routes.push(name);
-                } else {
-                    this.routes.push(name + '/' + methodName);
-                }
+        air.each(methods, function(method, methodName){
+            if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
+                self.routes.push(name);
+            } else {
+                self.routes.push(name + '/' + methodName);
             }
-        }
+        });
     }
     return controller;
 };

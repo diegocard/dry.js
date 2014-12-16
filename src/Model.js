@@ -1,19 +1,20 @@
 // Model
 // -----
 air.Model = function(name, params) {
-    var property, value, split, httpMethod, url;
     params = params || {};
     this.name = name;
     this.attributes = params.attributes || {};
-    for (property in params) {
-        value = params[property];
-        if (params.hasOwnProperty(property) && air.isString(value)){
+
+    // Generate model methods for each given endpoint
+    air.each(params, function(value, property){
+        var split, httpMethod, url;
+        if (air.isString(value)){
             split = value.split(' ');
             httpMethod = split[0];
             url = split[1];
             this[property] = this.endpointMethod(method, url);
         }
-    }
+    });
 };
 
 // Generate a model method which will perform an ajax request

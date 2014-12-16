@@ -14,13 +14,11 @@ air.View.prototype.render = function() {
     var viewElement = air.$(this.el),
         compiledTemplate = this.template.compile(this.model),
         events = this.events,
-        eventKey;
+        self = this;
     viewElement.html(compiledTemplate);
-    for (eventKey in events) {
-        if (events.hasOwnProperty(eventKey)){
-            this.addEvent(eventKey, events[eventKey]);
-        }
-    }
+    air.each(events, function(eventKey, event){
+        self.addEvent(eventKey, event);
+    });
 };
 
 air.View.prototype.addEvent = function(eventKey, eventAction) {
