@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>QUnit Example</title>
+    <link rel="stylesheet" href="qunit-1.16.0.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+        <div data-air="default"></div>
+        <div data-air="main/hello"></div>
+        <div data-air="body"></div>
+    </div>
+
+    <!-- Templates -->
+    <script data-air="default" type="text/template">
+        <h1>Air.js test page</h1>
+        <a href="#main/hello">Main</a>
+        <a href="#body">Body</a>
+    </script>
+
+    <script data-air="main/hello" type="text/template">
+        <h2>Hello!</h2>
+    </script>
+
+    <script data-air="body" type="text/template">
+        <% for(var i=0; i<10; i++) { %>
+            <span>Lorem ipsum</span>
+        <% } %>
+    </script>
+
+    <!-- Dependencies -->
+    <script src="../dist/air.js"></script>
+    <script src="jquery-1.11.1.min.js"></script>
+    <script src="qunit-1.16.0.js"></script>
+    <script src="AjaxTests.js"></script>
+</body>
+</html>

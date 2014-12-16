@@ -43,6 +43,6 @@ gulp.task('watch', function() {
 });
 
 gulp.task('test', function() {
-    return gulp.src('./test/tests.html')
+    return gulp.src('./test/UnitTests.html')
         .pipe(qunit());
 });
