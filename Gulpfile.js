@@ -2,7 +2,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
-    filesize = require('gulp-filesize'),
+    size = require('gulp-size'),
     docco = require("gulp-docco"),
     qunit = require('gulp-qunit');
 
@@ -22,11 +22,12 @@ gulp.task('default', function() {
     ])
         .pipe(concat('air.js'))
         .pipe(gulp.dest('dist'))
-        .pipe(filesize())
+        .pipe(size({title: 'Unminified'}))
         .pipe(uglify())
         .pipe(rename('air.min.js'))
         .pipe(gulp.dest('dist'))
-        .pipe(filesize());
+        .pipe(size({title: 'Minified'}))
+        .pipe(size({title: 'Minified and gzipped', gzip: true}));
 });
 
 gulp.task('doc', function() {
