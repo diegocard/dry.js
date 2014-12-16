@@ -15,7 +15,7 @@ var contains = function(str, element) {
 QUnit.testStart(beforeTest);
 QUnit.testDone(afterTest);
 
-QUnit.test("Default route is called on application start", function(assert) {
+QUnit.test("App: Default route is called on application start", function(assert) {
     assert.expect(1);
     // Create new app
     var app1 = air.app('app1');
@@ -31,7 +31,7 @@ QUnit.test("Default route is called on application start", function(assert) {
     app1.init();
 });
 
-QUnit.test("Default controller method renders appropriate content", function(assert) {
+QUnit.test("App: Default controller method renders appropriate content", function(assert) {
     assert.expect(1);
     // Create new app
     var app2 = air.app('app2');

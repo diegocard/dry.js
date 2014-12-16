@@ -1,4 +1,4 @@
-QUnit.test("isArray", function (assert) {
+QUnit.test("Utilities: air.isArray", function (assert) {
     var test1 = [],
     test2 = [1, 2, 3],
     test3 = ["a", "b", "c"],
@@ -12,7 +12,7 @@ QUnit.test("isArray", function (assert) {
     }
 });
 
-QUnit.test("isObject", function (assert) {
+QUnit.test("Utilities: air.isObject", function (assert) {
     var test1 = {},
     test2 = {
         a: 1,
@@ -43,7 +43,7 @@ QUnit.test("isObject", function (assert) {
     }
 });
 
-QUnit.test("isStrictlyObject", function (assert) {
+QUnit.test("Utilities: air.isStrictlyObject", function (assert) {
     var test1 = {},
     test2 = {
         a: 1,
@@ -72,7 +72,7 @@ QUnit.test("isStrictlyObject", function (assert) {
     }
 });
 
-QUnit.test("isBoolean", function (assert) {
+QUnit.test("Utilities: air.isBoolean", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -88,7 +88,7 @@ QUnit.test("isBoolean", function (assert) {
     }
 });
 
-QUnit.test("isString", function (assert) {
+QUnit.test("Utilities: air.isString", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -107,7 +107,7 @@ QUnit.test("isString", function (assert) {
     }
 });
 
-QUnit.test("isFunction", function (assert) {
+QUnit.test("Utilities: air.isFunction", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -127,7 +127,7 @@ QUnit.test("isFunction", function (assert) {
     }
 });
 
-QUnit.test("isUndefined", function (assert) {
+QUnit.test("Utilities: air.isUndefined", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -143,7 +143,7 @@ QUnit.test("isUndefined", function (assert) {
     }
 });
 
-QUnit.test("isNumeric", function (assert) {
+QUnit.test("Utilities: air.isNumeric", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -164,7 +164,7 @@ QUnit.test("isNumeric", function (assert) {
     }
 });
 
-QUnit.test("keys", function (assert) {
+QUnit.test("Utilities: air.keys", function (assert) {
     var obj1 = {},
         obj2 = {
             prop1: 1,
@@ -187,7 +187,7 @@ QUnit.test("keys", function (assert) {
     }, "keys: Several types of properties");
 });
 
-QUnit.test("each", function (assert) {
+QUnit.test("Utilities: air.each", function (assert) {
     var arr = [1, 2, 3, 4],
         sum1 = 0,
         sum2 = 0,
@@ -206,7 +206,7 @@ QUnit.test("each", function (assert) {
     assert.ok(sum2 === 6, "forEach: object properties");
 });
 
-QUnit.test("Ajax: get", function (assert) {
+QUnit.test("Utilities: air.get", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -236,7 +236,7 @@ QUnit.test("Ajax: get", function (assert) {
     });
 });
 
-QUnit.test("Ajax: getJSON", function (assert) {
+QUnit.test("Utilities: air.getJSON", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -263,7 +263,7 @@ QUnit.test("Ajax: getJSON", function (assert) {
 });
 
 // get
-QUnit.test("Ajax: get shortcut method", function (assert) {
+QUnit.test("Utilities: air.get shortcut method", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -289,7 +289,7 @@ QUnit.test("Ajax: get shortcut method", function (assert) {
     air.get(url);
 });
 
-QUnit.test("Ajax: post shortcut method", function (assert) {
+QUnit.test("Utilities: air.post shortcut method", function (assert) {
     // This test will post to a service which returns the same data posted
     assert.expect(1);
     var done = assert.async(),
@@ -330,7 +330,7 @@ QUnit.test("Ajax: post shortcut method", function (assert) {
     air.post(url, data);
 });
 
-QUnit.test("Ajax: put shortcut method", function (assert) {
+QUnit.test("Utilities: air.put shortcut method", function (assert) {
     // This test will send a PUT to a service which returns the same data sent
     assert.expect(1);
     var done = assert.async(),
@@ -371,7 +371,7 @@ QUnit.test("Ajax: put shortcut method", function (assert) {
     air.put(url, data);
 });
 
-QUnit.test("Ajax: delete shortcut method", function (assert) {
+QUnit.test("Utilities: air.delete shortcut method", function (assert) {
     // This test will send a DELETE to a service which returns the same data sent
     assert.expect(1);
     var done = assert.async(),
