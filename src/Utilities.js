@@ -146,6 +146,20 @@ air.each(['post', 'put', 'delete'], function(method){
     };
 });
 
+// JSONP requests
+air.jsonp = function(url, callback) {
+    var callbackName = 'air_jsonp_callback_' + Math.round(100000 * Math.random());
+    window[callbackName] = function(data) {
+        delete window[callbackName];
+        document.body.removeChild(script);
+        callback(data);
+    };
+
+    var script = document.createElement('script');
+    script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
+    document.body.appendChild(script);
+};
+
 // Serialize an array of form elements or a set of
 // key/values into a query string
 air.param = function(obj) {

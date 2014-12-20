@@ -6,6 +6,7 @@ air.App = function(name, options) {
     this.routes = this.options.routes || [];
     this.controllers = this.options.controllers || {};
     this.views = this.options.views || {};
+    this.modelDefinitions = this.options.models || {};
 };
 
 air.App.prototype.controller = function(name, methods) {
@@ -40,4 +41,13 @@ air.App.prototype.init = function() {
     /* Create and initialize the app's router */
     this.router = new air.Router(this.name, this.routes);
     this.router.init();
+};
+
+air.App.prototype.model = function(name, params) {
+    if (!params) {
+        return new air.Model(name, this.modelDefinitions[name]);
+    } else {
+        /* Store the model definition if needed */
+        this.modelDefinitions[name] = params;
+    }
 };

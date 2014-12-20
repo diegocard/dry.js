@@ -792,7 +792,7 @@ air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
             split = value.split(<span class="hljs-string">' '</span>);
             httpMethod = split[<span class="hljs-number">0</span>];
             url = split[<span class="hljs-number">1</span>];
-            self[property] = <span class="hljs-keyword">this</span>.endpointMethod(httpMethod, url);
+            self[property] = self.endpointMethod(httpMethod, url);
         }
     });
 };</pre></div></div>
