@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
@@ -11,78 +12,143 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <title>Air.js by diegocard</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <div id="container">
-      <div class="inner">
+        <div class="inner">
 
-        <header>
-          <h1>Air.js</h1>
-          <h2>Lightweight SPA framework focused on Convention over Configuration</h2>
-        </header>
+            <header>
+                <h1>Air.js</h1>
+                <h2>Lightweight SPA framework focused on Convention over Configuration</h2>
+            </header>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/diegocard/air.js/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/diegocard/air.js/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/diegocard/air.js" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+            <section id="downloads" class="clearfix">
+                <a href="https://github.com/diegocard/air.js/zipball/master" id="download-zip" class="button">
+                    <span>Download .zip</span>
+                </a>
+                <a href="https://github.com/diegocard/air.js/tarball/master" id="download-tar-gz" class="button">
+                    <span>Download .tar.gz</span>
+                </a>
+                <a href="https://github.com/diegocard/air.js" id="view-on-github" class="button">
+                    <span>View on GitHub</span>
+                </a>
+            </section>
 
-        <hr>
+            <hr>
 
-        <section id="main_content">
-          <h3>
-<a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Started</h3>
+            <section id="main_content">
+                <h2>
+                    <a id="philosophy" class="anchor" href="#philosophy" aria-hidden="true">
+                        <span class="octicon octicon-link">Philosophy</span>
+                    </a>
+                </h2>
 
-<p>Todo</p>
+                <h4>Minimal</h4>
+                <p>
+                    Air.js was inspired by what I consider to be the best features of the most well-known single page application frameworks:
+                    <ul>
+                        <li>Provides only the minimum set of components necessary for web application development, like Backbone.js</li>
+                        <li>Follows an MVC, convention over configuration approach, like Ember.js (although much simpler)</li>
+                        <li>Comes with all you need right out of the box like Angular.js (a.k.a batteries included), alghough these features can be easily replaced
+                            by other external components</li>
+                        <li>Integrates an opinionated set of guidelines for the application's architecture and data flow, similar to what Facebook's Flux does</li>
+                    </ul>
+                </p>
 
-<h3>
-<a id="philosophy" class="anchor" href="#philosophy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Philosophy</h3>
+                <h4>Lightweight</h4>
+                <p>
+                    Initial page load is one of the main concerns of Air.js. The library weights less than 8kb minified, which makes it viable for any sort
+                    of web application.
+                </p>
 
-<ul>
-<li>Minimal</li>
-<li>Lightweight</li>
-<li>Easy to learn and easy to use</li>
-<li>Standard way to join external components and libraries</li>
-<li>Easily replaceable components (<a href="http://www.breck-mckye.com/blog/2014/12/the-state-of-javascript-in-2015">http://www.breck-mckye.com/blog/2014/12/the-state-of-javascript-in-2015</a>)</li>
-</ul>
+                <h4>Easily replaceable components</h4>
+                <p>
+                    Air.js is intended to be a standard way to join external components and libraries. All of its components are designed so that they can be easily
+                    replaced.
+                </p>
+                <p>
+                    For example, you can swap Air.js's templating engine with Handlebars, integrate React to improve rendering performance, or manage all
+                    DOM interactions with jQuery/Zepto, etc.
+                </p>
+                <p>
+                    Please read <a href="http://www.breck-mckye.com/blog/2014/12/the-state-of-javascript-in-2015">this</a> article to further understand why this
+                    approach is necessary.
+                </p>
 
-<h3>
-<a id="components" class="anchor" href="#components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Components</h3>
+                <h4>Easy to learn, easy to use and easy to change</h4>
+                <p>
+                    No one likes learning a new front-end framework every week, so that's why Air.js was specifically designed to be super easy to use.
+                    Getting started will only take you some minutes, and there's not that much more to it. Complexity is the first sign of bad architecture,
+                    and your developers will thank you for it.
+                </p>
+                <p>
+                    Have you ever wanted to change a certain feature of a given framework? Well, this is super easy in Air.js because its code is brief
+                    and understandable, so re-writting a component is not complex at all. In fact I encourage you to do this if you want to replace any of the
+                    framework's core components with external libraries, you'll only have to run the tests afterwards to make sure that everything still works as
+                    expected.
+                </p>
 
-<ul>
-<li>Internal</li>
-<li>External</li>
-</ul>
 
-<h3>
-<a id="default-behavior-and-best-practices" class="anchor" href="#default-behavior-and-best-practices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Default behavior and best practices</h3>
+                <h2>
+                    <a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true">
+                        <span class="octicon octicon-link">Getting Started</span>
+                    </a>
+                </h2>
 
-<p>Todo</p>
+                <p>Todo</p>
 
-<h3>
-<a id="utilities" class="anchor" href="#utilities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Utilities</h3>
 
-<p>Todo</p>
-        </section>
+                <h2>
+                    <a id="components" class="anchor" href="#components" aria-hidden="true">
+                        <span class="octicon octicon-link">Components</span>
+                    </a>
+                </h2>
 
-        <footer>
-          Air.js is maintained by <a href="https://github.com/diegocard">diegocard</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+                <ul>
+                    <li>Routing based on convention over configuration</li>
+                    <li>Simple MVC architecture</li>
+                    <li>Powerful API for server comunication through Models, using Ajax calls</li>
+                    <li>DOM management utilities (no need for jQuery)</li>
+                    <li>Lightweight templating engine</li>
+                </ul>
 
-                  <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-58464053-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+                <h2>
+                    <a id="default-behavior-and-best-practices" class="anchor" href="#default-behavior-and-best-practices" aria-hidden="true">
+                        <span class="octicon octicon-link"></span>
+                    </a>Default behavior and best practices</h2>
 
-      </div>
+                <p>Todo</p>
+
+                <h2>
+                    <a id="utilities" class="anchor" href="#utilities" aria-hidden="true">
+                        <span class="octicon octicon-link"></span>
+                    </a>Utilities</h2>
+
+                <p>Todo</p>
+            </section>
+
+            <footer>
+                Air.js is maintained by <a href="https://github.com/diegocard">diegocard</a>
+                <br> This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+            </footer>
+
+            <!-- Include Air.js for simple testing purposes -->
+            <script src="https://cdn.rawgit.com/diegocard/air.js/master/dist/air.min.js"></script>
+
+            <!-- GA -->
+            <script type="text/javascript">
+                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+            </script>
+            <script type="text/javascript">
+                try {
+                    var pageTracker = _gat._getTracker("UA-58464053-1");
+                    pageTracker._trackPageview();
+                } catch (err) {}
+            </script>
+        </div>
     </div>
-  </body>
+</body>
+
 </html>
