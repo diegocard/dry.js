@@ -104,19 +104,100 @@
                 <p>Todo</p>
 
 
+                <!-- Components -->
                 <h2>
                     <a id="components" class="anchor" href="#components" aria-hidden="true">
                         <span class="octicon octicon-link">Components</span>
                     </a>
                 </h2>
 
-                <ul>
-                    <li>Routing based on convention over configuration</li>
-                    <li>Simple MVC architecture</li>
-                    <li>Powerful API for server comunication through Models, using Ajax calls</li>
-                    <li>DOM management utilities (no need for jQuery)</li>
-                    <li>Lightweight templating engine</li>
-                </ul>
+                <h4>App</h4>
+                <p>
+                    A web application is divided in apps.
+                    Their goal is to provide structure to the code, and can be seen as modules.
+                    Each app contains its own controllers, views and models, and handles a specific set of routes.
+                </p>
+
+                <p>Example:</p>
+
+                <pre>
+                    <code class="js">
+                        // Create new app
+                        var app1 = air.app('app1');
+                        // Start the app
+                        app1.init();
+                    </code>
+                </pre>
+
+                <h4>Controller</h4>
+                <p>
+                    A controller contains methods.
+                    Each method handles a specific route or event, returning a view instance if the result of the method's execution triggers UI changes.
+                    In this sense, Air.js controllers are very similar to Rails.
+                </p>
+
+                <p>Example:</p>
+                <pre>
+                    <code class="js">
+                        var app1 = air.app('app1');
+
+                        // Handles a list of products
+                        app1.controller('products', {
+                            'list': function() { // Triggered when navigating to /products/list
+                                return new air.View('ProductList')
+                            }
+                        });
+                    </code>
+                </pre>
+
+                <h4>Router</h4>
+                <p>
+                    The router is responsible for directing page navigation actions to controllers.
+                    As the previous example hints, you do not need to specify routes anywhere. They are automatically generated from controller names and methods.
+                <p>
+
+                <h4>Model</h4>
+                <p>
+                    In a typical fashion, models concentrate the responsibility of handling data structure, storage and server communication.
+                    They are injected into views through controller actions, and come with a convenient API for handling Ajax communication.
+                    Expanding on the previous example:
+                </p>
+
+                <pre>
+                    <code class="js">
+                        var app1 = air.app('app1');
+
+                        // Product model definition
+                        app1.model('Product', {
+                            attributes: {
+                                id: 1 // default
+                            }
+                            getAll: 'GET https://someUrl/products'
+                            postTest: 'POST https://someUrl/products/new',
+                            putTest: 'PUT https://someUrl/products/{id}',
+                            deleteTest: 'DELETE https://someUrl/{id}'
+                        });
+
+                        // Handles a list of products
+                        app1.controller('products', {
+                            'list': function() {
+                                // Creates a new model instance and calls the getAll method
+                                var allProducts = air.model('Product').getAll();
+                                // Pass the model to the view
+                                return new air.View('ProductList', allProducts);
+                            }
+                        });
+                    </code>
+                </pre>
+
+                <h4>Template</h4>
+                <p>TODO</p>
+
+                <h4>View</h4>
+                <p>TODO</p>
+
+                <h4>Utilities</h4>
+                <p>TODO</p>
 
                 <h2>
                     <a id="default-behavior-and-best-practices" class="anchor" href="#default-behavior-and-best-practices" aria-hidden="true">
@@ -139,6 +220,12 @@
 
             <!-- Include Air.js for simple testing purposes -->
             <script src="https://cdn.rawgit.com/diegocard/air.js/master/dist/air.min.js"></script>
+
+            <!-- Highlight.js -->
+            <link rel="stylesheet" href="./stylesheets/highlight.css">
+            <link rel="stylesheet" href="./stylesheets/monokai.css">
+            <script src="./javascripts/highlight.pack.js"></script>
+            <script>hljs.initHighlightingOnLoad();</script>
 
             <!-- GA -->
             <script type="text/javascript">
