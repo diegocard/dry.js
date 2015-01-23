@@ -52,6 +52,7 @@ a:hover {
     color: #003D98;
 }
 header {
+    width: 100%;
     padding-top: 35px;
     padding-bottom: 25px;
     position: absolute;
