@@ -18,6 +18,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 body {
     line-height: 1;
+    overflow-x: hidden;
 }
 
 ol, ul {
@@ -45,7 +46,7 @@ body {
     background: #e7e7e7 url(../images/body-bg.png) 0 0 repeat;
 }
 a {
-    color: #0066FF;
+    color: #3081A9;
 }
 a:hover {
     color: #003D98;
@@ -54,7 +55,8 @@ header {
     padding-top: 35px;
     padding-bottom: 25px;
     position: absolute;
-    top: 60px;
+    top: 20px;
+    max-width: 620px;
 }
 header h1 {
     font-family: 'Chivo', 'Helvetica Neue', Helvetica, Arial, serif;
@@ -85,8 +87,26 @@ header h2 {
 #downloads {
     margin-bottom: 40px;
     position: absolute;
-    top: 260px;
+    top: 280px;
 }
+.center-text {
+    text-align: center;
+}
+
+.main-logo {
+    color: #3081A9;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    padding: 50px 30px 20px;
+    display: inline-block;
+    background-color: #3081A9;
+    background-image: url(../images/cloud.svg);
+    background-repeat: no-repeat;
+    background-size: 190px;
+    background-position-x: -8px;
+    background-position-y: -30px;
+}
+
 a.button {
     display: block;
     float: left;
