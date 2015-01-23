@@ -1,4 +1,5 @@
-- Add more tests in general
+- View.js -> add each event of options.events on view creation
+- Add more tests in general (events, page navigation, etc)
 - Test models with ajax endpoints
 - Finish and test events
 - Improve documentation (check each source file) and create site
