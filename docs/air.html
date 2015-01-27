@@ -992,6 +992,7 @@ air.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
             </div>
             
             <div class="content"><div class='highlight'><pre>air.View = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
     options = options || {};
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);
@@ -999,6 +1000,9 @@ air.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
     <span class="hljs-keyword">this</span>.template = <span class="hljs-keyword">new</span> air.Template(name, options.template);
     <span class="hljs-keyword">this</span>.controller = options.controller;
     <span class="hljs-keyword">this</span>.events = options.events || {};
+    air.each(<span class="hljs-keyword">this</span>.events, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(action, key)</span> </span>{
+        self.addEvent(key, action);
+    });
 };
 
 air.View.prototype.render = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{

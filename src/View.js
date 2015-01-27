@@ -1,7 +1,6 @@
 // View
 // ----
 air.View = function(name, options) {
-    var self = this;
     options = options || {};
     this.name = name;
     this.el = options.el || (':not(script)[data-air="' + name + '"]');
@@ -9,9 +8,6 @@ air.View = function(name, options) {
     this.template = new air.Template(name, options.template);
     this.controller = options.controller;
     this.events = options.events || {};
-    air.each(this.events, function(action, key) {
-        self.addEvent(key, action);
-    });
 };
 
 air.View.prototype.render = function() {
@@ -20,8 +16,8 @@ air.View.prototype.render = function() {
         events = this.events,
         self = this;
     viewElement.html(compiledTemplate);
-    air.each(events, function(eventKey, event){
-        self.addEvent(eventKey, event);
+    air.each(events, function(action, key){
+        self.addEvent(key, action);
     });
 };
 
