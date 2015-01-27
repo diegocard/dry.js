@@ -1,6 +1,7 @@
 // View
 // ----
 air.View = function(name, options) {
+    var self = this;
     options = options || {};
     this.name = name;
     this.el = options.el || (':not(script)[data-air="' + name + '"]');
@@ -8,6 +9,9 @@ air.View = function(name, options) {
     this.template = new air.Template(name, options.template);
     this.controller = options.controller;
     this.events = options.events || {};
+    air.each(this.events, function(action, key) {
+        self.addEvent(key, action);
+    });
 };
 
 air.View.prototype.render = function() {
