@@ -287,22 +287,103 @@
                     and best practices</a> section for additional info.
                 </p>
 
-                <h4>Utilities</h4>
-                <p>TODO</p>
-
                 <h2>
-                    <a id="default-behavior-and-best-practices" class="anchor" href="#default-behavior-and-best-practices" aria-hidden="true">
-                        <span class="octicon octicon-link"></span>
-                    </a>Default behavior and best practices</h2>
+                    <a id="conventions" class="anchor" href="#conventions" aria-hidden="true">
+                        <span class="octicon octicon-link">Conventions</span>
+                    </a>
+                </h2>
 
-                <p>Todo</p>
+                <p><em>UNDER CONSTRUCTION</em></p>
 
                 <h2>
                     <a id="utilities" class="anchor" href="#utilities" aria-hidden="true">
-                        <span class="octicon octicon-link"></span>
-                    </a>Utilities</h2>
+                        <span class="octicon octicon-link">Utilities</span>
+                    </a>
+                </h2>
 
-                <p>Todo</p>
+                <p>
+                    Air.js also contains several utility functions which you can leverage in your own code. These are:
+                </p>
+
+                <h4>Type checking</h4>
+                <ul>
+                    <li>
+                        air.isArray(arr)
+                    </li>
+                    <li>
+                        air.isObject(obj)
+                    </li>
+                    <li>
+                        air.isStrictlyObject(obj)
+                    </li>
+                    <li>
+                        air.isBoolean(bool)
+                    </li>
+                    <li>
+                        air.isFunction(fun)
+                    </li>
+                    <li>
+                        air.isUndefined(obj)
+                    </li>
+                    <li>
+                        air.isNumeric(num)
+                    </li>
+                </ul>
+
+                <h4>Object management</h4>
+                <ul>
+                    <li>
+                        air.keys(obj)
+                    </li>
+                    <li>
+                        air.each(obj, func, [context])
+                    </li>
+                </ul>
+
+                <h4>Ajax communication</h4>
+                <ul>
+                    <li>
+                        air.ajax(options)
+                    </li>
+                    <li>
+                        air.getJSON(url, [callback], [error])
+                    </li>
+                    <li>
+                        air.get(url, [success], [error])
+                    </li>
+                    <li>
+                        air.post(url, data, [success], [error])
+                    </li>
+                    <li>
+                        air.put(url, data, [success], [error])
+                    </li>
+                    <li>
+                        air.delete(url, data, [success], [error])
+                    </li>
+                    <li>
+                        air.jsonp(url, callback)
+                    </li>
+                </ul>
+
+                <h4>DOM Management</h4>
+                <ul>
+                    <li>
+                        air.$(selector)
+                    </li>
+                    <li>
+                        air.$(selector).html([content])
+                    </li>
+                    <li>
+                        air.$(selector).on(eventName, eventHandler)
+                    </li>
+                    <li>
+                        air.$(selector).off(eventName, eventHandler)
+                    </li>
+                    <li>
+                        air.$(selector).trigger(eventName, [data])
+                    </li>
+                </ul>
+
             </section>
 
             <footer>
