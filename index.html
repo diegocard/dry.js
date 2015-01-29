@@ -52,7 +52,7 @@
                     </a>
                 </h2>
 
-                <h4>Minimal</h4>
+                <h3>Minimal</h3>
                 <p>
                     Air.js was inspired by what I consider to be the best features of the most well-known single page application frameworks:
                     <ul>
@@ -64,13 +64,13 @@
                     </ul>
                 </p>
 
-                <h4>Lightweight</h4>
+                <h3>Lightweight</h3>
                 <p>
                     Initial page load is one of the main concerns of Air.js. The library weights less than 8kb minified, which makes it viable for any sort
                     of web application.
                 </p>
 
-                <h4>Easily replaceable components</h4>
+                <h3>Easily replaceable components</h3>
                 <p>
                     Air.js is intended to be a standard way to join external components and libraries. All of its components are designed so that they can be easily
                     replaced.
@@ -84,7 +84,7 @@
                     approach is necessary.
                 </p>
 
-                <h4>Easy to learn, easy to use and easy to change</h4>
+                <h3>Easy to learn, easy to use and easy to change</h3>
                 <p>
                     No one likes learning a new front-end framework every week, so that's why Air.js was specifically designed to be super easy to use.
                     Getting started will only take you some minutes, and there's not that much more to it. Complexity is the first sign of bad architecture,
@@ -114,7 +114,7 @@
                     </a>
                 </h2>
 
-                <h4>App</h4>
+                <h3>App</h3>
                 <p>
                     A website is divided in apps.
                     Their goal is to provide structure to the code, and can be seen as modules.
@@ -122,13 +122,13 @@
                 </p>
 
 <pre><code class="language-javascript">
-    // Create new app
-    var app1 = air.app('app1');
-    // Start the app
-    app1.init();
+// Create new app
+var app1 = air.app('app1');
+// Start the app
+app1.init();
 </code></pre>
 
-                <h4>Controller</h4>
+                <h3>Controller</h3>
                 <p>
                     A controller contains methods.
                     Each method handles a specific route or event, returning a view instance if the result of the method's execution triggers UI changes.
@@ -136,47 +136,47 @@
                 </p>
 
 <pre><code class="language-javascript">
-    var app1 = air.app('app1');
+var app1 = air.app('app1');
 
-    // Handles a list of products
-    app1.controller('products', {
-        'list': function() { // Triggered when navigating to /products/list
-            return new air.View('ProductList')
-        }
-    });
+// Handles a list of products
+app1.controller('products', {
+    'list': function() { // Triggered when navigating to /products/list
+        return new air.View('ProductList')
+    }
+});
 </code></pre>
 
-                <h4>Router</h4>
+                <h3>Router</h3>
                 <p>
                     The router is responsible for directing page navigation actions to controllers.
                     As the previous example hints, you do not need to specify routes anywhere. They are automatically generated from controller names and methods.
                 <p>
 
 <pre><code class="language-javascript">
-    var app1 = air.app('app1');
+var app1 = air.app('app1');
 
-    // Home page
-    app1.controller('default', {
-        // Triggered on base url (root)
-        'default': function() {
-            return new air.View('HomePage')
-        }
-    });
+// Home page
+app1.controller('default', {
+    // Triggered on base url (root)
+    'default': function() {
+        return new air.View('HomePage')
+    }
+});
 
-    // Handles a list of products
-    app1.controller('products', {
-        // Triggered when navigating to /products/:id
-        'default': function(id) {
-            return new air.View('ProductDetails')
-        }
-        // Triggered when navigating to /products/list
-        'list': function() {
-            return new air.View('ProductList')
-        }
-    });
+// Handles a list of products
+app1.controller('products', {
+    // Triggered when navigating to /products/:id
+    'default': function(id) {
+        return new air.View('ProductDetails')
+    }
+    // Triggered when navigating to /products/list
+    'list': function() {
+        return new air.View('ProductList')
+    }
+});
 </code></pre>
 
-                <h4>Model</h4>
+                <h3>Model</h3>
                 <p>
                     In a typical fashion, models concentrate the responsibility of handling data structure, storage and server communication.
                     They are injected into views through controller actions, and come with a convenient API for handling Ajax communication.
@@ -184,31 +184,31 @@
                 </p>
 
 <pre><code class="language-javascript">
-    var app1 = air.app('app1');
+var app1 = air.app('app1');
 
-    // Product model definition
-    app1.model('Product', {
-        attributes: {
-            id: 1 // default
-        }
-        getAll: 'GET https://someUrl/products'
-        newProduct: 'POST https://someUrl/products/new',
-        updateProduct: 'PUT https://someUrl/products/{id}',
-        deleteProduct: 'DELETE https://someUrl/{id}'
-    });
+// Product model definition
+app1.model('Product', {
+    attributes: {
+        id: 1 // default
+    }
+    getAll: 'GET https://someUrl/products'
+    newProduct: 'POST https://someUrl/products/new',
+    updateProduct: 'PUT https://someUrl/products/{id}',
+    deleteProduct: 'DELETE https://someUrl/{id}'
+});
 
-    // Handles a list of products
-    app1.controller('products', {
-        'list': function() {
-            // Creates a new model instance and calls the getAll method
-            var allProducts = app1.model('Product').getAll();
-            // Pass the model to the view
-            return new air.View('ProductList', allProducts);
-        }
-    });
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return new air.View('ProductList', allProducts);
+    }
+});
 </code></pre>
 
-                <h4>View</h4>
+                <h3>View</h3>
                 <p>
                     Views contain presentation logic. Each view contains a model instance which stores the data that is rendered
                     on the template. They are also responsible for handling events, and do so by calling methods from the controller
@@ -216,36 +216,36 @@
                 </p>
 
 <pre><code class="language-javascript">
-    var app1 = air.app('app1');
+var app1 = air.app('app1');
 
-    // Product model definition
-    app1.model('Product', {
-        getAll: 'GET https://someUrl/products'
-    });
+// Product model definition
+app1.model('Product', {
+    getAll: 'GET https://someUrl/products'
+});
 
-    app1.view('ProductList', {
-        events: {
-            // When the button with class .btn-new' is pressed,
-            // call the 'new' method in the controller
-            'click .btn-new': 'new'
-        }
-    });
+app1.view('ProductList', {
+    events: {
+        // When the button with class .btn-new' is pressed,
+        // call the 'new' method in the controller
+        'click .btn-new': 'new'
+    }
+});
 
-    // Handles a list of products
-    app1.controller('products', {
-        'list': function() {
-            // Creates a new model instance and calls the getAll method
-            var allProducts = app1.model('Product').getAll();
-            // Pass the model to the view
-            return app1.view('ProductList', allProducts);
-        },
-        'new': function() {
-            // ...
-        }
-    });
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return app1.view('ProductList', allProducts);
+    },
+    'new': function() {
+        // ...
+    }
+});
 </code></pre>
 
-                <h4>Template</h4>
+                <h3>Template</h3>
                 <p>
                     Templates can be either strings or functinons which construct HTML code from the view data.
                     Air.js automatically finds template definitions in the dom looking for a script with a data-air attribute,
@@ -253,26 +253,26 @@
                 </p>
 
 <pre><code class="language-javascript">
-    var app1 = air.app('app1');
+var app1 = air.app('app1');
 
-    // Home page
-    app1.controller('main', {
-        'hello': function() {
-            return new air.View('main/hello');
-        }
-    });
+// Home page
+app1.controller('main', {
+    'hello': function() {
+        return new air.View('main/hello');
+    }
+});
 </code></pre>
 
 <pre><code class="language-markup">
-    &lt;!-- Template -->
-    &lt;script data-air="main/hello" type="text/template">
-        &lt;% for(var i=0; i<10; i++) { %>
-            <span>Lorem ipsum</span>
-        &lt;% } %>
-    &lt;/script>
+&lt;!-- Template -->
+&lt;script data-air="main/hello" type="text/template">
+    &lt;% for(var i=0; i<10; i++) { %>
+        <span>Lorem ipsum</span>
+    &lt;% } %>
+&lt;/script>
 
 
-    &lt;div data-air="main/hello">&lt;!-- Template will be rendered here -->&lt;/div>
+&lt;div data-air="main/hello">&lt;!-- Template will be rendered here -->&lt;/div>
 </code></pre>
 
                 <p>
@@ -302,45 +302,66 @@
                 </h2>
 
                 <p>
-                    Air.js also contains several utility functions which you can leverage in your own code. These are:
+                    Air.js also contains several utility functions which you can leverage in your own code.
+                    Tip: You can open your browser's dev tools and check them out this page :)
                 </p>
 
-                <h4>Type checking</h4>
-                <ul>
-                    <li>
-                        air.isArray(arr)
-                    </li>
-                    <li>
-                        air.isObject(obj)
-                    </li>
-                    <li>
-                        air.isStrictlyObject(obj)
-                    </li>
-                    <li>
-                        air.isBoolean(bool)
-                    </li>
-                    <li>
-                        air.isFunction(fun)
-                    </li>
-                    <li>
-                        air.isUndefined(obj)
-                    </li>
-                    <li>
-                        air.isNumeric(num)
-                    </li>
-                </ul>
+                <h3>Type checking</h3>
 
-                <h4>Object management</h4>
-                <ul>
-                    <li>
-                        air.keys(obj)
-                    </li>
-                    <li>
-                        air.each(obj, func, [context])
-                    </li>
-                </ul>
+<pre><code class="language-javascript">
+// Check if the given parameter is an array
+air.isArray([1,2,3]) => true
 
-                <h4>Ajax communication</h4>
+// Check if the given parameter is an object
+air.isObject({a:1, b:2}) => true
+
+// Check if the given parameter is strictly an object
+air.isStrictlyObject({'a':1, 'b':2}) => true
+air.isStrictlyObject([1,2,3]) => false
+
+// Check if the given parameter is boolean
+air.isBoolean(true) => true
+
+// Check if the given parameter is a string
+air.isString('Hi there') => true
+
+// Check if the given parameter is a function
+air.isFunction(function(){}) => true
+
+// Check if the given parameter is undefined
+air.isUndefined(undefined) => true
+
+// Check if the given parameter is numeric
+air.isNumeric(1) => true
+</code></pre>
+
+                <h3>Object management</h3>
+<pre><code class="language-javascript">
+// Returns an array with the property names for the given object
+air.keys({'a':1, 'b': 2, 'c': 3}) => ['a', 'b', 'c'];
+
+// Concise and efficient forEach implementation
+
+var arr = [10, 20, 30];
+air.each(arr, function(number) {
+    console.log(number)
+});
+// Logs 10 20 30
+
+var context = {
+    valueMessage: 'The value is',
+    indexMessage: 'at index'
+};
+air.each(arr, function(number, index) {
+    console.log(this.valueMessage, number, this.indexMessage, index);
+}, context);
+// Logs:
+// The number is 10 at index 0
+// The number is 20 at index 1
+// The number is 30 at index 2
+</code></pre>
+
+                <h3>Ajax communication</h3>
                 <ul>
                     <li>
                         air.ajax(options)
@@ -365,7 +386,7 @@
                     </li>
                 </ul>
 
-                <h4>DOM Management</h4>
+                <h3>DOM Management</h3>
                 <ul>
                     <li>
                         air.$(selector)
