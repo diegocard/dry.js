@@ -362,48 +362,52 @@ air.each(arr, function(number, index) {
 </code></pre>
 
                 <h3>Ajax communication</h3>
-                <ul>
-                    <li>
-                        air.ajax(options)
-                    </li>
-                    <li>
-                        air.getJSON(url, [callback], [error])
-                    </li>
-                    <li>
-                        air.get(url, [success], [error])
-                    </li>
-                    <li>
-                        air.post(url, data, [success], [error])
-                    </li>
-                    <li>
-                        air.put(url, data, [success], [error])
-                    </li>
-                    <li>
-                        air.delete(url, data, [success], [error])
-                    </li>
-                    <li>
-                        air.jsonp(url, callback)
-                    </li>
-                </ul>
+<pre><code class="language-javascript">
+// Simple jQuery-like ajax implementation
+air.ajax({
+    type: 'GET',
+    url: 'https://api.github.com/users/diegocard',
+    timeout: 5000,
+    success: function(data){
+        console.log(data);
+    },
+    error: function() {
+        console.log('error');
+    }
+});
+// There are also default values for most parameters
+air.ajax({
+    url: 'https://api.github.com/users/diegocard'
+});
+</code></pre>
+                <p>
+                    And other shortcuts:
+                    <ul>
+                        <li>air.getJSON(url, [success], [error]);</li>
+                        <li>air.get(url, [success], [error]);</li>
+                        <li>air.post(url, data, [success], [error])</li>
+                        <li>air.put(url, data, [success], [error])</li>
+                        <li>air.delete(url, data, [success], [error])</li>
+                        <li>air.jsonp(url, callback)</li>
+                    </ul>
+                </p>
 
                 <h3>DOM Management</h3>
-                <ul>
-                    <li>
-                        air.$(selector)
-                    </li>
-                    <li>
-                        air.$(selector).html([content])
-                    </li>
-                    <li>
-                        air.$(selector).on(eventName, eventHandler)
-                    </li>
-                    <li>
-                        air.$(selector).off(eventName, eventHandler)
-                    </li>
-                    <li>
-                        air.$(selector).trigger(eventName, [data])
-                    </li>
-                </ul>
+<pre><code class="language-javascript">
+// jQuery-like selectors
+air.$('body');
+
+// jQuery-like html function
+air.$('body').html('&lt;h1>Hi&lt;/h1>');
+
+// jQuery-like event handlers
+var clickHandler = function() {
+    console.log('clicked');
+}
+air.$('body').on('click', clickHandler); // Activate click event
+air.$('body').trigger('click', /* You can pass data here */);
+air.$('body').off('click', clickHandler); // Deactivate click event
+</code></pre>
 
             </section>
 
