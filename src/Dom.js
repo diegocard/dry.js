@@ -35,5 +35,5 @@ air.Dom.prototype.trigger = function(eventName, data) {
         event.initCustomEvent(eventName, true, true, data);
     }
 
-    el.dispatchEvent(event);
+    this.element.dispatchEvent(event);
 };
