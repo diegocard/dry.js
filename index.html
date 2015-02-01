@@ -12,7 +12,7 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Air.js by diegocard</title>
+    <title>Dry.js by diegocard</title>
 </head>
 
 <body>
@@ -26,19 +26,19 @@
 
             <header>
                 <div class="center-text">
-                    <h1 class="main-logo">Air.js</h1>
-                    <h2>Lightweight SPA framework focused on Convention over Configuration</h2>
+                    <h1 class="main-logo">Dry.js</h1>
+                    <h2>Lightweight SPA framework focused on Conventions</h2>
                 </div>
             </header>
 
             <section id="downloads" class="clearfix">
-                <a href="https://github.com/diegocard/air.js/zipball/master" id="download-zip" class="button">
+                <a href="https://github.com/diegocard/dry.js/zipball/master" id="download-zip" class="button">
                     <span>Download .zip</span>
                 </a>
-                <a href="https://github.com/diegocard/air.js/tarball/master" id="download-tar-gz" class="button">
+                <a href="https://github.com/diegocard/dry.js/tarball/master" id="download-tar-gz" class="button">
                     <span>Download .tar.gz</span>
                 </a>
-                <a href="https://github.com/diegocard/air.js" id="view-on-github" class="button">
+                <a href="https://github.com/diegocard/dry.js" id="view-on-github" class="button">
                     <span>View on GitHub</span>
                 </a>
             </section>
@@ -54,7 +54,7 @@
 
                 <h3>Minimal</h3>
                 <p>
-                    Air.js was inspired by what I consider to be the best features of the most well-known single page application frameworks:
+                    Dry.js was inspired by what I consider to be the best features of the most well-known single page application frameworks:
                     <ul>
                         <li>Provides only the minimum set of components necessary for web application development, like Backbone.js</li>
                         <li>Follows an MVC, convention over configuration approach, like Ember.js (although much simpler)</li>
@@ -66,17 +66,17 @@
 
                 <h3>Lightweight</h3>
                 <p>
-                    Initial page load is one of the main concerns of Air.js. The library weights less than 8kb minified (3kb gzipped) which makes it viable for any sort
+                    Initial page load is one of the main concerns of Dry.js. The library weights less than 8kb minified (3kb gzipped) which makes it viable for any sort
                     of web application.
                 </p>
 
                 <h3>Easily replaceable components</h3>
                 <p>
-                    Air.js is intended to be a standard way to join external components and libraries. All of its components are designed so that they can be easily
+                    Dry.js is intended to be a standard way to join external components and libraries. All of its components are designed so that they can be easily
                     replaced.
                 </p>
                 <p>
-                    For example, you can swap Air.js's templating engine with Handlebars, integrate React to improve rendering performance, or manage all
+                    For example, you can swap Dry.js's templating engine with Handlebars, integrate React to improve rendering performance, or manage all
                     DOM interactions with jQuery/Zepto, etc.
                 </p>
                 <p>
@@ -86,12 +86,12 @@
 
                 <h3>Easy to learn, easy to use and easy to change</h3>
                 <p>
-                    No one likes learning a new front-end framework every week, so that's why Air.js was specifically designed to be super easy to use.
+                    No one likes learning a new front-end framework every week, so that's why Dry.js was specifically designed to be super easy to use.
                     Getting started will only take you some minutes, and there's not that much more to it. Complexity is the first sign of bad architecture,
                     and your developers will thank you for it.
                 </p>
                 <p>
-                    Have you ever wanted to change a certain feature of a given framework? Well, this is super easy in Air.js because its code is brief
+                    Have you ever wanted to change a certain feature of a given framework? Well, this is super easy in Dry.js because its code is brief
                     and understandable, so re-writting a component is not complex at all. In fact I encourage you to do this if you want to replace any of the
                     framework's core components with external libraries, you'll only have to run the tests afterwards to make sure that everything still works as
                     expected.
@@ -123,7 +123,7 @@
 
 <pre><code class="language-javascript">
 // Create new app
-var app1 = air.app('app1');
+var app1 = dry.app('app1');
 // Start the app
 app1.init();
 </code></pre>
@@ -132,16 +132,16 @@ app1.init();
                 <p>
                     A controller contains methods.
                     Each method handles a specific route or event, returning a view instance if the result of the method's execution triggers UI changes.
-                    In this sense, Air.js controllers are very similar to Rails or ASP.NET MVC.
+                    In this sense, Dry.js controllers are very similar to Rails or ASP.NET MVC.
                 </p>
 
 <pre><code class="language-javascript">
-var app1 = air.app('app1');
+var app1 = dry.app('app1');
 
 // Handles a list of products
 app1.controller('products', {
     'list': function() { // Triggered when navigating to /products/list
-        return new air.View('ProductList')
+        return new dry.View('ProductList')
     }
 });
 </code></pre>
@@ -153,13 +153,13 @@ app1.controller('products', {
                 <p>
 
 <pre><code class="language-javascript">
-var app1 = air.app('app1');
+var app1 = dry.app('app1');
 
 // Home page
 app1.controller('default', {
     // Triggered on base url (root)
     'default': function() {
-        return new air.View('HomePage')
+        return new dry.View('HomePage')
     }
 });
 
@@ -167,11 +167,11 @@ app1.controller('default', {
 app1.controller('products', {
     // Triggered when navigating to /products/:id
     'default': function(id) {
-        return new air.View('ProductDetails')
+        return new dry.View('ProductDetails')
     }
     // Triggered when navigating to /products/list
     'list': function() {
-        return new air.View('ProductList')
+        return new dry.View('ProductList')
     }
 });
 </code></pre>
@@ -184,7 +184,7 @@ app1.controller('products', {
                 </p>
 
 <pre><code class="language-javascript">
-var app1 = air.app('app1');
+var app1 = dry.app('app1');
 
 // Product model definition
 app1.model('Product', {
@@ -203,7 +203,7 @@ app1.controller('products', {
         // Creates a new model instance and calls the getAll method
         var allProducts = app1.model('Product').getAll();
         // Pass the model to the view
-        return new air.View('ProductList', allProducts);
+        return new dry.View('ProductList', allProducts);
     }
 });
 </code></pre>
@@ -216,7 +216,7 @@ app1.controller('products', {
                 </p>
 
 <pre><code class="language-javascript">
-var app1 = air.app('app1');
+var app1 = dry.app('app1');
 
 // Product model definition
 app1.model('Product', {
@@ -248,31 +248,31 @@ app1.controller('products', {
                 <h3>Template</h3>
                 <p>
                     Templates can be either strings or functinons which construct HTML code from the view data.
-                    Air.js automatically finds template definitions in the dom looking for a script with a data-air attribute,
-                    and then renders it to a DOM element with a data-air attribute of the same value.
+                    Dry.js automatically finds template definitions in the dom looking for a script with a data-dry attribute,
+                    and then renders it to a DOM element with a data-dry attribute of the same value.
                 </p>
 
 <pre><code class="language-javascript">
-var app1 = air.app('app1');
+var app1 = dry.app('app1');
 
 // Home page
 app1.controller('main', {
     'hello': function() {
-        return new air.View('main/hello');
+        return new dry.View('main/hello');
     }
 });
 </code></pre>
 
 <pre><code class="language-markup">
 &lt;!-- Template -->
-&lt;script data-air="main/hello" type="text/template">
+&lt;script data-dry="main/hello" type="text/template">
     &lt;% for(var i=0; i<10; i++) { %>
         <span>Lorem ipsum</span>
     &lt;% } %>
 &lt;/script>
 
 
-&lt;div data-air="main/hello">&lt;!-- Template will be rendered here -->&lt;/div>
+&lt;div data-dry="main/hello">&lt;!-- Template will be rendered here -->&lt;/div>
 </code></pre>
 
                 <p>
@@ -282,7 +282,7 @@ app1.controller('main', {
 
                 <p>
                     Notice that the view instance is created on the fly, and since the only parameter specified when creating the view is its name, it will
-                    simply follow the default behavior for views. More specifically, it look for a script with a <strong>data-air</strong> attribute equal to its name (the template) and render it into
+                    simply follow the default behavior for views. More specifically, it look for a script with a <strong>data-dry</strong> attribute equal to its name (the template) and render it into
                     the first non-script DOM element with the same attribute value. Please read the <a href="#default-behavior-and-best-practices">Default behavior
                     and best practices</a> section for additional info.
                 </p>
@@ -302,7 +302,7 @@ app1.controller('main', {
                 </h2>
 
                 <p>
-                    Air.js also contains several utility functions which you can leverage in your own code.
+                    Dry.js also contains several utility functions which you can leverage in your own code.
                     Tip: You can open your browser's dev tools and check them out this page :)
                 </p>
 
@@ -310,40 +310,40 @@ app1.controller('main', {
 
 <pre><code class="language-javascript">
 // Check if the given parameter is an array
-air.isArray([1,2,3]) => true
+dry.isArray([1,2,3]) => true
 
 // Check if the given parameter is an object
-air.isObject({a:1, b:2}) => true
+dry.isObject({a:1, b:2}) => true
 
 // Check if the given parameter is strictly an object
-air.isStrictlyObject({'a':1, 'b':2}) => true
-air.isStrictlyObject([1,2,3]) => false
+dry.isStrictlyObject({'a':1, 'b':2}) => true
+dry.isStrictlyObject([1,2,3]) => false
 
 // Check if the given parameter is boolean
-air.isBoolean(true) => true
+dry.isBoolean(true) => true
 
 // Check if the given parameter is a string
-air.isString('Hi there') => true
+dry.isString('Hi there') => true
 
 // Check if the given parameter is a function
-air.isFunction(function(){}) => true
+dry.isFunction(function(){}) => true
 
 // Check if the given parameter is undefined
-air.isUndefined(undefined) => true
+dry.isUndefined(undefined) => true
 
 // Check if the given parameter is numeric
-air.isNumeric(1) => true
+dry.isNumeric(1) => true
 </code></pre>
 
                 <h3>Object management</h3>
 <pre><code class="language-javascript">
 // Returns an array with the property names for the given object
-air.keys({'a':1, 'b': 2, 'c': 3}) => ['a', 'b', 'c'];
+dry.keys({'a':1, 'b': 2, 'c': 3}) => ['a', 'b', 'c'];
 
 // Concise and efficient forEach implementation
 
 var arr = [10, 20, 30];
-air.each(arr, function(number) {
+dry.each(arr, function(number) {
     console.log(number)
 });
 // Logs 10 20 30
@@ -352,7 +352,7 @@ var context = {
     valueMessage: 'The value is',
     indexMessage: 'at index'
 };
-air.each(arr, function(number, index) {
+dry.each(arr, function(number, index) {
     console.log(this.valueMessage, number, this.indexMessage, index);
 }, context);
 // Logs:
@@ -364,7 +364,7 @@ air.each(arr, function(number, index) {
                 <h3>Ajax communication</h3>
 <pre><code class="language-javascript">
 // Simple jQuery-like ajax implementation
-air.ajax({
+dry.ajax({
     type: 'GET',
     url: 'https://api.github.com/users/diegocard',
     timeout: 5000,
@@ -376,47 +376,47 @@ air.ajax({
     }
 });
 // There are also default values for most parameters
-air.ajax({
+dry.ajax({
     url: 'https://api.github.com/users/diegocard'
 });
 </code></pre>
                 <p>
                     And other shortcuts:
                     <ul>
-                        <li>air.getJSON(url, [success], [error]);</li>
-                        <li>air.get(url, [success], [error]);</li>
-                        <li>air.post(url, data, [success], [error])</li>
-                        <li>air.put(url, data, [success], [error])</li>
-                        <li>air.delete(url, data, [success], [error])</li>
-                        <li>air.jsonp(url, callback)</li>
+                        <li>dry.getJSON(url, [success], [error]);</li>
+                        <li>dry.get(url, [success], [error]);</li>
+                        <li>dry.post(url, data, [success], [error])</li>
+                        <li>dry.put(url, data, [success], [error])</li>
+                        <li>dry.delete(url, data, [success], [error])</li>
+                        <li>dry.jsonp(url, callback)</li>
                     </ul>
                 </p>
 
                 <h3>DOM Management</h3>
 <pre><code class="language-javascript">
 // jQuery-like selectors
-air.$('body');
+dry.$('body');
 
 // jQuery-like html function
-air.$('body').html('&lt;h1>Hi&lt;/h1>');
+dry.$('body').html('&lt;h1>Hi&lt;/h1>');
 
 // jQuery-like event handlers
 var clickHandler = function() {
     console.log('clicked');
 }
-air.$('body').on('click', clickHandler); // Activate click event
-air.$('body').trigger('click', /* You can pass data here */);
-air.$('body').off('click', clickHandler); // Deactivate click event
+dry.$('body').on('click', clickHandler); // Activate click event
+dry.$('body').trigger('click', /* You can pass data here */);
+dry.$('body').off('click', clickHandler); // Deactivate click event
 </code></pre>
 
             </section>
 
             <footer>
-                Air.js is maintained by <a href="https://github.com/diegocard">diegocard</a>
+                Dry.js is maintained by <a href="https://github.com/diegocard">diegocard</a>
             </footer>
 
-            <!-- Include Air.js for simple testing purposes -->
-            <script type="text/javascript" src="https://cdn.rawgit.com/diegocard/air.js/master/dist/air.min.js"></script>
+            <!-- Include Dry.js for simple testing purposes -->
+            <script type="text/javascript" src="https://cdn.rawgit.com/diegocard/dry.js/master/dist/dry.min.js"></script>
 
             <!-- Prism.js -->
             <script type="text/javascript" src="javascripts/prism.js"></script>

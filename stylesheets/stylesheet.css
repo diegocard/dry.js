@@ -53,15 +53,16 @@ a:hover {
 }
 header {
     width: 100%;
-    padding-top: 35px;
+    padding-top: 0;
     padding-bottom: 25px;
     position: absolute;
     top: 20px;
     max-width: 620px;
 }
 header h1 {
+    text-shadow: none;
     font-family: 'Chivo', 'Helvetica Neue', Helvetica, Arial, serif;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 900;
     line-height: 1.2;
     color: #303030;
@@ -95,17 +96,15 @@ header h2 {
 }
 
 .main-logo {
-    color: #3081A9;
-    border-radius: 30px;
+    color: #ffffff;
     margin-bottom: 20px;
-    padding: 50px 30px 20px;
+    padding: 34px 40px 108px;
     display: inline-block;
-    background-color: #3081A9;
-    background-image: url(../images/cloud.svg);
+    background-image: url(../images/umbrella.svg);
     background-repeat: no-repeat;
     background-size: 190px;
-    background-position-x: -8px;
-    background-position-y: -30px;
+    background-position-x: 0px;
+    background-position-y: 0px;
 }
 
 a.button {
@@ -471,6 +470,7 @@ footer a:hover {
     }
     #downloads {
         margin-bottom: 25px;
+        top: 302px;
     }
     #download-zip, #download-tar-gz {
         display: none;
