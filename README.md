@@ -1,9 +1,9 @@
-air.js
+dry.js
 ======
 
 Super lightweight SPA framework focused on Convention over Configuration
 
-Build status: [![Build Status](https://travis-ci.org/diegocard/air.js.svg?branch=master)](https://travis-ci.org/diegocard/air.js)
+Build status: [![Build Status](https://travis-ci.org/diegocard/dry.js.svg?branch=master)](https://travis-ci.org/diegocard/dry.js)
 
 ## Features
 
