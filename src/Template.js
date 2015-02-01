@@ -1,22 +1,22 @@
 // Template
 // --------
-air.Template = function(name, tmpl) {
+dry.Template = function(name, tmpl) {
     this.name = name;
-    if (air.isFunction(tmpl)) {
+    if (dry.isFunction(tmpl)) {
         // Allow for pre-compiled funcions
         this.compile = tmpl;
     } else {
-        this.templateId = tmpl || ('script[data-air="' + name + '"]');
+        this.templateId = tmpl || ('script[data-dry="' + name + '"]');
     }
 };
 
-air.Template.prototype.cache = [];
+dry.Template.prototype.cache = [];
 
-air.Template.prototype.compile = function compile(model) {
+dry.Template.prototype.compile = function compile(model) {
     /* Figure out if we're getting a template, or if we need to
      * load the template - and be sure to cache the result.
      */
-    var str = this.cache[this.name] || air.$(this.templateId).element.innerHTML,
+    var str = this.cache[this.name] || dry.$(this.templateId).element.innerHTML,
         fn = new Function("obj",
             "var p=[],print=function(){p.push.apply(p,arguments);};" +
 

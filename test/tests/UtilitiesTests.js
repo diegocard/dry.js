@@ -1,18 +1,18 @@
-QUnit.test("Utilities: air.isArray", function (assert) {
+QUnit.test("Utilities: dry.isArray", function (assert) {
     var test1 = [],
     test2 = [1, 2, 3],
     test3 = ["a", "b", "c"],
     invalidTests = [NaN, 1, {}, {a: 1}, undefined, function () {return 1;}],
     i, len;
-    assert.ok(air.isArray(test1), "isArray: empty array");
-    assert.ok(air.isArray(test2), "isArray: numeric array");
-    assert.ok(air.isArray(test3), "isArray: string array");
+    assert.ok(dry.isArray(test1), "isArray: empty array");
+    assert.ok(dry.isArray(test2), "isArray: numeric array");
+    assert.ok(dry.isArray(test3), "isArray: string array");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isArray(invalidTests[i]));
+        assert.ok(!dry.isArray(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.isObject", function (assert) {
+QUnit.test("Utilities: dry.isObject", function (assert) {
     var test1 = {},
     test2 = {
         a: 1,
@@ -33,17 +33,17 @@ QUnit.test("Utilities: air.isObject", function (assert) {
         return 1;
     }],
     i, len;
-    assert.ok(air.isObject(test1), "isObject: empty object");
-    assert.ok(air.isObject(test2), "isObject: nested objects");
-    assert.ok(air.isObject(test3), "isObject: includes a function");
-    assert.ok(air.isObject(test3), "isObject: empty array");
-    assert.ok(air.isObject(test3), "isObject: array with elements");
+    assert.ok(dry.isObject(test1), "isObject: empty object");
+    assert.ok(dry.isObject(test2), "isObject: nested objects");
+    assert.ok(dry.isObject(test3), "isObject: includes a function");
+    assert.ok(dry.isObject(test3), "isObject: empty array");
+    assert.ok(dry.isObject(test3), "isObject: array with elements");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isObject(invalidTests[i]));
+        assert.ok(!dry.isObject(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.isStrictlyObject", function (assert) {
+QUnit.test("Utilities: dry.isStrictlyObject", function (assert) {
     var test1 = {},
     test2 = {
         a: 1,
@@ -62,17 +62,17 @@ QUnit.test("Utilities: air.isStrictlyObject", function (assert) {
         return 1;
     }],
     i, len;
-    assert.ok(air.isStrictlyObject(test1), "isStrictlyObject: empty object");
-    assert.ok(air.isStrictlyObject(test2), "isStrictlyObject: nested objects");
-    assert.ok(air.isStrictlyObject(test3), "isStrictlyObject: includes a function");
-    assert.ok(air.isStrictlyObject(test3), "isStrictlyObject: empty array");
-    assert.ok(air.isStrictlyObject(test3), "isStrictlyObject: array with elements");
+    assert.ok(dry.isStrictlyObject(test1), "isStrictlyObject: empty object");
+    assert.ok(dry.isStrictlyObject(test2), "isStrictlyObject: nested objects");
+    assert.ok(dry.isStrictlyObject(test3), "isStrictlyObject: includes a function");
+    assert.ok(dry.isStrictlyObject(test3), "isStrictlyObject: empty array");
+    assert.ok(dry.isStrictlyObject(test3), "isStrictlyObject: array with elements");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isStrictlyObject(invalidTests[i]));
+        assert.ok(!dry.isStrictlyObject(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.isBoolean", function (assert) {
+QUnit.test("Utilities: dry.isBoolean", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -81,14 +81,14 @@ QUnit.test("Utilities: air.isBoolean", function (assert) {
         return 1;
     }],
     i, len;
-    assert.ok(air.isBoolean(true), "isStrictlyObject: true");
-    assert.ok(air.isBoolean(false), "isStrictlyObject: false");
+    assert.ok(dry.isBoolean(true), "isStrictlyObject: true");
+    assert.ok(dry.isBoolean(false), "isStrictlyObject: false");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isBoolean(invalidTests[i]));
+        assert.ok(!dry.isBoolean(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.isString", function (assert) {
+QUnit.test("Utilities: dry.isString", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -97,17 +97,17 @@ QUnit.test("Utilities: air.isString", function (assert) {
         return 1;
     }],
     i, len;
-    assert.ok(air.isString(""), "isString: empty string");
-    assert.ok(air.isString('test1'), "isString: single quotes");
-    assert.ok(air.isString("test2"), "isString: double quotes");
-    assert.ok(air.isString(new String("asd")), "isString: String constructor");
-    assert.ok(air.isString(new String()), "isString: Empty string constructor");
+    assert.ok(dry.isString(""), "isString: empty string");
+    assert.ok(dry.isString('test1'), "isString: single quotes");
+    assert.ok(dry.isString("test2"), "isString: double quotes");
+    assert.ok(dry.isString(new String("asd")), "isString: String constructor");
+    assert.ok(dry.isString(new String()), "isString: Empty string constructor");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isString(invalidTests[i]));
+        assert.ok(!dry.isString(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.isFunction", function (assert) {
+QUnit.test("Utilities: dry.isFunction", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -116,18 +116,18 @@ QUnit.test("Utilities: air.isFunction", function (assert) {
         return a + 1;
     },
     i, len;
-    assert.ok(air.isFunction(function (a, b) {
+    assert.ok(dry.isFunction(function (a, b) {
         return a + b;
     }), "isFunction: anonymous function");
-    assert.ok(air.isFunction(func), "isFunction: names function");
-    assert.ok(air.isFunction(new Function()), "isFunction: Empty function constructor");
-    assert.ok(air.isFunction(new Function("x", "y", "return x+y;")), "isFunction: Empty function constructor");
+    assert.ok(dry.isFunction(func), "isFunction: names function");
+    assert.ok(dry.isFunction(new Function()), "isFunction: Empty function constructor");
+    assert.ok(dry.isFunction(new Function("x", "y", "return x+y;")), "isFunction: Empty function constructor");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isFunction(invalidTests[i]));
+        assert.ok(!dry.isFunction(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.isUndefined", function (assert) {
+QUnit.test("Utilities: dry.isUndefined", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -136,14 +136,14 @@ QUnit.test("Utilities: air.isUndefined", function (assert) {
         return 1;
     }],
     undef, i, len;
-    assert.ok(air.isUndefined(undef), "isUndefined: Uninitialized variable");
-    assert.ok(air.isUndefined(undefined), "isUndefined: Undefined pseudo-reserved word");
+    assert.ok(dry.isUndefined(undef), "isUndefined: Uninitialized variable");
+    assert.ok(dry.isUndefined(undefined), "isUndefined: Undefined pseudo-reserved word");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isUndefined(invalidTests[i]));
+        assert.ok(!dry.isUndefined(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.isNumeric", function (assert) {
+QUnit.test("Utilities: dry.isNumeric", function (assert) {
     var invalidTests = [{}, {
         a: 1
     },
@@ -152,19 +152,19 @@ QUnit.test("Utilities: air.isNumeric", function (assert) {
         return 1;
     }],
     i, len;
-    assert.ok(air.isNumeric(-25), "isNumeric: Negative integer number");
-    assert.ok(air.isNumeric(4), "isNumeric: Positive integer number");
-    assert.ok(air.isNumeric(0), "isNumeric: Zero");
-    assert.ok(air.isNumeric(-10.15), "isNumeric: Negative float number");
-    assert.ok(air.isNumeric(1.15), "isNumeric: Positive float number");
-    assert.ok(air.isNumeric(Number.MAX_VALUE), "isNumeric: Max number");
-    assert.ok(air.isNumeric(Number.MIN_VALUE), "isNumeric: Min number");
+    assert.ok(dry.isNumeric(-25), "isNumeric: Negative integer number");
+    assert.ok(dry.isNumeric(4), "isNumeric: Positive integer number");
+    assert.ok(dry.isNumeric(0), "isNumeric: Zero");
+    assert.ok(dry.isNumeric(-10.15), "isNumeric: Negative float number");
+    assert.ok(dry.isNumeric(1.15), "isNumeric: Positive float number");
+    assert.ok(dry.isNumeric(Number.MAX_VALUE), "isNumeric: Max number");
+    assert.ok(dry.isNumeric(Number.MIN_VALUE), "isNumeric: Min number");
     for (i = 0, len = invalidTests.length; i < len; i++) {
-        assert.ok(!air.isNumeric(invalidTests[i]));
+        assert.ok(!dry.isNumeric(invalidTests[i]));
     }
 });
 
-QUnit.test("Utilities: air.keys", function (assert) {
+QUnit.test("Utilities: dry.keys", function (assert) {
     var obj1 = {},
         obj2 = {
             prop1: 1,
@@ -175,9 +175,9 @@ QUnit.test("Utilities: air.keys", function (assert) {
             },
         },
         obj2Props = ['prop1', ];
-    assert.ok(air.keys(obj1).length === 0, "keys: Empty object");
+    assert.ok(dry.keys(obj1).length === 0, "keys: Empty object");
     assert.ok(function () {
-        var result2 = air.keys(obj2);
+        var result2 = dry.keys(obj2);
         return (
             result2[0] === 'prop1' &&
             result2[1] === 'prop2' &&
@@ -187,7 +187,7 @@ QUnit.test("Utilities: air.keys", function (assert) {
     }, "keys: Several types of properties");
 });
 
-QUnit.test("Utilities: air.each", function (assert) {
+QUnit.test("Utilities: dry.each", function (assert) {
     var arr = [1, 2, 3, 4],
         sum1 = 0,
         sum2 = 0,
@@ -196,10 +196,10 @@ QUnit.test("Utilities: air.each", function (assert) {
             b: 2,
             c: 3,
         };
-    air.each(arr, function (val) {
+    dry.each(arr, function (val) {
         sum1 += val;
     });
-    air.each(obj, function (val) {
+    dry.each(obj, function (val) {
         sum2 += val;
     });
     assert.ok(sum1 === 10, "forEach: numeric array");

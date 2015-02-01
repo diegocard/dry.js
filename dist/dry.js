@@ -1,10 +1,10 @@
-// AIR.JS
+// DRY.JS
 // ------
 
-air = {
+dry = {
     // jQuery-like function
     $: function(element) {
-        return new air.Dom(element);
+        return new dry.Dom(element);
     },
 
     // Apps container
@@ -12,7 +12,7 @@ air = {
 
     // Returns an app or create it if it doesn't exist (Singleton)
     app: function(name, options) {
-        return this.apps[name] || (this.apps[name] = new air.App(name, options));
+        return this.apps[name] || (this.apps[name] = new dry.App(name, options));
     },
 
     // Navigate to a certain url
@@ -23,15 +23,15 @@ air = {
     // Exexute a route without navigating
     run: function(route) {
         var app;
-        for (app in air.apps) {
-            air.apps[app].router.run(route);
+        for (app in dry.apps) {
+            dry.apps[app].router.run(route);
         }
     }
 };
 
 // Settings
 // --------
-air.settings = {
+dry.settings = {
     // When a route is left empty, the router will look for this controller
     DEFAULT_CONTROLLER_NAME: "default",
     // When a route doesn't target any specific method, it will look for this one
@@ -42,47 +42,47 @@ air.settings = {
 // ---------
 
 // Check if the given parameter is an array
-air.isArray = function(arr) {
+dry.isArray = function(arr) {
     return Object.prototype.toString.call(arr) === "[object Array]";
 };
 
 // Check if the given parameter is an object
-air.isObject = function(obj) {
-    return obj === Object(obj) && !air.isFunction(obj);
+dry.isObject = function(obj) {
+    return obj === Object(obj) && !dry.isFunction(obj);
 };
 
 // Check if the given parameter is strictly an object
-air.isStrictlyObject = function(obj) {
-    return air.isObject(obj) && !air.isArray(obj);
+dry.isStrictlyObject = function(obj) {
+    return dry.isObject(obj) && !dry.isArray(obj);
 };
 
 // Check if the given parameter is boolean
-air.isBoolean = function(bool) {
+dry.isBoolean = function(bool) {
     return bool === true || bool === false;
 };
 
 // Check if the given parameter is a string
-air.isString = function(str) {
+dry.isString = function(str) {
     return Object.prototype.toString.call(str) === "[object String]";
 };
 
 // Check if the given parameter is a function
-air.isFunction = function(fun) {
+dry.isFunction = function(fun) {
     return Object.prototype.toString.call(fun) === "[object Function]";
 };
 
 // Check if the given parameter is undefined
-air.isUndefined = function(obj) {
+dry.isUndefined = function(obj) {
     return typeof obj === "undefined";
 };
 
 // Check if the given parameter is numeric
-air.isNumeric = function(num) {
+dry.isNumeric = function(num) {
     return !isNaN(parseFloat(num)) && isFinite(num);
 };
 
 // Returns an array with the property names for the given object
-air.keys = function (obj) {
+dry.keys = function (obj) {
     var keys = [],
         key;
     for (key in obj) {
@@ -94,10 +94,10 @@ air.keys = function (obj) {
 };
 
 // Concise and efficient forEach implementation
-air.each = function (obj, func, context) {
+dry.each = function (obj, func, context) {
     var i, len, keys;
-    if (air.isStrictlyObject(obj)) {
-        keys = air.keys(obj);
+    if (dry.isStrictlyObject(obj)) {
+        keys = dry.keys(obj);
         for (i=0, len=keys.length; i<len; i++) {
             func.call(context, obj[keys[i]], keys[i], obj);
         }
@@ -109,7 +109,7 @@ air.each = function (obj, func, context) {
 };
 
 // Simple jQuery-like ajax implementation
-air.ajax = function(options) {
+dry.ajax = function(options) {
     var type = options.type || 'GET',
         upperCaseType = type.toUpperCase() || 'GET',
         xhr = new XMLHttpRequest(),
@@ -136,22 +136,22 @@ air.ajax = function(options) {
     // Timeout
     xhr.timeout = options.timeout || 10000;
     xhr.ontimeout = options.ontimeout || function(){
-        console.error('air.ajax timeout for url', options.url);
+        console.error('dry.ajax timeout for url', options.url);
     };
 
     if (upperCaseType === 'GET') {
         xhr.send();
     } else if (upperCaseType) { /* POST, PUT, DELETE */
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        xhr.send(air.param(options.data));
+        xhr.send(dry.param(options.data));
     }
     xhr = null;
     return this;
 };
 
 // Send a GET request to retrieve JSON from a given URL
-air.getJSON = function(url, callback, error) {
-    return air.ajax({
+dry.getJSON = function(url, callback, error) {
+    return dry.ajax({
         type: 'GET',
         url: url,
         success: function(data) {
@@ -164,8 +164,8 @@ air.getJSON = function(url, callback, error) {
 };
 
 // Utility ajax method shortcut for GET requests
-air.get = function(url, success, error) {
-    return air.ajax({
+dry.get = function(url, success, error) {
+    return dry.ajax({
         type: 'GET',
         url: url,
         success: success,
@@ -174,9 +174,9 @@ air.get = function(url, success, error) {
 };
 
 // Utility ajax method shortcuts for POST, PUT and DELETE requests
-air.each(['post', 'put', 'delete'], function(method){
-    air[method] = function(url, data, success, error) {
-        return air.ajax({
+dry.each(['post', 'put', 'delete'], function(method){
+    dry[method] = function(url, data, success, error) {
+        return dry.ajax({
             type: method,
             url: url,
             data: data,
@@ -187,8 +187,8 @@ air.each(['post', 'put', 'delete'], function(method){
 });
 
 // JSONP requests
-air.jsonp = function(url, callback) {
-    var callbackName = 'air_jsonp_callback_' + Math.round(100000 * Math.random());
+dry.jsonp = function(url, callback) {
+    var callbackName = 'dry_jsonp_callback_' + Math.round(100000 * Math.random());
     window[callbackName] = function(data) {
         delete window[callbackName];
         document.body.removeChild(script);
@@ -202,7 +202,7 @@ air.jsonp = function(url, callback) {
 
 // Serialize an array of form elements or a set of
 // key/values into a query string
-air.param = function(obj) {
+dry.param = function(obj) {
     var r20 = /%20/g,
         rbracket = /\[\]$/,
         rCRLF = /\r?\n/g,
@@ -212,15 +212,15 @@ air.param = function(obj) {
         prefix,
         add = function(key, value) {
             /* If value is a function, invoke it and return its value */
-            value = air.isFunction(value) ? value() : (value == null ? "" : value);
+            value = dry.isFunction(value) ? value() : (value == null ? "" : value);
             arr[arr.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
         },
         buildParams = function (prefix, obj, add) {
             var name;
 
-            if (air.isArray(obj)) {
+            if (dry.isArray(obj)) {
                 /* Serialize array item */
-                air.each(obj, function(value, index) {
+                dry.each(obj, function(value, index) {
                     if (rbracket.test(prefix)) {
                         /* Treat each array item as a scalar */
                         add(prefix, value);
@@ -230,7 +230,7 @@ air.param = function(obj) {
                     }
                 });
 
-            } else if (air.isObject(obj)) {
+            } else if (dry.isObject(obj)) {
                 /* Serialize object item */
                 for (name in obj) {
                     buildParams(prefix + "[" + name + "]", obj[name], add);
@@ -242,9 +242,9 @@ air.param = function(obj) {
         };
 
     /* If an array was passed in, assume that it is an array of form elements */
-    if (air.isArray(obj) || (!air.isStrictlyObject(obj))) {
+    if (dry.isArray(obj) || (!dry.isStrictlyObject(obj))) {
         /* Serialize the form elements */
-        air.each(obj, function() {
+        dry.each(obj, function() {
             add(this.name, this.value);
         });
     } else {
@@ -261,12 +261,12 @@ air.param = function(obj) {
 // DOM Management Utilities
 // ------------------------
 
-air.Dom = function(name) {
+dry.Dom = function(name) {
     this.element = document.querySelector(name);
 };
 
 // jQuery-like html function
-air.Dom.prototype.html = function(content) {
+dry.Dom.prototype.html = function(content) {
     if (content) {
         this.element.innerHTML = content;
         return this;
@@ -276,15 +276,15 @@ air.Dom.prototype.html = function(content) {
 };
 
 // jQuery-like event handlers
-air.Dom.prototype.on = function(eventName, eventHandler) {
+dry.Dom.prototype.on = function(eventName, eventHandler) {
     this.element.addEventListener(eventName, eventHandler);
 };
 
-air.Dom.prototype.off = function(eventName, eventHandler) {
+dry.Dom.prototype.off = function(eventName, eventHandler) {
     this.element.removeEventListener(eventName, eventHandler);
 };
 
-air.Dom.prototype.trigger = function(eventName, data) {
+dry.Dom.prototype.trigger = function(eventName, data) {
     var event;
     if (window.CustomEvent) {
         event = new CustomEvent(eventName, {
@@ -300,7 +300,7 @@ air.Dom.prototype.trigger = function(eventName, data) {
 
 // App
 // ---
-air.App = function(name, options) {
+dry.App = function(name, options) {
     this.name = name;
     this.options = options || {};
     this.routes = this.options.routes || [];
@@ -309,17 +309,17 @@ air.App = function(name, options) {
     this.modelDefinitions = this.options.models || {};
 };
 
-air.App.prototype.controller = function(name, methods) {
+dry.App.prototype.controller = function(name, methods) {
     var self = this,
         controller;
-    if (air.isUndefined(methods)) {
+    if (dry.isUndefined(methods)) {
         controller = this.controllers[name];
     } else {
-        controller = new air.Controller(name, methods);
+        controller = new dry.Controller(name, methods);
         this.controllers[name] = controller;
         /* Register routes for each controller method */
-        air.each(methods, function(method, methodName){
-            if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
+        dry.each(methods, function(method, methodName){
+            if (methodName.toLowerCase() === dry.settings.DEFAULT_CONTROLLER_METHOD) {
                 self.routes.push(name);
             } else {
                 self.routes.push(name + '/' + methodName);
@@ -329,23 +329,23 @@ air.App.prototype.controller = function(name, methods) {
     return controller;
 };
 
-air.App.prototype.view = function(name, templateData) {
-    if (air.isUndefined(templateData)) {
+dry.App.prototype.view = function(name, templateData) {
+    if (dry.isUndefined(templateData)) {
         return this.views[name];
     } else {
-        this.views[name] = new air.View(name, templateData);
+        this.views[name] = new dry.View(name, templateData);
     }
 };
 
-air.App.prototype.init = function() {
+dry.App.prototype.init = function() {
     /* Create and initialize the app's router */
-    this.router = new air.Router(this.name, this.routes);
+    this.router = new dry.Router(this.name, this.routes);
     this.router.init();
 };
 
-air.App.prototype.model = function(name, params) {
+dry.App.prototype.model = function(name, params) {
     if (!params) {
-        return new air.Model(name, this.modelDefinitions[name]);
+        return new dry.Model(name, this.modelDefinitions[name]);
     } else {
         /* Store the model definition if needed */
         this.modelDefinitions[name] = params;
@@ -354,16 +354,16 @@ air.App.prototype.model = function(name, params) {
 
 // Router
 // ------
-air.Router = function(appName, routes) {
+dry.Router = function(appName, routes) {
     var self = this,
         /* Main logic behind the execution of a route */
         routeCallback = function(route) {
             var split = route.url.split('/'),
                 /* Find which controller should handle a given route */
-                controllerName = split[0] || air.settings.DEFAULT_CONTROLLER_NAME,
+                controllerName = split[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
                 /* Find which method should be invoked in the controller that handles the given route */
-                controllerMethod = split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD,
-                controller = air.apps[self.appName].controllers[controllerName];
+                controllerMethod = split[1] ? split[1].split('?')[0] : dry.settings.DEFAULT_CONTROLLER_METHOD,
+                controller = dry.apps[self.appName].controllers[controllerName];
             controller.invokeMethod(controllerMethod, route.params);
         },
         i, len, route;
@@ -375,7 +375,7 @@ air.Router = function(appName, routes) {
     }
 
     /* Empty routes are handled through the default action in the default controller */
-    if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
+    if (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) > -1){
         routes.push('');
     }
 
@@ -386,11 +386,11 @@ air.Router = function(appName, routes) {
     }
 };
 
-air.Router.prototype.run = function(route) {
+dry.Router.prototype.run = function(route) {
     this.rlite.run(route);
 };
 
-air.Router.prototype.init = function() {
+dry.Router.prototype.init = function() {
     /* Hash-based routing */
     var self = this,
         processHash = function() {
@@ -404,16 +404,16 @@ air.Router.prototype.init = function() {
 
 // Model
 // -----
-air.Model = function(name, params) {
+dry.Model = function(name, params) {
     params = params || {};
     this.name = name;
     this.attributes = params.attributes || {};
     var self = this;
 
     /* Generate model methods for each given endpoint */
-    air.each(params, function(value, property){
+    dry.each(params, function(value, property){
         var split, httpMethod, url;
-        if (air.isString(value)){
+        if (dry.isString(value)){
             split = value.split(' ');
             httpMethod = split[0];
             url = split[1];
@@ -424,7 +424,7 @@ air.Model = function(name, params) {
 
 // Generate a model method which will perform an ajax request
 // for a given endpoint
-air.Model.prototype.endpointMethod = function(httpMethod, url) {
+dry.Model.prototype.endpointMethod = function(httpMethod, url) {
     return function(params, success, error) {
         var urlAfterReplacement = url,
             attributes = this.attributes,
@@ -437,7 +437,7 @@ air.Model.prototype.endpointMethod = function(httpMethod, url) {
         for (param in params) {
             urlAfterReplacement = urlAfterReplacement.replace('{' + param + '}', params[param]);
         }
-        return air.ajax({
+        return dry.ajax({
             url: urlAfterReplacement,
             type: httpMethod,
             data: params,
@@ -449,12 +449,12 @@ air.Model.prototype.endpointMethod = function(httpMethod, url) {
 
 // Controller
 // ----------
-air.Controller = function(name, methods) {
+dry.Controller = function(name, methods) {
     this.name = name;
     this.methods = methods || {};
 };
 
-air.Controller.prototype.invokeMethod = function(methodName, params) {
+dry.Controller.prototype.invokeMethod = function(methodName, params) {
     var method = this.methods[methodName],
         result, defaultView, defaultViewName;
     if (method) {
@@ -466,13 +466,13 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
          * simply controllerName if methodName is the default one.
          */
         defaultViewName = this.name;
-        if (methodName && methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
+        if (methodName && methodName != dry.settings.DEFAULT_CONTROLLER_METHOD) {
             defaultViewName += '/' + methodName;
         }
-        result = new air.View(defaultViewName, {templateData: params, controller: this});
+        result = new dry.View(defaultViewName, {templateData: params, controller: this});
     }
     /* If a view was returned, render it */
-    if (result && result.constructor === air.View) {
+    if (result && result.constructor === dry.View) {
         /* If the controller's method execution resulted in the creation of a view,
          * store this information in the view itself.
          */
@@ -483,23 +483,23 @@ air.Controller.prototype.invokeMethod = function(methodName, params) {
 
 // Template
 // --------
-air.Template = function(name, tmpl) {
+dry.Template = function(name, tmpl) {
     this.name = name;
-    if (air.isFunction(tmpl)) {
+    if (dry.isFunction(tmpl)) {
         // Allow for pre-compiled funcions
         this.compile = tmpl;
     } else {
-        this.templateId = tmpl || ('script[data-air="' + name + '"]');
+        this.templateId = tmpl || ('script[data-dry="' + name + '"]');
     }
 };
 
-air.Template.prototype.cache = [];
+dry.Template.prototype.cache = [];
 
-air.Template.prototype.compile = function compile(model) {
+dry.Template.prototype.compile = function compile(model) {
     /* Figure out if we're getting a template, or if we need to
      * load the template - and be sure to cache the result.
      */
-    var str = this.cache[this.name] || air.$(this.templateId).element.innerHTML,
+    var str = this.cache[this.name] || dry.$(this.templateId).element.innerHTML,
         fn = new Function("obj",
             "var p=[],print=function(){p.push.apply(p,arguments);};" +
 
@@ -522,39 +522,39 @@ air.Template.prototype.compile = function compile(model) {
 
 // View
 // ----
-air.View = function(name, options) {
+dry.View = function(name, options) {
     options = options || {};
     this.name = name;
-    this.el = options.el || (':not(script)[data-air="' + name + '"]');
-    this.model = options.model || new air.Model(name);
-    this.template = new air.Template(name, options.template);
+    this.el = options.el || (':not(script)[data-dry="' + name + '"]');
+    this.model = options.model || new dry.Model(name);
+    this.template = new dry.Template(name, options.template);
     this.controller = options.controller;
     this.events = options.events || {};
 };
 
-air.View.prototype.render = function() {
-    var viewElement = air.$(this.el),
+dry.View.prototype.render = function() {
+    var viewElement = dry.$(this.el),
         compiledTemplate = this.template.compile(this.model),
         events = this.events,
         self = this;
     viewElement.html(compiledTemplate);
-    air.each(events, function(action, key){
+    dry.each(events, function(action, key){
         self.addEvent(key, action);
     });
 };
 
-air.View.prototype.addEvent = function(eventKey, eventAction) {
+dry.View.prototype.addEvent = function(eventKey, eventAction) {
     var eventKeySplit, eventElement, eventTrigger;
     eventKeySplit = eventKey.split(' ');
     eventElement = eventKeySplit[1];
     eventTrigger = eventKeySplit[0];
-    if (air.isString(eventAction)) {
+    if (dry.isString(eventAction)) {
         // TODO: Finish, test
         eventAction = function(params) {
             this.controller.invokeMethod(eventAction, params);
         };
     }
-    air.$(eventElement).on(eventTrigger, eventAction);
+    dry.$(eventElement).on(eventTrigger, eventAction);
 };
 
 function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};

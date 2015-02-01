@@ -20,18 +20,18 @@ gulp.task('compile', function() {
         './src/View.js',
         './vendor/*.js'
     ])
-        .pipe(concat('air.js'))
+        .pipe(concat('dry.js'))
         .pipe(gulp.dest('dist'))
         .pipe(size({title: 'Unminified'}))
         .pipe(uglify())
-        .pipe(rename('air.min.js'))
+        .pipe(rename('dry.min.js'))
         .pipe(gulp.dest('dist'))
         .pipe(size({title: 'Minified'}))
         .pipe(size({title: 'Minified and gzipped', gzip: true}));
 });
 
 gulp.task('doc', function() {
-    return gulp.src("./dist/air.js")
+    return gulp.src("./dist/dry.js")
         .pipe(docco({
             // layout: 'linear'
         }))

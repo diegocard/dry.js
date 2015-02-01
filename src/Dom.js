@@ -1,12 +1,12 @@
 // DOM Management Utilities
 // ------------------------
 
-air.Dom = function(name) {
+dry.Dom = function(name) {
     this.element = document.querySelector(name);
 };
 
 // jQuery-like html function
-air.Dom.prototype.html = function(content) {
+dry.Dom.prototype.html = function(content) {
     if (content) {
         this.element.innerHTML = content;
         return this;
@@ -16,15 +16,15 @@ air.Dom.prototype.html = function(content) {
 };
 
 // jQuery-like event handlers
-air.Dom.prototype.on = function(eventName, eventHandler) {
+dry.Dom.prototype.on = function(eventName, eventHandler) {
     this.element.addEventListener(eventName, eventHandler);
 };
 
-air.Dom.prototype.off = function(eventName, eventHandler) {
+dry.Dom.prototype.off = function(eventName, eventHandler) {
     this.element.removeEventListener(eventName, eventHandler);
 };
 
-air.Dom.prototype.trigger = function(eventName, data) {
+dry.Dom.prototype.trigger = function(eventName, data) {
     var event;
     if (window.CustomEvent) {
         event = new CustomEvent(eventName, {

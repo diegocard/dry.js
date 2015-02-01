@@ -1,14 +1,14 @@
 {
-  "name": "air.js",
+  "name": "dry.js",
   "version": "0.0.1",
   "description": "\"Lightweight SPA framework focused on Convention over Configuration\"",
-  "main": "air.js",
+  "main": "dry.js",
   "scripts": {
     "test": "gulp test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/diegocard/air.js.git"
+    "url": "https://github.com/diegocard/dry.js.git"
   },
   "keywords": [
     "Lightweight",
@@ -18,7 +18,7 @@
   "author": "Diego Cardozo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/diegocard/air.js/issues"
+    "url": "https://github.com/diegocard/dry.js/issues"
   },
   "devDependencies": {
     "gulp": "~3.8.7",

@@ -1,4 +1,4 @@
-QUnit.test("Ajax: air.get", function (assert) {
+QUnit.test("Ajax: dry.get", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -8,7 +8,7 @@ QUnit.test("Ajax: air.get", function (assert) {
             return data && (typeof data === "object") && data.id === gitHubUserId;
         };
     // Request with all parameters
-    air.ajax({
+    dry.ajax({
         type: 'GET',
         url: url,
         timeout: 5000,
@@ -23,12 +23,12 @@ QUnit.test("Ajax: air.get", function (assert) {
         }
     });
     // Request with only the required parameters
-    air.ajax({
+    dry.ajax({
         url: url
     });
 });
 
-QUnit.test("Ajax: air.getJSON", function (assert) {
+QUnit.test("Ajax: dry.getJSON", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -38,7 +38,7 @@ QUnit.test("Ajax: air.getJSON", function (assert) {
             return data && (typeof data === "object") && data.id === gitHubUserId;
         };
     // Request with all parameters
-    air.getJSON(
+    dry.getJSON(
         url,
         function(data){
             if (checkDataFormat(data)) {
@@ -51,11 +51,11 @@ QUnit.test("Ajax: air.getJSON", function (assert) {
         }
     );
     // Request with only the required parameters
-    air.getJSON(url);
+    dry.getJSON(url);
 });
 
 // get
-QUnit.test("Ajax: air.get shortcut method", function (assert) {
+QUnit.test("Ajax: dry.get shortcut method", function (assert) {
     // This test will retrieve my user's information from GitHub's user API.
     assert.expect(1);
     var done = assert.async(),
@@ -65,7 +65,7 @@ QUnit.test("Ajax: air.get shortcut method", function (assert) {
         return data && (typeof data === "object") && data.id === gitHubUserId;
     };
     // Request with all parameters
-    air.get(
+    dry.get(
         url,
         function(data){
             if (checkDataFormat(data)) {
@@ -78,10 +78,10 @@ QUnit.test("Ajax: air.get shortcut method", function (assert) {
         }
     );
     // Request with only the required parameters
-    air.get(url);
+    dry.get(url);
 });
 
-QUnit.test("Ajax: air.post shortcut method", function (assert) {
+QUnit.test("Ajax: dry.post shortcut method", function (assert) {
     // This test will post to a service which returns the same data posted
     assert.expect(1);
     var done = assert.async(),
@@ -105,7 +105,7 @@ QUnit.test("Ajax: air.post shortcut method", function (assert) {
             );
         };
     // Request with all parameters
-    air.post(
+    dry.post(
         url,
         data,
         function(data){
@@ -119,10 +119,10 @@ QUnit.test("Ajax: air.post shortcut method", function (assert) {
         }
     );
     // Request with only the required parameters
-    air.post(url, data);
+    dry.post(url, data);
 });
 
-QUnit.test("Ajax: air.put shortcut method", function (assert) {
+QUnit.test("Ajax: dry.put shortcut method", function (assert) {
     // This test will send a PUT to a service which returns the same data sent
     assert.expect(1);
     var done = assert.async(),
@@ -146,7 +146,7 @@ QUnit.test("Ajax: air.put shortcut method", function (assert) {
         );
     };
     // Request with all parameters
-    air.put(
+    dry.put(
         url,
         data,
         function(data){
@@ -160,10 +160,10 @@ QUnit.test("Ajax: air.put shortcut method", function (assert) {
         }
     );
     // Request with only the required parameters
-    air.put(url, data);
+    dry.put(url, data);
 });
 
-QUnit.test("Ajax: air.delete shortcut method", function (assert) {
+QUnit.test("Ajax: dry.delete shortcut method", function (assert) {
     // This test will send a DELETE to a service which returns the same data sent
     assert.expect(1);
     var done = assert.async(),
@@ -187,7 +187,7 @@ QUnit.test("Ajax: air.delete shortcut method", function (assert) {
         );
     };
     // Request with all parameters
-    air.delete(
+    dry.delete(
         url,
         data,
         function(data){
@@ -201,5 +201,5 @@ QUnit.test("Ajax: air.delete shortcut method", function (assert) {
         }
     );
     // Request with only the required parameters
-    air.delete(url, data);
+    dry.delete(url, data);
 });

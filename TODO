@@ -1,3 +1,4 @@
+- FIX AJAX SHORTCUT METHODS -> NetworkTests.html
 - View.js -> add each event of options.events on view creation (test it)
 - Add more tests in general (events, page navigation, etc)
 - Test models with ajax endpoints

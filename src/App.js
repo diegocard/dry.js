@@ -1,6 +1,6 @@
 // App
 // ---
-air.App = function(name, options) {
+dry.App = function(name, options) {
     this.name = name;
     this.options = options || {};
     this.routes = this.options.routes || [];
@@ -9,17 +9,17 @@ air.App = function(name, options) {
     this.modelDefinitions = this.options.models || {};
 };
 
-air.App.prototype.controller = function(name, methods) {
+dry.App.prototype.controller = function(name, methods) {
     var self = this,
         controller;
-    if (air.isUndefined(methods)) {
+    if (dry.isUndefined(methods)) {
         controller = this.controllers[name];
     } else {
-        controller = new air.Controller(name, methods);
+        controller = new dry.Controller(name, methods);
         this.controllers[name] = controller;
         /* Register routes for each controller method */
-        air.each(methods, function(method, methodName){
-            if (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
+        dry.each(methods, function(method, methodName){
+            if (methodName.toLowerCase() === dry.settings.DEFAULT_CONTROLLER_METHOD) {
                 self.routes.push(name);
             } else {
                 self.routes.push(name + '/' + methodName);
@@ -29,23 +29,23 @@ air.App.prototype.controller = function(name, methods) {
     return controller;
 };
 
-air.App.prototype.view = function(name, templateData) {
-    if (air.isUndefined(templateData)) {
+dry.App.prototype.view = function(name, templateData) {
+    if (dry.isUndefined(templateData)) {
         return this.views[name];
     } else {
-        this.views[name] = new air.View(name, templateData);
+        this.views[name] = new dry.View(name, templateData);
     }
 };
 
-air.App.prototype.init = function() {
+dry.App.prototype.init = function() {
     /* Create and initialize the app's router */
-    this.router = new air.Router(this.name, this.routes);
+    this.router = new dry.Router(this.name, this.routes);
     this.router.init();
 };
 
-air.App.prototype.model = function(name, params) {
+dry.App.prototype.model = function(name, params) {
     if (!params) {
-        return new air.Model(name, this.modelDefinitions[name]);
+        return new dry.Model(name, this.modelDefinitions[name]);
     } else {
         /* Store the model definition if needed */
         this.modelDefinitions[name] = params;

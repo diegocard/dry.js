@@ -1,15 +1,15 @@
 // Router
 // ------
-air.Router = function(appName, routes) {
+dry.Router = function(appName, routes) {
     var self = this,
         /* Main logic behind the execution of a route */
         routeCallback = function(route) {
             var split = route.url.split('/'),
                 /* Find which controller should handle a given route */
-                controllerName = split[0] || air.settings.DEFAULT_CONTROLLER_NAME,
+                controllerName = split[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
                 /* Find which method should be invoked in the controller that handles the given route */
-                controllerMethod = split[1] ? split[1].split('?')[0] : air.settings.DEFAULT_CONTROLLER_METHOD,
-                controller = air.apps[self.appName].controllers[controllerName];
+                controllerMethod = split[1] ? split[1].split('?')[0] : dry.settings.DEFAULT_CONTROLLER_METHOD,
+                controller = dry.apps[self.appName].controllers[controllerName];
             controller.invokeMethod(controllerMethod, route.params);
         },
         i, len, route;
@@ -21,7 +21,7 @@ air.Router = function(appName, routes) {
     }
 
     /* Empty routes are handled through the default action in the default controller */
-    if (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) > -1){
+    if (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) > -1){
         routes.push('');
     }
 
@@ -32,11 +32,11 @@ air.Router = function(appName, routes) {
     }
 };
 
-air.Router.prototype.run = function(route) {
+dry.Router.prototype.run = function(route) {
     this.rlite.run(route);
 };
 
-air.Router.prototype.init = function() {
+dry.Router.prototype.init = function() {
     /* Hash-based routing */
     var self = this,
         processHash = function() {

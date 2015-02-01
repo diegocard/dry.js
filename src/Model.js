@@ -1,15 +1,15 @@
 // Model
 // -----
-air.Model = function(name, params) {
+dry.Model = function(name, params) {
     params = params || {};
     this.name = name;
     this.attributes = params.attributes || {};
     var self = this;
 
     /* Generate model methods for each given endpoint */
-    air.each(params, function(value, property){
+    dry.each(params, function(value, property){
         var split, httpMethod, url;
-        if (air.isString(value)){
+        if (dry.isString(value)){
             split = value.split(' ');
             httpMethod = split[0];
             url = split[1];
@@ -20,7 +20,7 @@ air.Model = function(name, params) {
 
 // Generate a model method which will perform an ajax request
 // for a given endpoint
-air.Model.prototype.endpointMethod = function(httpMethod, url) {
+dry.Model.prototype.endpointMethod = function(httpMethod, url) {
     return function(params, success, error) {
         var urlAfterReplacement = url,
             attributes = this.attributes,
@@ -33,7 +33,7 @@ air.Model.prototype.endpointMethod = function(httpMethod, url) {
         for (param in params) {
             urlAfterReplacement = urlAfterReplacement.replace('{' + param + '}', params[param]);
         }
-        return air.ajax({
+        return dry.ajax({
             url: urlAfterReplacement,
             type: httpMethod,
             data: params,

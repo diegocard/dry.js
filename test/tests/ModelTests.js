@@ -2,7 +2,7 @@ QUnit.test("Model: Generate GET, POST, PUT and DELETE methods", function (assert
     // This test will send a DELETE to a service which returns the same data sent
     assert.expect(4);
     var done = assert.async(),
-        testModel = new air.Model('TestModel', {
+        testModel = new dry.Model('TestModel', {
             getTest: 'GET https://api.github.com/users/diegocard',
             postTest: 'POST http://httpbin.org/post',
             putTest: 'PUT http://httpbin.org/put',

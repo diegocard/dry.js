@@ -1,10 +1,10 @@
-// AIR.JS
+// DRY.JS
 // ------
 
-air = {
+dry = {
     // jQuery-like function
     $: function(element) {
-        return new air.Dom(element);
+        return new dry.Dom(element);
     },
 
     // Apps container
@@ -12,7 +12,7 @@ air = {
 
     // Returns an app or create it if it doesn't exist (Singleton)
     app: function(name, options) {
-        return this.apps[name] || (this.apps[name] = new air.App(name, options));
+        return this.apps[name] || (this.apps[name] = new dry.App(name, options));
     },
 
     // Navigate to a certain url
@@ -23,8 +23,8 @@ air = {
     // Exexute a route without navigating
     run: function(route) {
         var app;
-        for (app in air.apps) {
-            air.apps[app].router.run(route);
+        for (app in dry.apps) {
+            dry.apps[app].router.run(route);
         }
     }
 };

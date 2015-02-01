@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>air.js</title>
+  <title>dry.js</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -15,7 +15,7 @@
         
           <li id="title">
               <div class="annotation">
-                  <h1>air.js</h1>
+                  <h1>dry.js</h1>
               </div>
           </li>
         
@@ -27,12 +27,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h2 id="air-js">AIR.JS</h2>
+              <h2 id="dry-js">DRY.JS</h2>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-air = {</pre></div></div>
+dry = {</pre></div></div>
             
         </li>
         
@@ -48,7 +48,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    $: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(element)</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> air.Dom(element);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> dry.Dom(element);
     },</pre></div></div>
             
         </li>
@@ -80,7 +80,7 @@ air = {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>    app: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.apps[name] || (<span class="hljs-keyword">this</span>.apps[name] = <span class="hljs-keyword">new</span> air.App(name, options));
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.apps[name] || (<span class="hljs-keyword">this</span>.apps[name] = <span class="hljs-keyword">new</span> dry.App(name, options));
     },</pre></div></div>
             
         </li>
@@ -115,8 +115,8 @@ air = {</pre></div></div>
             
             <div class="content"><div class='highlight'><pre>    run: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
         <span class="hljs-keyword">var</span> app;
-        <span class="hljs-keyword">for</span> (app <span class="hljs-keyword">in</span> air.apps) {
-            air.apps[app].router.run(route);
+        <span class="hljs-keyword">for</span> (app <span class="hljs-keyword">in</span> dry.apps) {
+            dry.apps[app].router.run(route);
         }
     }
 };</pre></div></div>
@@ -134,7 +134,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.settings = {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>dry.settings = {</pre></div></div>
             
         </li>
         
@@ -193,7 +193,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isArray = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arr)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.isArray = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(arr)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(arr) === <span class="hljs-string">"[object Array]"</span>;
 };</pre></div></div>
             
@@ -210,8 +210,8 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isObject = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
-    <span class="hljs-keyword">return</span> obj === <span class="hljs-built_in">Object</span>(obj) &amp;&amp; !air.isFunction(obj);
+            <div class="content"><div class='highlight'><pre>dry.isObject = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
+    <span class="hljs-keyword">return</span> obj === <span class="hljs-built_in">Object</span>(obj) &amp;&amp; !dry.isFunction(obj);
 };</pre></div></div>
             
         </li>
@@ -227,8 +227,8 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isStrictlyObject = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
-    <span class="hljs-keyword">return</span> air.isObject(obj) &amp;&amp; !air.isArray(obj);
+            <div class="content"><div class='highlight'><pre>dry.isStrictlyObject = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
+    <span class="hljs-keyword">return</span> dry.isObject(obj) &amp;&amp; !dry.isArray(obj);
 };</pre></div></div>
             
         </li>
@@ -244,7 +244,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isBoolean = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(bool)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.isBoolean = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(bool)</span> </span>{
     <span class="hljs-keyword">return</span> bool === <span class="hljs-literal">true</span> || bool === <span class="hljs-literal">false</span>;
 };</pre></div></div>
             
@@ -261,7 +261,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(str)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.isString = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(str)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(str) === <span class="hljs-string">"[object String]"</span>;
 };</pre></div></div>
             
@@ -278,7 +278,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isFunction = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fun)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.isFunction = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fun)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.prototype.toString.call(fun) === <span class="hljs-string">"[object Function]"</span>;
 };</pre></div></div>
             
@@ -295,7 +295,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isUndefined = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.isUndefined = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> obj === <span class="hljs-string">"undefined"</span>;
 };</pre></div></div>
             
@@ -312,7 +312,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.isNumeric = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(num)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.isNumeric = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(num)</span> </span>{
     <span class="hljs-keyword">return</span> !<span class="hljs-built_in">isNaN</span>(<span class="hljs-built_in">parseFloat</span>(num)) &amp;&amp; <span class="hljs-built_in">isFinite</span>(num);
 };</pre></div></div>
             
@@ -329,7 +329,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.keys = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.keys = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj)</span> </span>{
     <span class="hljs-keyword">var</span> keys = [],
         key;
     <span class="hljs-keyword">for</span> (key <span class="hljs-keyword">in</span> obj) {
@@ -353,10 +353,10 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.each = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj, func, context)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.each = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj, func, context)</span> </span>{
     <span class="hljs-keyword">var</span> i, len, keys;
-    <span class="hljs-keyword">if</span> (air.isStrictlyObject(obj)) {
-        keys = air.keys(obj);
+    <span class="hljs-keyword">if</span> (dry.isStrictlyObject(obj)) {
+        keys = dry.keys(obj);
         <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>, len=keys.length; i&lt;len; i++) {
             func.call(context, obj[keys[i]], keys[i], obj);
         }
@@ -380,7 +380,7 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span> </span>{
     <span class="hljs-keyword">var</span> type = options.type || <span class="hljs-string">'GET'</span>,
         upperCaseType = type.toUpperCase() || <span class="hljs-string">'GET'</span>,
         xhr = <span class="hljs-keyword">new</span> XMLHttpRequest(),
@@ -419,14 +419,14 @@ air = {</pre></div></div>
             
             <div class="content"><div class='highlight'><pre>    xhr.timeout = options.timeout || <span class="hljs-number">10000</span>;
     xhr.ontimeout = options.ontimeout || <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
-        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'air.ajax timeout for url'</span>, options.url);
+        <span class="hljs-built_in">console</span>.error(<span class="hljs-string">'dry.ajax timeout for url'</span>, options.url);
     };
 
     <span class="hljs-keyword">if</span> (upperCaseType === <span class="hljs-string">'GET'</span>) {
         xhr.send();
     } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (upperCaseType) { <span class="hljs-comment">/* POST, PUT, DELETE */</span>
         xhr.setRequestHeader(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'application/x-www-form-urlencoded; charset=UTF-8'</span>);
-        xhr.send(air.param(options.data));
+        xhr.send(dry.param(options.data));
     }
     xhr = <span class="hljs-literal">null</span>;
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
@@ -445,8 +445,8 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.getJSON = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, callback, error)</span> </span>{
-    <span class="hljs-keyword">return</span> air.ajax({
+            <div class="content"><div class='highlight'><pre>dry.getJSON = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, callback, error)</span> </span>{
+    <span class="hljs-keyword">return</span> dry.ajax({
         type: <span class="hljs-string">'GET'</span>,
         url: url,
         success: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
@@ -471,8 +471,8 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.get = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, success, error)</span> </span>{
-    <span class="hljs-keyword">return</span> air.ajax({
+            <div class="content"><div class='highlight'><pre>dry.get = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, success, error)</span> </span>{
+    <span class="hljs-keyword">return</span> dry.ajax({
         type: <span class="hljs-string">'GET'</span>,
         url: url,
         success: success,
@@ -493,9 +493,9 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.each([<span class="hljs-string">'post'</span>, <span class="hljs-string">'put'</span>, <span class="hljs-string">'delete'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method)</span></span>{
-    air[method] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, data, success, error)</span> </span>{
-        <span class="hljs-keyword">return</span> air.ajax({
+            <div class="content"><div class='highlight'><pre>dry.each([<span class="hljs-string">'post'</span>, <span class="hljs-string">'put'</span>, <span class="hljs-string">'delete'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method)</span></span>{
+    dry[method] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, data, success, error)</span> </span>{
+        <span class="hljs-keyword">return</span> dry.ajax({
             type: method,
             url: url,
             data: data,
@@ -518,8 +518,8 @@ air = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.jsonp = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, callback)</span> </span>{
-    <span class="hljs-keyword">var</span> callbackName = <span class="hljs-string">'air_jsonp_callback_'</span> + <span class="hljs-built_in">Math</span>.round(<span class="hljs-number">100000</span> * <span class="hljs-built_in">Math</span>.random());
+            <div class="content"><div class='highlight'><pre>dry.jsonp = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> callbackName = <span class="hljs-string">'dry_jsonp_callback_'</span> + <span class="hljs-built_in">Math</span>.round(<span class="hljs-number">100000</span> * <span class="hljs-built_in">Math</span>.random());
     <span class="hljs-built_in">window</span>[callbackName] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> </span>{
         <span class="hljs-keyword">delete</span> <span class="hljs-built_in">window</span>[callbackName];
         <span class="hljs-built_in">document</span>.body.removeChild(script);
@@ -545,7 +545,7 @@ key/values into a query string</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.param = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.param = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(obj)</span> </span>{
     <span class="hljs-keyword">var</span> r20 = <span class="hljs-regexp">/%20/g</span>,
         rbracket = <span class="hljs-regexp">/\[\]$/</span>,
         rCRLF = <span class="hljs-regexp">/\r?\n/g</span>,
@@ -555,15 +555,15 @@ key/values into a query string</p>
         prefix,
         add = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key, value)</span> </span>{
             <span class="hljs-comment">/* If value is a function, invoke it and return its value */</span>
-            value = air.isFunction(value) ? value() : (value == <span class="hljs-literal">null</span> ? <span class="hljs-string">""</span> : value);
+            value = dry.isFunction(value) ? value() : (value == <span class="hljs-literal">null</span> ? <span class="hljs-string">""</span> : value);
             arr[arr.length] = <span class="hljs-built_in">encodeURIComponent</span>(key) + <span class="hljs-string">"="</span> + <span class="hljs-built_in">encodeURIComponent</span>(value);
         },
         buildParams = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(prefix, obj, add)</span> </span>{
             <span class="hljs-keyword">var</span> name;
 
-            <span class="hljs-keyword">if</span> (air.isArray(obj)) {
+            <span class="hljs-keyword">if</span> (dry.isArray(obj)) {
                 <span class="hljs-comment">/* Serialize array item */</span>
-                air.each(obj, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value, index)</span> </span>{
+                dry.each(obj, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value, index)</span> </span>{
                     <span class="hljs-keyword">if</span> (rbracket.test(prefix)) {
                         <span class="hljs-comment">/* Treat each array item as a scalar */</span>
                         add(prefix, value);
@@ -573,7 +573,7 @@ key/values into a query string</p>
                     }
                 });
 
-            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (air.isObject(obj)) {
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (dry.isObject(obj)) {
                 <span class="hljs-comment">/* Serialize object item */</span>
                 <span class="hljs-keyword">for</span> (name <span class="hljs-keyword">in</span> obj) {
                     buildParams(prefix + <span class="hljs-string">"["</span> + name + <span class="hljs-string">"]"</span>, obj[name], add);
@@ -585,9 +585,9 @@ key/values into a query string</p>
         };
 
     <span class="hljs-comment">/* If an array was passed in, assume that it is an array of form elements */</span>
-    <span class="hljs-keyword">if</span> (air.isArray(obj) || (!air.isStrictlyObject(obj))) {
+    <span class="hljs-keyword">if</span> (dry.isArray(obj) || (!dry.isStrictlyObject(obj))) {
         <span class="hljs-comment">/* Serialize the form elements */</span>
-        air.each(obj, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+        dry.each(obj, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
             add(<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.value);
         });
     } <span class="hljs-keyword">else</span> {
@@ -615,7 +615,7 @@ key/values into a query string</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-air.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> </span>{
+dry.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span> </span>{
     <span class="hljs-keyword">this</span>.element = <span class="hljs-built_in">document</span>.querySelector(name);
 };</pre></div></div>
             
@@ -632,7 +632,7 @@ air.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.Dom.prototype.html = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(content)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.Dom.prototype.html = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(content)</span> </span>{
     <span class="hljs-keyword">if</span> (content) {
         <span class="hljs-keyword">this</span>.element.innerHTML = content;
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
@@ -654,15 +654,15 @@ air.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.Dom.prototype.on = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, eventHandler)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.Dom.prototype.on = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, eventHandler)</span> </span>{
     <span class="hljs-keyword">this</span>.element.addEventListener(eventName, eventHandler);
 };
 
-air.Dom.prototype.off = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, eventHandler)</span> </span>{
+dry.Dom.prototype.off = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, eventHandler)</span> </span>{
     <span class="hljs-keyword">this</span>.element.removeEventListener(eventName, eventHandler);
 };
 
-air.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, data)</span> </span>{
+dry.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, data)</span> </span>{
     <span class="hljs-keyword">var</span> event;
     <span class="hljs-keyword">if</span> (<span class="hljs-built_in">window</span>.CustomEvent) {
         event = <span class="hljs-keyword">new</span> CustomEvent(eventName, {
@@ -689,7 +689,7 @@ air.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keywor
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.App = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.App = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.options = options || {};
     <span class="hljs-keyword">this</span>.routes = <span class="hljs-keyword">this</span>.options.routes || [];
@@ -698,17 +698,17 @@ air.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keywor
     <span class="hljs-keyword">this</span>.modelDefinitions = <span class="hljs-keyword">this</span>.options.models || {};
 };
 
-air.App.prototype.controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
+dry.App.prototype.controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
         controller;
-    <span class="hljs-keyword">if</span> (air.isUndefined(methods)) {
+    <span class="hljs-keyword">if</span> (dry.isUndefined(methods)) {
         controller = <span class="hljs-keyword">this</span>.controllers[name];
     } <span class="hljs-keyword">else</span> {
-        controller = <span class="hljs-keyword">new</span> air.Controller(name, methods);
+        controller = <span class="hljs-keyword">new</span> dry.Controller(name, methods);
         <span class="hljs-keyword">this</span>.controllers[name] = controller;
         <span class="hljs-comment">/* Register routes for each controller method */</span>
-        air.each(methods, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method, methodName)</span></span>{
-            <span class="hljs-keyword">if</span> (methodName.toLowerCase() === air.settings.DEFAULT_CONTROLLER_METHOD) {
+        dry.each(methods, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method, methodName)</span></span>{
+            <span class="hljs-keyword">if</span> (methodName.toLowerCase() === dry.settings.DEFAULT_CONTROLLER_METHOD) {
                 self.routes.push(name);
             } <span class="hljs-keyword">else</span> {
                 self.routes.push(name + <span class="hljs-string">'/'</span> + methodName);
@@ -718,23 +718,23 @@ air.App.prototype.controller = <span class="hljs-function"><span class="hljs-key
     <span class="hljs-keyword">return</span> controller;
 };
 
-air.App.prototype.view = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, templateData)</span> </span>{
-    <span class="hljs-keyword">if</span> (air.isUndefined(templateData)) {
+dry.App.prototype.view = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, templateData)</span> </span>{
+    <span class="hljs-keyword">if</span> (dry.isUndefined(templateData)) {
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.views[name];
     } <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">this</span>.views[name] = <span class="hljs-keyword">new</span> air.View(name, templateData);
+        <span class="hljs-keyword">this</span>.views[name] = <span class="hljs-keyword">new</span> dry.View(name, templateData);
     }
 };
 
-air.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+dry.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-comment">/* Create and initialize the app's router */</span>
-    <span class="hljs-keyword">this</span>.router = <span class="hljs-keyword">new</span> air.Router(<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.routes);
+    <span class="hljs-keyword">this</span>.router = <span class="hljs-keyword">new</span> dry.Router(<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.routes);
     <span class="hljs-keyword">this</span>.router.init();
 };
 
-air.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, params)</span> </span>{
+dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, params)</span> </span>{
     <span class="hljs-keyword">if</span> (!params) {
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> air.Model(name, <span class="hljs-keyword">this</span>.modelDefinitions[name]);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> dry.Model(name, <span class="hljs-keyword">this</span>.modelDefinitions[name]);
     } <span class="hljs-keyword">else</span> {
         <span class="hljs-comment">/* Store the model definition if needed */</span>
         <span class="hljs-keyword">this</span>.modelDefinitions[name] = params;
@@ -754,16 +754,16 @@ air.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.Router = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(appName, routes)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.Router = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(appName, routes)</span> </span>{
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
         <span class="hljs-comment">/* Main logic behind the execution of a route */</span>
         routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
             <span class="hljs-keyword">var</span> split = route.url.split(<span class="hljs-string">'/'</span>),
                 <span class="hljs-comment">/* Find which controller should handle a given route */</span>
-                controllerName = split[<span class="hljs-number">0</span>] || air.settings.DEFAULT_CONTROLLER_NAME,
+                controllerName = split[<span class="hljs-number">0</span>] || dry.settings.DEFAULT_CONTROLLER_NAME,
                 <span class="hljs-comment">/* Find which method should be invoked in the controller that handles the given route */</span>
-                controllerMethod = split[<span class="hljs-number">1</span>] ? split[<span class="hljs-number">1</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] : air.settings.DEFAULT_CONTROLLER_METHOD,
-                controller = air.apps[self.appName].controllers[controllerName];
+                controllerMethod = split[<span class="hljs-number">1</span>] ? split[<span class="hljs-number">1</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] : dry.settings.DEFAULT_CONTROLLER_METHOD,
+                controller = dry.apps[self.appName].controllers[controllerName];
             controller.invokeMethod(controllerMethod, route.params);
         },
         i, len, route;
@@ -775,7 +775,7 @@ air.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
     }
 
     <span class="hljs-comment">/* Empty routes are handled through the default action in the default controller */</span>
-    <span class="hljs-keyword">if</span> (routes.indexOf(air.settings.DEFAULT_CONTROLLER_NAME) &gt; -<span class="hljs-number">1</span>){
+    <span class="hljs-keyword">if</span> (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) &gt; -<span class="hljs-number">1</span>){
         routes.push(<span class="hljs-string">''</span>);
     }
 
@@ -786,11 +786,11 @@ air.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
     }
 };
 
-air.Router.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+dry.Router.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
     <span class="hljs-keyword">this</span>.rlite.run(route);
 };
 
-air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-comment">/* Hash-based routing */</span>
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
         processHash = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
@@ -815,16 +815,16 @@ air.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.Model = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, params)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.Model = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, params)</span> </span>{
     params = params || {};
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.attributes = params.attributes || {};
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
 
     <span class="hljs-comment">/* Generate model methods for each given endpoint */</span>
-    air.each(params, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value, property)</span></span>{
+    dry.each(params, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value, property)</span></span>{
         <span class="hljs-keyword">var</span> split, httpMethod, url;
-        <span class="hljs-keyword">if</span> (air.isString(value)){
+        <span class="hljs-keyword">if</span> (dry.isString(value)){
             split = value.split(<span class="hljs-string">' '</span>);
             httpMethod = split[<span class="hljs-number">0</span>];
             url = split[<span class="hljs-number">1</span>];
@@ -847,7 +847,7 @@ for a given endpoint</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.Model.prototype.endpointMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(httpMethod, url)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.Model.prototype.endpointMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(httpMethod, url)</span> </span>{
     <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(params, success, error)</span> </span>{
         <span class="hljs-keyword">var</span> urlAfterReplacement = url,
             attributes = <span class="hljs-keyword">this</span>.attributes,
@@ -860,7 +860,7 @@ for a given endpoint</p>
         <span class="hljs-keyword">for</span> (param <span class="hljs-keyword">in</span> params) {
             urlAfterReplacement = urlAfterReplacement.replace(<span class="hljs-string">'{'</span> + param + <span class="hljs-string">'}'</span>, params[param]);
         }
-        <span class="hljs-keyword">return</span> air.ajax({
+        <span class="hljs-keyword">return</span> dry.ajax({
             url: urlAfterReplacement,
             type: httpMethod,
             data: params,
@@ -883,12 +883,12 @@ for a given endpoint</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.Controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.Controller = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, methods)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.methods = methods || {};
 };
 
-air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName, params)</span> </span>{
+dry.Controller.prototype.invokeMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName, params)</span> </span>{
     <span class="hljs-keyword">var</span> method = <span class="hljs-keyword">this</span>.methods[methodName],
         result, defaultView, defaultViewName;
     <span class="hljs-keyword">if</span> (method) {
@@ -900,13 +900,13 @@ air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
          * simply controllerName if methodName is the default one.
          */</span>
         defaultViewName = <span class="hljs-keyword">this</span>.name;
-        <span class="hljs-keyword">if</span> (methodName &amp;&amp; methodName != air.settings.DEFAULT_CONTROLLER_METHOD) {
+        <span class="hljs-keyword">if</span> (methodName &amp;&amp; methodName != dry.settings.DEFAULT_CONTROLLER_METHOD) {
             defaultViewName += <span class="hljs-string">'/'</span> + methodName;
         }
-        result = <span class="hljs-keyword">new</span> air.View(defaultViewName, {templateData: params, controller: <span class="hljs-keyword">this</span>});
+        result = <span class="hljs-keyword">new</span> dry.View(defaultViewName, {templateData: params, controller: <span class="hljs-keyword">this</span>});
     }
     <span class="hljs-comment">/* If a view was returned, render it */</span>
-    <span class="hljs-keyword">if</span> (result &amp;&amp; result.constructor === air.View) {
+    <span class="hljs-keyword">if</span> (result &amp;&amp; result.constructor === dry.View) {
         <span class="hljs-comment">/* If the controller's method execution resulted in the creation of a view,
          * store this information in the view itself.
          */</span>
@@ -928,9 +928,9 @@ air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.Template = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, tmpl)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.Template = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, tmpl)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
-    <span class="hljs-keyword">if</span> (air.isFunction(tmpl)) {</pre></div></div>
+    <span class="hljs-keyword">if</span> (dry.isFunction(tmpl)) {</pre></div></div>
             
         </li>
         
@@ -947,17 +947,17 @@ air.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">this</span>.compile = tmpl;
     } <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">this</span>.templateId = tmpl || (<span class="hljs-string">'script[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);
+        <span class="hljs-keyword">this</span>.templateId = tmpl || (<span class="hljs-string">'script[data-dry="'</span> + name + <span class="hljs-string">'"]'</span>);
     }
 };
 
-air.Template.prototype.cache = [];
+dry.Template.prototype.cache = [];
 
-air.Template.prototype.compile = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compile</span><span class="hljs-params">(model)</span> </span>{
+dry.Template.prototype.compile = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">compile</span><span class="hljs-params">(model)</span> </span>{
     <span class="hljs-comment">/* Figure out if we're getting a template, or if we need to
      * load the template - and be sure to cache the result.
      */</span>
-    <span class="hljs-keyword">var</span> str = <span class="hljs-keyword">this</span>.cache[<span class="hljs-keyword">this</span>.name] || air.$(<span class="hljs-keyword">this</span>.templateId).element.innerHTML,
+    <span class="hljs-keyword">var</span> str = <span class="hljs-keyword">this</span>.cache[<span class="hljs-keyword">this</span>.name] || dry.$(<span class="hljs-keyword">this</span>.templateId).element.innerHTML,
         fn = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span>(<span class="hljs-string">"obj"</span>,
             <span class="hljs-string">"var p=[],print=function(){p.push.apply(p,arguments);};"</span> +
 
@@ -991,33 +991,33 @@ air.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>air.View = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.View = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
     options = options || {};
     <span class="hljs-keyword">this</span>.name = name;
-    <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-air="'</span> + name + <span class="hljs-string">'"]'</span>);
-    <span class="hljs-keyword">this</span>.model = options.model || <span class="hljs-keyword">new</span> air.Model(name);
-    <span class="hljs-keyword">this</span>.template = <span class="hljs-keyword">new</span> air.Template(name, options.template);
+    <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-dry="'</span> + name + <span class="hljs-string">'"]'</span>);
+    <span class="hljs-keyword">this</span>.model = options.model || <span class="hljs-keyword">new</span> dry.Model(name);
+    <span class="hljs-keyword">this</span>.template = <span class="hljs-keyword">new</span> dry.Template(name, options.template);
     <span class="hljs-keyword">this</span>.controller = options.controller;
     <span class="hljs-keyword">this</span>.events = options.events || {};
 };
 
-air.View.prototype.render = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">var</span> viewElement = air.$(<span class="hljs-keyword">this</span>.el),
+dry.View.prototype.render = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> viewElement = dry.$(<span class="hljs-keyword">this</span>.el),
         compiledTemplate = <span class="hljs-keyword">this</span>.template.compile(<span class="hljs-keyword">this</span>.model),
         events = <span class="hljs-keyword">this</span>.events,
         self = <span class="hljs-keyword">this</span>;
     viewElement.html(compiledTemplate);
-    air.each(events, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(action, key)</span></span>{
+    dry.each(events, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(action, key)</span></span>{
         self.addEvent(key, action);
     });
 };
 
-air.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventKey, eventAction)</span> </span>{
+dry.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventKey, eventAction)</span> </span>{
     <span class="hljs-keyword">var</span> eventKeySplit, eventElement, eventTrigger;
     eventKeySplit = eventKey.split(<span class="hljs-string">' '</span>);
     eventElement = eventKeySplit[<span class="hljs-number">1</span>];
     eventTrigger = eventKeySplit[<span class="hljs-number">0</span>];
-    <span class="hljs-keyword">if</span> (air.isString(eventAction)) {</pre></div></div>
+    <span class="hljs-keyword">if</span> (dry.isString(eventAction)) {</pre></div></div>
             
         </li>
         
@@ -1036,7 +1036,7 @@ air.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyw
             <span class="hljs-keyword">this</span>.controller.invokeMethod(eventAction, params);
         };
     }
-    air.$(eventElement).on(eventTrigger, eventAction);
+    dry.$(eventElement).on(eventTrigger, eventAction);
 };
 
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Rlite</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">this</span>.rules={}}Rlite.prototype={add:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n,t)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> r,u,e=n.split(<span class="hljs-string">"/"</span>),i=<span class="hljs-keyword">this</span>.rules,f=<span class="hljs-number">0</span>;f&lt;e.length;++f)r=e[f],u=r.length&amp;&amp;r.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">":"</span>?<span class="hljs-string">":"</span>:r,i[u]?i=i[u]:(i=i[u]={},u==<span class="hljs-string">":"</span>&amp;&amp;(i[<span class="hljs-string">"@name"</span>]=r.substr(<span class="hljs-number">1</span>,r.length-<span class="hljs-number">1</span>)));i[<span class="hljs-string">"@"</span>]=t},run:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{n&amp;&amp;n.length&amp;&amp;(n=n.replace(<span class="hljs-string">"/?"</span>,<span class="hljs-string">"?"</span>),n.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">1</span>,n.length)),n.length&amp;&amp;n.charAt(n.length-<span class="hljs-number">1</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">0</span>,n.length-<span class="hljs-number">1</span>)));<span class="hljs-keyword">var</span> t=<span class="hljs-keyword">this</span>.rules,i=n.split(<span class="hljs-string">"?"</span>,<span class="hljs-number">2</span>),u=i[<span class="hljs-number">0</span>].split(<span class="hljs-string">"/"</span>,<span class="hljs-number">50</span>),r={};<span class="hljs-keyword">return</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> n=<span class="hljs-number">0</span>;n&lt;u.length&amp;&amp;t;++n){<span class="hljs-keyword">var</span> f=u[n],e=f.toLowerCase(),i=t[e];!i&amp;&amp;(i=t[<span class="hljs-string">":"</span>])&amp;&amp;(r[i[<span class="hljs-string">"@name"</span>]]=f);t=i}}(),<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> t,u=n.split(<span class="hljs-string">"&amp;"</span>,<span class="hljs-number">50</span>),i=<span class="hljs-number">0</span>;i&lt;u.length;++i)t=u[i].split(<span class="hljs-string">"="</span>,<span class="hljs-number">2</span>),t.length==<span class="hljs-number">2</span>&amp;&amp;(r[t[<span class="hljs-number">0</span>]]=t[<span class="hljs-number">1</span>])}(i.length==<span class="hljs-number">2</span>?i[<span class="hljs-number">1</span>]:<span class="hljs-string">""</span>),t&amp;&amp;t[<span class="hljs-string">"@"</span>])?(t[<span class="hljs-string">"@"</span>]({url:n,params:r}),!<span class="hljs-number">0</span>):!<span class="hljs-number">1</span>}};</pre></div></div>

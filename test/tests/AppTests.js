@@ -6,7 +6,7 @@ var contains = function(str, element) {
         return str.indexOf(element) > -1;
     },
     beforeTest = function() {
-        air.apps = {};
+        dry.apps = {};
     },
     afterTest = function() {
         // window.location.href = urlBeforeTest;
@@ -18,7 +18,7 @@ QUnit.testDone(afterTest);
 QUnit.test("App: Default route is called on application start", function(assert) {
     assert.expect(1);
     // Create new app
-    var app1 = air.app('app1');
+    var app1 = dry.app('app1');
 
     // Default controller (root directory)
     app1.controller('default', {
@@ -34,7 +34,7 @@ QUnit.test("App: Default route is called on application start", function(assert)
 QUnit.test("App: Default controller method renders appropriate content", function(assert) {
     assert.expect(1);
     // Create new app
-    var app2 = air.app('app2');
+    var app2 = dry.app('app2');
 
     // Default controller (root directory)
     app2.controller('default', {
@@ -45,5 +45,5 @@ QUnit.test("App: Default controller method renders appropriate content", functio
     app2.init();
 
     var htmlContent = jQuery('#qunit-fixture').html();
-    assert.ok(contains(htmlContent, 'Air.js test page'), "default route was called and rendered the correct content");
+    assert.ok(contains(htmlContent, 'Dry.js test page'), "default route was called and rendered the correct content");
 });
