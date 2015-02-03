@@ -754,7 +754,20 @@ dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
 
             </div>
             
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              
+            </div>
+            
             <div class="content"><div class='highlight'><pre>dry.Router = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(appName, routes)</span> </span>{
+    <span class="hljs-keyword">this</span>.rules = {};
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
         <span class="hljs-comment">/* Main logic behind the execution of a route */</span>
         routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
@@ -769,25 +782,84 @@ dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
         i, len, route;
     <span class="hljs-keyword">this</span>.appName = appName;
 
-    <span class="hljs-comment">/* Initialize RLite (routing engine) */</span>
-    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.r) {
-        <span class="hljs-keyword">this</span>.rlite = <span class="hljs-keyword">new</span> Rlite();
-    }
-
     <span class="hljs-comment">/* Empty routes are handled through the default action in the default controller */</span>
-    <span class="hljs-keyword">if</span> (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) &gt; -<span class="hljs-number">1</span>){
+    <span class="hljs-keyword">if</span> (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) &gt; -<span class="hljs-number">1</span>) {
         routes.push(<span class="hljs-string">''</span>);
     }
 
     <span class="hljs-comment">/* Register each route */</span>
-    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>, len=routes.length; i&lt;len; i++) {
+    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>, len = routes.length; i &lt; len; i++) {
         route = routes[i];
-        <span class="hljs-keyword">this</span>.rlite.add(route, routeCallback);
+        <span class="hljs-keyword">this</span>.add(route, routeCallback);
     }
 };
 
-dry.Router.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
-    <span class="hljs-keyword">this</span>.rlite.run(route);
+dry.Router.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route, handler)</span> </span>{
+    <span class="hljs-keyword">var</span> pieces = route.split(<span class="hljs-string">'/'</span>),
+        rules = <span class="hljs-keyword">this</span>.rules;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; pieces.length; ++i) {
+        <span class="hljs-keyword">var</span> piece = pieces[i],
+            name = piece.length &amp;&amp; piece.charAt(<span class="hljs-number">0</span>) == <span class="hljs-string">':'</span> ? <span class="hljs-string">':'</span> : piece;
+
+        <span class="hljs-keyword">if</span> (!rules[name]) {
+            rules = (rules[name] = {});
+
+            <span class="hljs-keyword">if</span> (name == <span class="hljs-string">':'</span>) {
+                rules[<span class="hljs-string">'@name'</span>] = piece.slice(<span class="hljs-number">1</span>);
+            }
+        } <span class="hljs-keyword">else</span> {
+            rules = rules[name];
+        }
+    }
+
+    rules[<span class="hljs-string">'@'</span>] = handler;
+};
+
+dry.Router.prototype.run = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url)</span> </span>{
+    <span class="hljs-keyword">if</span> (url &amp;&amp; url.length) {
+        url = url.replace(<span class="hljs-string">'/?'</span>, <span class="hljs-string">'?'</span>);
+        url.charAt(<span class="hljs-number">0</span>) == <span class="hljs-string">'/'</span> &amp;&amp; (url = url.slice(<span class="hljs-number">1</span>));
+        url.length &amp;&amp; url.slice(-<span class="hljs-number">1</span>) == <span class="hljs-string">'/'</span> &amp;&amp; (url = url.slice(<span class="hljs-number">0</span>, -<span class="hljs-number">1</span>));
+    }
+
+    <span class="hljs-keyword">var</span> rules = <span class="hljs-keyword">this</span>.rules,
+        querySplit = url.split(<span class="hljs-string">'?'</span>, <span class="hljs-number">2</span>),
+        pieces = querySplit[<span class="hljs-number">0</span>].split(<span class="hljs-string">'/'</span>, <span class="hljs-number">50</span>),
+        params = {};
+
+    (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseUrl</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; pieces.length &amp;&amp; rules; ++i) {
+            <span class="hljs-keyword">var</span> piece = pieces[i],
+                rule = rules[piece.toLowerCase()];
+
+            <span class="hljs-keyword">if</span> (!rule &amp;&amp; (rule = rules[<span class="hljs-string">':'</span>])) {
+                params[rule[<span class="hljs-string">'@name'</span>]] = piece;
+            }
+
+            rules = rule;
+        }
+    })();
+
+    (<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">parseQuery</span><span class="hljs-params">(q)</span> </span>{
+        <span class="hljs-keyword">var</span> query = q.split(<span class="hljs-string">'&amp;'</span>, <span class="hljs-number">50</span>);
+
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; query.length; ++i) {
+            <span class="hljs-keyword">var</span> nameValue = query[i].split(<span class="hljs-string">'='</span>, <span class="hljs-number">2</span>);
+
+            nameValue.length == <span class="hljs-number">2</span> &amp;&amp; (params[nameValue[<span class="hljs-number">0</span>]] = nameValue[<span class="hljs-number">1</span>]);
+        }
+    })(querySplit.length == <span class="hljs-number">2</span> ? querySplit[<span class="hljs-number">1</span>] : <span class="hljs-string">''</span>);
+
+    <span class="hljs-keyword">if</span> (rules &amp;&amp; rules[<span class="hljs-string">'@'</span>]) {
+        rules[<span class="hljs-string">'@'</span>]({
+            url: url,
+            params: params
+        });
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
 };
 
 dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
@@ -795,7 +867,7 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
         processHash = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> hash = location.hash || <span class="hljs-string">'#'</span>;
-            self.rlite.run(hash.substr(<span class="hljs-number">1</span>));
+            self.run(hash.substr(<span class="hljs-number">1</span>));
         };
 
     <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'hashchange'</span>, processHash);
@@ -805,11 +877,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <h2 id="model">Model</h2>
 
@@ -836,11 +908,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Generate a model method which will perform an ajax request
 for a given endpoint</p>
@@ -873,11 +945,11 @@ for a given endpoint</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <h2 id="controller">Controller</h2>
 
@@ -918,11 +990,11 @@ dry.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h2 id="template">Template</h2>
 
@@ -935,11 +1007,11 @@ dry.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Allow for pre-compiled funcions</p>
 
@@ -981,11 +1053,11 @@ dry.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <h2 id="view">View</h2>
 
@@ -1022,11 +1094,11 @@ dry.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyw
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>TODO: Finish, test</p>
 
@@ -1037,9 +1109,7 @@ dry.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyw
         };
     }
     dry.$(eventElement).on(eventTrigger, eventAction);
-};
-
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Rlite</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">this</span>.rules={}}Rlite.prototype={add:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n,t)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> r,u,e=n.split(<span class="hljs-string">"/"</span>),i=<span class="hljs-keyword">this</span>.rules,f=<span class="hljs-number">0</span>;f&lt;e.length;++f)r=e[f],u=r.length&amp;&amp;r.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">":"</span>?<span class="hljs-string">":"</span>:r,i[u]?i=i[u]:(i=i[u]={},u==<span class="hljs-string">":"</span>&amp;&amp;(i[<span class="hljs-string">"@name"</span>]=r.substr(<span class="hljs-number">1</span>,r.length-<span class="hljs-number">1</span>)));i[<span class="hljs-string">"@"</span>]=t},run:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{n&amp;&amp;n.length&amp;&amp;(n=n.replace(<span class="hljs-string">"/?"</span>,<span class="hljs-string">"?"</span>),n.charAt(<span class="hljs-number">0</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">1</span>,n.length)),n.length&amp;&amp;n.charAt(n.length-<span class="hljs-number">1</span>)==<span class="hljs-string">"/"</span>&amp;&amp;(n=n.substr(<span class="hljs-number">0</span>,n.length-<span class="hljs-number">1</span>)));<span class="hljs-keyword">var</span> t=<span class="hljs-keyword">this</span>.rules,i=n.split(<span class="hljs-string">"?"</span>,<span class="hljs-number">2</span>),u=i[<span class="hljs-number">0</span>].split(<span class="hljs-string">"/"</span>,<span class="hljs-number">50</span>),r={};<span class="hljs-keyword">return</span>(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> n=<span class="hljs-number">0</span>;n&lt;u.length&amp;&amp;t;++n){<span class="hljs-keyword">var</span> f=u[n],e=f.toLowerCase(),i=t[e];!i&amp;&amp;(i=t[<span class="hljs-string">":"</span>])&amp;&amp;(r[i[<span class="hljs-string">"@name"</span>]]=f);t=i}}(),<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(n)</span></span>{<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> t,u=n.split(<span class="hljs-string">"&amp;"</span>,<span class="hljs-number">50</span>),i=<span class="hljs-number">0</span>;i&lt;u.length;++i)t=u[i].split(<span class="hljs-string">"="</span>,<span class="hljs-number">2</span>),t.length==<span class="hljs-number">2</span>&amp;&amp;(r[t[<span class="hljs-number">0</span>]]=t[<span class="hljs-number">1</span>])}(i.length==<span class="hljs-number">2</span>?i[<span class="hljs-number">1</span>]:<span class="hljs-string">""</span>),t&amp;&amp;t[<span class="hljs-string">"@"</span>])?(t[<span class="hljs-string">"@"</span>]({url:n,params:r}),!<span class="hljs-number">0</span>):!<span class="hljs-number">1</span>}};</pre></div></div>
+};</pre></div></div>
             
         </li>
         

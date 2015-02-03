@@ -355,6 +355,7 @@ dry.App.prototype.model = function(name, params) {
 // Router
 // ------
 dry.Router = function(appName, routes) {
+    this.rules = {};
     var self = this,
         /* Main logic behind the execution of a route */
         routeCallback = function(route) {
@@ -369,25 +370,84 @@ dry.Router = function(appName, routes) {
         i, len, route;
     this.appName = appName;
 
-    /* Initialize RLite (routing engine) */
-    if (!this.r) {
-        this.rlite = new Rlite();
-    }
-
     /* Empty routes are handled through the default action in the default controller */
-    if (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) > -1){
+    if (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) > -1) {
         routes.push('');
     }
 
     /* Register each route */
-    for (i=0, len=routes.length; i<len; i++) {
+    for (i = 0, len = routes.length; i < len; i++) {
         route = routes[i];
-        this.rlite.add(route, routeCallback);
+        this.add(route, routeCallback);
     }
 };
 
-dry.Router.prototype.run = function(route) {
-    this.rlite.run(route);
+dry.Router.prototype.add = function(route, handler) {
+    var pieces = route.split('/'),
+        rules = this.rules;
+
+    for (var i = 0; i < pieces.length; ++i) {
+        var piece = pieces[i],
+            name = piece.length && piece.charAt(0) == ':' ? ':' : piece;
+
+        if (!rules[name]) {
+            rules = (rules[name] = {});
+
+            if (name == ':') {
+                rules['@name'] = piece.slice(1);
+            }
+        } else {
+            rules = rules[name];
+        }
+    }
+
+    rules['@'] = handler;
+};
+
+dry.Router.prototype.run = function(url) {
+    if (url && url.length) {
+        url = url.replace('/?', '?');
+        url.charAt(0) == '/' && (url = url.slice(1));
+        url.length && url.slice(-1) == '/' && (url = url.slice(0, -1));
+    }
+
+    var rules = this.rules,
+        querySplit = url.split('?', 2),
+        pieces = querySplit[0].split('/', 50),
+        params = {};
+
+    (function parseUrl() {
+        for (var i = 0; i < pieces.length && rules; ++i) {
+            var piece = pieces[i],
+                rule = rules[piece.toLowerCase()];
+
+            if (!rule && (rule = rules[':'])) {
+                params[rule['@name']] = piece;
+            }
+
+            rules = rule;
+        }
+    })();
+
+    (function parseQuery(q) {
+        var query = q.split('&', 50);
+
+        for (var i = 0; i < query.length; ++i) {
+            var nameValue = query[i].split('=', 2);
+
+            nameValue.length == 2 && (params[nameValue[0]] = nameValue[1]);
+        }
+    })(querySplit.length == 2 ? querySplit[1] : '');
+
+    if (rules && rules['@']) {
+        rules['@']({
+            url: url,
+            params: params
+        });
+        return true;
+    }
+
+    return false;
 };
 
 dry.Router.prototype.init = function() {
@@ -395,7 +455,7 @@ dry.Router.prototype.init = function() {
     var self = this,
         processHash = function() {
             var hash = location.hash || '#';
-            self.rlite.run(hash.substr(1));
+            self.run(hash.substr(1));
         };
 
     window.addEventListener('hashchange', processHash);
@@ -556,5 +616,3 @@ dry.View.prototype.addEvent = function(eventKey, eventAction) {
     }
     dry.$(eventElement).on(eventTrigger, eventAction);
 };
-
-function Rlite(){this.rules={}}Rlite.prototype={add:function(n,t){for(var r,u,e=n.split("/"),i=this.rules,f=0;f<e.length;++f)r=e[f],u=r.length&&r.charAt(0)==":"?":":r,i[u]?i=i[u]:(i=i[u]={},u==":"&&(i["@name"]=r.substr(1,r.length-1)));i["@"]=t},run:function(n){n&&n.length&&(n=n.replace("/?","?"),n.charAt(0)=="/"&&(n=n.substr(1,n.length)),n.length&&n.charAt(n.length-1)=="/"&&(n=n.substr(0,n.length-1)));var t=this.rules,i=n.split("?",2),u=i[0].split("/",50),r={};return(function(){for(var n=0;n<u.length&&t;++n){var f=u[n],e=f.toLowerCase(),i=t[e];!i&&(i=t[":"])&&(r[i["@name"]]=f);t=i}}(),function(n){for(var t,u=n.split("&",50),i=0;i<u.length;++i)t=u[i].split("=",2),t.length==2&&(r[t[0]]=t[1])}(i.length==2?i[1]:""),t&&t["@"])?(t["@"]({url:n,params:r}),!0):!1}};

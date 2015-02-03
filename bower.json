@@ -1,0 +1,22 @@
+{
+  "name": "dry-js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/diegocard/dry.js",
+  "authors": [
+    "Diego Cardozo <diegocard@gmail.com>"
+  ],
+  "description": "Lightweight SPA framework focused on conventions",
+  "main": "/dist/dry.min.js",
+  "keywords": [
+    "SPA",
+    "dry",
+    "framework",
+    "convention"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    ".gitignore"
+  ]
+}

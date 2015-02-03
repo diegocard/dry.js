@@ -1,4 +1,6 @@
-- FIX AJAX SHORTCUT METHODS -> NetworkTests.html
+- Change routes array in App.js and make it an object which already contains the controller that must be called.
+  This object is passed on to the router on init. Reflect this changes on Router.js
+  in router.
 - View.js -> add each event of options.events on view creation (test it)
 - Add more tests in general (events, page navigation, etc)
 - Test models with ajax endpoints

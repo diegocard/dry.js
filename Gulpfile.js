@@ -17,8 +17,7 @@ gulp.task('compile', function() {
         './src/Model.js',
         './src/Controller.js',
         './src/Template.js',
-        './src/View.js',
-        './vendor/*.js'
+        './src/View.js'
     ])
         .pipe(concat('dry.js'))
         .pipe(gulp.dest('dist'))
