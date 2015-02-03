@@ -1,6 +1,6 @@
 {
   "name": "dry.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "\"Lightweight SPA framework focused on Convention over Configuration\"",
   "main": "dry.js",
   "scripts": {
