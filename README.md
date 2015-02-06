@@ -68,6 +68,136 @@ var app1 = dry.app('app1');
 app1.init();
 ```
 
+###Controller
+A controller contains methods. Each method handles a specific route or event, returning a view instance if the result of the method's execution triggers UI changes. In this sense, Dry.js controllers are very similar to Rails or ASP.NET MVC.
+
+```js
+var app1 = dry.app('app1');
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() { // Triggered when navigating to /products/list
+        return new dry.View('ProductList')
+    }
+});
+```
+
+###Router
+The router is responsible for directing page navigation actions to controllers. As the previous example hints, you do not need to specify routes anywhere. They are automatically generated from controller names and methods.
+
+```js
+var app1 = dry.app('app1');
+
+// Home page
+app1.controller('default', {
+    // Triggered on base url (root)
+    'default': function() {
+        return new dry.View('HomePage')
+    }
+});
+
+// Handles a list of products
+app1.controller('products', {
+    // Triggered when navigating to /products/:id
+    'default': function(id) {
+        return new dry.View('ProductDetails')
+    }
+    // Triggered when navigating to /products/list
+    'list': function() {
+        return new dry.View('ProductList')
+    }
+});
+```
+
+###Model
+In a typical fashion, models concentrate the responsibility of handling data structure, storage and server communication. They are injected into views through controller actions, and come with a convenient API for handling Ajax communication. Expanding on the previous example:
+
+```js
+var app1 = dry.app('app1');
+
+// Product model definition
+app1.model('Product', {
+    attributes: {
+        id: 1 // default
+    }
+    getAll: 'GET https://someUrl/products'
+    newProduct: 'POST https://someUrl/products/new',
+    updateProduct: 'PUT https://someUrl/products/{id}',
+    deleteProduct: 'DELETE https://someUrl/{id}'
+});
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return new dry.View('ProductList', allProducts);
+    }
+});
+```
+
+###View
+Views contain presentation logic. Each view contains a model instance which stores the data that is rendered on the template. They are also responsible for handling events, and do so by calling methods from the controller that created the view.
+
+```js
+var app1 = dry.app('app1');
+
+// Product model definition
+app1.model('Product', {
+    getAll: 'GET https://someUrl/products'
+});
+
+app1.view('ProductList', {
+    events: {
+        // When the button with class .btn-new' is pressed,
+        // call the 'new' method in the controller
+        'click .btn-new': 'new'
+    }
+});
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return app1.view('ProductList', allProducts);
+    },
+    'new': function() {
+        // ...
+    }
+});
+```
+
+###Template
+Templates can be either strings or functinons which construct HTML code from the view data. Dry.js automatically finds template definitions in the dom looking for a script with a data-dry attribute, and then renders it to a DOM element with a data-dry attribute of the same value.
+
+```js
+var app1 = dry.app('app1');
+
+// Home page
+app1.controller('main', {
+    'hello': function() {
+        return new dry.View('main/hello');
+    }
+});
+```
+
+```html
+<!-- Template -->
+<script data-dry="main/hello" type="text/template">
+    <% for(var i=0; i<10; i++) { %>
+        Lorem ipsum
+    <% } %>
+</script>
+<div data-dry="main/hello"><!-- Template will be rendered here --></div>
+```
+
+The convention here is very simple: by default, once a user navigates to a route (say www.someUrl.com/main/hello), then the main controller executes the hello method, which will create a new instance of the main/hello view.
+
+Notice that the view instance is created on the fly, and since the only parameter specified when creating the view is its name, it will simply follow the default behavior for views. More specifically, it look for a script with a data-dry attribute equal to its name (the template) and render it into the first non-script DOM element with the same attribute value.
+
 ## Thanks To
 
 - [chrisdavies](https://github.com/chrisdavies/) for his implementation of [rlite](https://github.com/chrisdavies/rlite) (used as default router behind the secenes)
