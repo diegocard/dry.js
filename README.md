@@ -28,10 +28,10 @@ Have you ever wanted to change a certain feature of a given framework? Well, thi
 ## Inspiration
 Dry.js was inspired by what I consider to be the best features of the most well-known single page application frameworks:
 
-Provides only the minimum set of components necessary for web application development, like Backbone.js
-Follows an MVC, convention over configuration approach, like Ember.js (although much simpler)
-Comes with all you need right out of the box like Angular.js (a.k.a batteries included), alghough these features can be easily replaced by other external components
-Integrates an opinionated set of guidelines for the application's architecture and data flow, similar to what Facebook's Flux does
+- Provides only the minimum set of components necessary for web application development, like Backbone.js
+- Follows an MVC, convention over configuration approach, like Ember.js (although much simpler)
+- Comes with all you need right out of the box like Angular.js (a.k.a batteries included), alghough these features can be easily replaced by other external components
+- Integrates an opinionated set of guidelines for the application's architecture and data flow, similar to what Facebook's Flux does
 
 ## Getting Started
 Setting up Dry.js is extremely easy. You only need to include the script anywhere on the page, and you are all set.
