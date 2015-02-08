@@ -1,7 +1,7 @@
 dry.js
 ======
 
-Super lightweight SPA framework focused on conventions
+Lightweight SPA framework based on Convention over Configuration
 
 Build status: [![Build Status](https://travis-ci.org/diegocard/dry.js.svg?branch=master)](https://travis-ci.org/diegocard/dry.js)
 
