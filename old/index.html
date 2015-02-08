@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/prism.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Dry.js by diegocard</title>
+</head>
+
+<body>
+    <div id="clouds">
+        <div class="cloud x1"></div>
+        <div class="cloud x2"></div>
+        <div class="cloud x3"></div>
+        <div class="cloud x4"></div>
+
+        <div class="inner">
+
+            <header>
+                <div class="center-text">
+                    <h1 class="main-logo">Dry.js</h1>
+                    <h2>Lightweight SPA framework focused on conventions</h2>
+                </div>
+            </header>
+
+            <section id="downloads" class="clearfix">
+                <a href="https://github.com/diegocard/dry.js/zipball/master" id="download-zip" class="button">
+                    <span>Download .zip</span>
+                </a>
+                <a href="https://github.com/diegocard/dry.js/tarball/master" id="download-tar-gz" class="button">
+                    <span>Download .tar.gz</span>
+                </a>
+                <a href="https://github.com/diegocard/dry.js" id="view-on-github" class="button">
+                    <span>View on GitHub</span>
+                </a>
+            </section>
+
+            <hr>
+
+            <section id="main_content">
+                <h2>
+                    <a id="philosophy" class="anchor" href="#philosophy" aria-hidden="true">
+                        <span class="octicon octicon-link">Philosophy</span>
+                    </a>
+                </h2>
+
+                <h3>Best practices</h3>
+                <p>
+                    As its name implies, Dry.js is based around the idea of applying the <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Don't Repeat Yourself</a> (DRY) principle to front end development as extensively as possible. It does so by following a <a href="http://en.wikipedia.org/wiki/Convention_over_configuration">Convention Over Configuration</a> (CoC) approach.
+                </p>
+
+                <h3>Inspiration</h3>
+                <p>
+                    Dry.js was inspired by what I consider to be the best features of the most well-known single page application frameworks:
+                    <ul>
+                        <li>Provides only the minimum set of components necessary for web application development, like Backbone.js</li>
+                        <li>Follows an MVC, convention over configuration approach, like Ember.js (although much simpler)</li>
+                        <li>Comes with all you need right out of the box like Angular.js (a.k.a batteries included), alghough these features can be easily replaced
+                            by other external components</li>
+                        <li>Integrates an opinionated set of guidelines for the application's architecture and data flow, similar to what Facebook's Flux does</li>
+                    </ul>
+                </p>
+
+                <h3>Lightweight</h3>
+                <p>
+                    Initial page load is one of the main concerns of Dry.js. The library weights less than 8kb minified (3kb gzipped) which makes it viable for any sort
+                    of web application.
+                </p>
+
+                <h3>Easily replaceable components</h3>
+                <p>
+                    Dry.js is intended to be a standard way to join external components and libraries. All of its components are designed so that they can be easily
+                    replaced.
+                </p>
+                <p>
+                    For example, you can swap Dry.js's templating engine with Handlebars, integrate React to improve rendering performance, or manage all
+                    DOM interactions with jQuery/Zepto, etc.
+                </p>
+                <p>
+                    Please read <a href="http://www.breck-mckye.com/blog/2014/12/the-state-of-javascript-in-2015">this</a> article to further understand why this
+                    approach is necessary.
+                </p>
+
+                <h3>Easy to learn, easy to use and easy to change</h3>
+                <p>
+                    No one likes learning a new front-end framework every week, so that's why Dry.js was specifically designed to be super easy to use.
+                    Getting started will only take you some minutes, and there's not that much more to it. Complexity is the first sign of bad architecture,
+                    and your developers will thank you for it.
+                </p>
+                <p>
+                    Have you ever wanted to change a certain feature of a given framework? Well, this is super easy in Dry.js because its code is brief
+                    and understandable, so re-writting a component is not complex at all. In fact I encourage you to do this if you want to replace any of the
+                    framework's core components with external libraries, you'll only have to run the tests afterwards to make sure that everything still works as
+                    expected.
+                </p>
+
+
+                <h2>
+                    <a id="getting-started" class="anchor" href="#getting-started" aria-hidden="true">
+                        <span class="octicon octicon-link">Getting Started</span>
+                    </a>
+                </h2>
+
+                <p>
+                    Setting up Dry.js is extremely easy. You only need to include the script anywhere on the page, and you are all set.
+                </p>
+<pre><code class="language-markup">
+&lt;html>
+    &lt;head>
+        &lt;title>Getting started&lt;/title>
+    &lt;/head>
+    &lt;body>
+        &lt;h1>Hello world&lt;/h1>
+
+        &lt;!-- Include dry.min.js here -->
+        &lt;script src="scripts/dry.min.js">&lt;/script>
+    &lt;/body>
+&lt;/html>
+</code></pre>
+
+                <p>
+                    You can download the minitied and development versions through any of these options.
+                    <ul>
+                        <li>
+                            Through the <a href="#">links</a> at the top of the page.
+                        </li>
+                        <li>
+                            Install with Bower: <code>bower install dry-js</code>
+                        </li>
+                        <li>
+                            Install with npm: <code>npm install dry-js</code>
+                        </li>
+                    </ul>
+                </p>
+
+
+
+                <!-- Components -->
+                <h2>
+                    <a id="components" class="anchor" href="#components" aria-hidden="true">
+                        <span class="octicon octicon-link">Components</span>
+                    </a>
+                </h2>
+
+                <h3>App</h3>
+                <p>
+                    A website is divided in apps.
+                    Their goal is to provide structure to the code, and can be seen as modules.
+                    Each app contains its own controllers, views and models, and handles a specific set of routes.
+                </p>
+
+<pre><code class="language-javascript">
+// Create new app
+var app1 = dry.app('app1');
+// Start the app
+app1.init();
+</code></pre>
+
+                <h3>Controller</h3>
+                <p>
+                    A controller contains methods.
+                    Each method handles a specific route or event, returning a view instance if the result of the method's execution triggers UI changes.
+                    In this sense, Dry.js controllers are very similar to Rails or ASP.NET MVC.
+                </p>
+
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() { // Triggered when navigating to /products/list
+        return new dry.View('ProductList')
+    }
+});
+</code></pre>
+
+                <h3>Router</h3>
+                <p>
+                    The router is responsible for directing page navigation actions to controllers.
+                    As the previous example hints, you do not need to specify routes anywhere. They are automatically generated from controller names and methods.
+                <p>
+
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Home page
+app1.controller('default', {
+    // Triggered on base url (root)
+    'default': function() {
+        return new dry.View('HomePage')
+    }
+});
+
+// Handles a list of products
+app1.controller('products', {
+    // Triggered when navigating to /products/:id
+    'default': function(id) {
+        return new dry.View('ProductDetails')
+    }
+    // Triggered when navigating to /products/list
+    'list': function() {
+        return new dry.View('ProductList')
+    }
+});
+</code></pre>
+
+                <h3>Model</h3>
+                <p>
+                    In a typical fashion, models concentrate the responsibility of handling data structure, storage and server communication.
+                    They are injected into views through controller actions, and come with a convenient API for handling Ajax communication.
+                    Expanding on the previous example:
+                </p>
+
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Product model definition
+app1.model('Product', {
+    attributes: {
+        id: 1 // default
+    }
+    getAll: 'GET https://someUrl/products'
+    newProduct: 'POST https://someUrl/products/new',
+    updateProduct: 'PUT https://someUrl/products/{id}',
+    deleteProduct: 'DELETE https://someUrl/{id}'
+});
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return new dry.View('ProductList', allProducts);
+    }
+});
+</code></pre>
+
+                <h3>View</h3>
+                <p>
+                    Views contain presentation logic. Each view contains a model instance which stores the data that is rendered
+                    on the template. They are also responsible for handling events, and do so by calling methods from the controller
+                    that created the view.
+                </p>
+
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Product model definition
+app1.model('Product', {
+    getAll: 'GET https://someUrl/products'
+});
+
+app1.view('ProductList', {
+    events: {
+        // When the button with class .btn-new' is pressed,
+        // call the 'new' method in the controller
+        'click .btn-new': 'new'
+    }
+});
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return app1.view('ProductList', allProducts);
+    },
+    'new': function() {
+        // ...
+    }
+});
+</code></pre>
+
+                <h3>Template</h3>
+                <p>
+                    Templates can be either strings or functinons which construct HTML code from the view data.
+                    Dry.js automatically finds template definitions in the dom looking for a script with a data-dry attribute,
+                    and then renders it to a DOM element with a data-dry attribute of the same value.
+                </p>
+
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Home page
+app1.controller('main', {
+    'hello': function() {
+        return new dry.View('main/hello');
+    }
+});
+</code></pre>
+
+<pre><code class="language-markup">
+&lt;!-- Template -->
+&lt;script data-dry="main/hello" type="text/template">
+    &lt;% for(var i=0; i<10; i++) { %>
+        <span>Lorem ipsum</span>
+    &lt;% } %>
+&lt;/script>
+
+
+&lt;div data-dry="main/hello">&lt;!-- Template will be rendered here -->&lt;/div>
+</code></pre>
+
+                <p>
+                    The convention here is very simple: by default, once a user navigates to a route (say www.someUrl.com/<strong>main/hello</strong>),
+                    then the <strong>main</strong> controller executes the <strong>hello</strong> method, which will create a new instance of the <strong>main/hello</strong> view.
+                </p>
+
+                <p>
+                    Notice that the view instance is created on the fly, and since the only parameter specified when creating the view is its name, it will
+                    simply follow the default behavior for views. More specifically, it look for a script with a <strong>data-dry</strong> attribute equal to its name (the template) and render it into
+                    the first non-script DOM element with the same attribute value. Please read the <a href="#default-behavior-and-best-practices">Default behavior
+                    and best practices</a> section for additional info.
+                </p>
+
+                <h2>
+                    <a id="utilities" class="anchor" href="#utilities" aria-hidden="true">
+                        <span class="octicon octicon-link">Utilities</span>
+                    </a>
+                </h2>
+
+                <p>
+                    Dry.js also contains several utility functions which you can leverage in your own code.
+                    Tip: You can open your browser's dev tools and check them out this page :)
+                </p>
+
+                <h3>Type checking</h3>
+
+<pre><code class="language-javascript">
+// Check if the given parameter is an array
+dry.isArray([1,2,3]) => true
+
+// Check if the given parameter is an object
+dry.isObject({a:1, b:2}) => true
+
+// Check if the given parameter is strictly an object
+dry.isStrictlyObject({'a':1, 'b':2}) => true
+dry.isStrictlyObject([1,2,3]) => false
+
+// Check if the given parameter is boolean
+dry.isBoolean(true) => true
+
+// Check if the given parameter is a string
+dry.isString('Hi there') => true
+
+// Check if the given parameter is a function
+dry.isFunction(function(){}) => true
+
+// Check if the given parameter is undefined
+dry.isUndefined(undefined) => true
+
+// Check if the given parameter is numeric
+dry.isNumeric(1) => true
+</code></pre>
+
+                <h3>Object management</h3>
+<pre><code class="language-javascript">
+// Returns an array with the property names for the given object
+dry.keys({'a':1, 'b': 2, 'c': 3}) => ['a', 'b', 'c'];
+
+// Concise and efficient forEach implementation
+
+var arr = [10, 20, 30];
+dry.each(arr, function(number) {
+    console.log(number)
+});
+// Logs 10 20 30
+
+var context = {
+    valueMessage: 'The value is',
+    indexMessage: 'at index'
+};
+dry.each(arr, function(number, index) {
+    console.log(this.valueMessage, number, this.indexMessage, index);
+}, context);
+// Logs:
+// The number is 10 at index 0
+// The number is 20 at index 1
+// The number is 30 at index 2
+</code></pre>
+
+                <h3>Ajax communication</h3>
+<pre><code class="language-javascript">
+// Simple jQuery-like ajax implementation
+dry.ajax({
+    type: 'GET',
+    url: 'https://api.github.com/users/diegocard',
+    timeout: 5000,
+    success: function(data){
+        console.log(data);
+    },
+    error: function() {
+        console.log('error');
+    }
+});
+// There are also default values for most parameters
+dry.ajax({
+    url: 'https://api.github.com/users/diegocard'
+});
+</code></pre>
+                <p>
+                    And other shortcuts:
+                    <ul>
+                        <li>dry.getJSON(url, [success], [error]);</li>
+                        <li>dry.get(url, [success], [error]);</li>
+                        <li>dry.post(url, data, [success], [error])</li>
+                        <li>dry.put(url, data, [success], [error])</li>
+                        <li>dry.delete(url, data, [success], [error])</li>
+                        <li>dry.jsonp(url, callback)</li>
+                    </ul>
+                </p>
+
+                <h3>DOM Management</h3>
+<pre><code class="language-javascript">
+// jQuery-like selectors
+dry.$('body');
+
+// jQuery-like html function
+dry.$('body').html('&lt;h1>Hi&lt;/h1>');
+
+// jQuery-like event handlers
+var clickHandler = function() {
+    console.log('clicked');
+}
+dry.$('body').on('click', clickHandler); // Activate click event
+dry.$('body').trigger('click', /* You can pass data here */);
+dry.$('body').off('click', clickHandler); // Deactivate click event
+</code></pre>
+
+            </section>
+
+            <footer>
+                Dry.js is maintained by <a href="https://github.com/diegocard">diegocard</a>
+            </footer>
+
+            <!-- Include Dry.js for simple testing purposes -->
+            <script type="text/javascript" src="https://cdn.rawgit.com/diegocard/dry.js/master/dist/dry.min.js"></script>
+
+            <!-- Prism.js -->
+            <script type="text/javascript" src="javascripts/prism.js"></script>
+
+            <!-- GA -->
+            <script type="text/javascript">
+                var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+                document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+            </script>
+            <script type="text/javascript">
+                try {
+                    var pageTracker = _gat._getTracker("UA-58464053-1");
+                    pageTracker._trackPageview();
+                } catch (err) {}
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

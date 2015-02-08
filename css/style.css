@@ -1,0 +1,243 @@
+*{	-webkit-transition: .7s ease-out;
+ 	-moz-transition: .7s ease-out;
+ 	-o-transition:  .7s ease-out;
+ 	transition: .7s ease-out;
+    list-style: none;
+}
+
+/*================================
+TYPOGRAPHY
+================================*/
+body {
+    font-family: 'Raleway', sans-serif;
+    line-height: 1.8em;
+}
+
+.bigicon {font-size: 3em;}
+h2{font-size: 42px;}
+h3{font-size: 28px;}
+h4{font-size: 18px; line-height: 1.4em;}
+
+p{
+    letter-spacing: 1px;
+    color: #aeaeae;
+    font-weight: lighter;
+}
+
+
+/*================================
+DEFAULT STYLE & FORMATING
+================================*/
+ul{padding: 0;}
+a{color: #2B71BA}
+a:hover{color: #c3c3c3; text-decoration: none;}
+
+#philosophy{text-align: center;}
+.col-md-4, .col-md-6{padding-bottom: 50px;}
+.col-md-3 {padding: 0;}
+
+.sectionhead{
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+hr.separetor{
+    width: 80px;
+    color: #363942;
+    border-top: 2px solid #2B71BA;
+}
+
+
+.btn-default{
+    background: none;
+    border: none;
+    text-transform: uppercase;
+    margin: 50px 0;
+    color: #c3c3c3;
+    letter-spacing: 2px;
+}
+
+.btn-default:hover{
+    background: none;
+    color: #2B71BA;
+}
+
+.btnicon, .brandicon{
+    margin-right: 10px;
+}
+
+
+/*================================
+HERO AREA
+================================*/
+#hero{
+    color: #fff;
+    text-align: center;
+    background: url(../img/trianglify-background.svg)no-repeat; /*your background image*/
+    max-height: 880px;
+    overflow: hidden;
+}
+
+.herocontent{
+    width: 100%;
+    max-width: 900px;
+    padding-top: 40px;
+    margin-bottom: 50px;
+}
+.heroshot{
+    margin-top: 30px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/*================================
+PHILOSOPHY SECTION
+================================*/
+
+
+/*================================
+INSPIRATION SECTION
+================================*/
+#inspiration{padding-top: 70px;}
+
+/*================================
+PORTFOLIO SECTION
+================================*/
+#portfolio{
+    background: #efefef;
+    margin-top: 50px;
+    padding: 30px 0;
+    text-align: center;
+}
+
+/*================================
+TESTIMONIAL SECTION
+================================*/
+
+.clientsphoto img{
+    width: 80px;
+    float: left;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.clientsphoto img:hover{
+    border-radius: 15%;
+}
+
+blockquote{
+    margin: 0;
+    padding: 0 0 10px 0;
+    border: none;
+}
+
+blockquote p{
+    font-style: italic;
+    font-size: 14px;
+}
+
+.quote{overflow: hidden}
+.quote h5{margin-bottom: 5px;}
+
+
+/*================================
+FOOTER SECTION
+================================*/
+
+footer{
+    text-align: center;
+    padding: 50px 0;
+    background: #363942;
+}
+
+footer p, footer .bigicon {color: #7e7e7e;}
+
+.footerlinks{margin: 30px 0;}
+.footerlinks li{
+    display: inline;
+    padding: 10px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.footersocial {margin-top: 30px;}
+
+.footersocial li{
+    display:inline;
+    padding: 0 15px;
+    font-size: 2em;
+}
+
+.footersocial li a {color: #7e7e7e;}
+.footersocial li a:hover {color: #2B71BA;}
+
+/*================================
+FOLLOW BUTTON
+================================*/
+.dribbble-follow-button {
+	display: inline-block;
+    margin-top: 15px;
+}
+
+.dribbble-follow-button .label, .dribbble-follow-button .count {
+    font: bold 11px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #333;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    border-radius: 3px;
+}
+
+.dribbble-follow-button .label {
+    padding: 0 3px 0 1px;
+    white-space: nowrap;
+    background: #e3e3e3;
+    background: linear-gradient(top, white, #dedede);
+}
+
+.dribbble-follow-button .label i {
+    height: 18px;
+    width: 18px;
+    float: left;
+    background: url(../img/icon.png) no-repeat top left;
+}
+
+.dribbble-follow-button .label:hover {
+    border-color: #bbb;
+    background: #fff;
+    color: #333;
+}
+
+.dribbble-follow-button .label:active {
+     box-shadow: 0 1px 5px rgba(0,0,0,.15) inset;
+}
+
+.dribbble-follow-button .count {
+    margin-left: 5px;
+    padding: 0 3px;
+    color: #333;
+    border-color: #bbb;
+    font-weight: normal;
+    background: white;
+}
+
+.dribbble-follow-button .count:hover {
+    text-decoration: underline;
+}
+
+.dribbble-follow-button .count > * {
+	top: 50%;
+	left: 0;
+	margin: -4px 0 0 -4px;
+	border: 4px solid transparent;
+	border-right-color: #aaa;
+	border-left: 0;
+	position: absolute;
+}
+
+.dribbble-follow-button .count u {
+    margin-left: -3px;
+    border-right-color: white;
+}
