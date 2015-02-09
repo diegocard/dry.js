@@ -1,4 +1,5 @@
-*{	-webkit-transition: .7s ease-out;
+*{
+    -webkit-transition: .7s ease-out;
  	-moz-transition: .7s ease-out;
  	-o-transition:  .7s ease-out;
  	transition: .7s ease-out;
@@ -16,11 +17,15 @@ body {
 .bigicon {font-size: 3em;}
 h2{font-size: 42px;}
 h3{font-size: 28px;}
-h4{font-size: 18px; line-height: 1.4em;}
+h4{
+    font-size: 18px;
+    line-height: 1.4em;
+    font-weight: bold;
+}
 
 p{
     letter-spacing: 1px;
-    color: #aeaeae;
+    color: #333;
     font-weight: lighter;
 }
 
@@ -67,6 +72,13 @@ hr.separetor{
     margin-right: 10px;
 }
 
+ul {
+    margin-left: 20px;
+}
+
+li {
+    list-style-type: disc;
+}
 
 /*================================
 HERO AREA
