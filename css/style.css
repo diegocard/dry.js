@@ -15,6 +15,14 @@ body {
 }
 
 .bigicon {font-size: 3em;}
+.largeicon {font-size: 5em;}
+.reverse-icon {
+    background-color: #2B71BA;
+    color: #fff;
+    padding: 20px;
+    border-radius: 50%;
+}
+
 h2{font-size: 42px;}
 h3{font-size: 28px;}
 h4{
@@ -106,7 +114,9 @@ HERO AREA
 /*================================
 PHILOSOPHY SECTION
 ================================*/
-
+h4 {
+    margin-top: 25px;
+}
 
 /*================================
 INSPIRATION SECTION
