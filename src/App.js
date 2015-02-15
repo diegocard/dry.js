@@ -4,6 +4,7 @@ dry.App = function(name, options) {
     this.name = name;
     this.options = options || {};
     this.routes = this.options.routes || [];
+    this.filters = this.options.filters || {};
     this.controllers = this.options.controllers || {};
     this.views = this.options.views || {};
     this.modelDefinitions = this.options.models || {};
@@ -27,6 +28,10 @@ dry.App.prototype.controller = function(name, methods) {
         });
     }
     return controller;
+};
+
+dry.App.prototype.redirect = function(controller, method, params) {
+    this.controllers[controller].invokeMethod(method, params);
 };
 
 dry.App.prototype.view = function(name, templateData) {

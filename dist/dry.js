@@ -304,6 +304,7 @@ dry.App = function(name, options) {
     this.name = name;
     this.options = options || {};
     this.routes = this.options.routes || [];
+    this.filters = this.options.filters || {};
     this.controllers = this.options.controllers || {};
     this.views = this.options.views || {};
     this.modelDefinitions = this.options.models || {};
@@ -327,6 +328,10 @@ dry.App.prototype.controller = function(name, methods) {
         });
     }
     return controller;
+};
+
+dry.App.prototype.redirect = function(controller, method, params) {
+    this.controllers[controller].invokeMethod(method, params);
 };
 
 dry.App.prototype.view = function(name, templateData) {
@@ -507,6 +512,23 @@ dry.Model.prototype.endpointMethod = function(httpMethod, url) {
     };
 };
 
+// Filter
+// ------
+dry.Filter = function(name, condition, action) {
+    this.name = name;
+    this.condition = condition;
+    this.action = action;
+};
+
+// Evaluate the condition. If it is true, then run the action.
+dry.Filter.prototype.runFilter = function() {
+    var result = this.condition();
+    if (result && this.action) {
+        this.action();
+    }
+    return result;
+};
+
 // Controller
 // ----------
 dry.Controller = function(name, methods) {
@@ -539,6 +561,10 @@ dry.Controller.prototype.invokeMethod = function(methodName, params) {
         result.controller = result.controller || this;
         result.render();
     }
+};
+
+dry.Controller.prototype.redirect = function(methodName, params) {
+    this.invokeMethod(methodName, params);
 };
 
 // Template

@@ -31,3 +31,7 @@ dry.Controller.prototype.invokeMethod = function(methodName, params) {
         result.render();
     }
 };
+
+dry.Controller.prototype.redirect = function(methodName, params) {
+    this.invokeMethod(methodName, params);
+};

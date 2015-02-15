@@ -15,6 +15,7 @@ gulp.task('compile', function() {
         './src/App.js',
         './src/Router.js',
         './src/Model.js',
+        './src/Filter.js',
         './src/Controller.js',
         './src/Template.js',
         './src/View.js'

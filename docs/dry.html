@@ -693,6 +693,7 @@ dry.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keywor
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.options = options || {};
     <span class="hljs-keyword">this</span>.routes = <span class="hljs-keyword">this</span>.options.routes || [];
+    <span class="hljs-keyword">this</span>.filters = <span class="hljs-keyword">this</span>.options.filters || {};
     <span class="hljs-keyword">this</span>.controllers = <span class="hljs-keyword">this</span>.options.controllers || {};
     <span class="hljs-keyword">this</span>.views = <span class="hljs-keyword">this</span>.options.views || {};
     <span class="hljs-keyword">this</span>.modelDefinitions = <span class="hljs-keyword">this</span>.options.models || {};
@@ -716,6 +717,10 @@ dry.App.prototype.controller = <span class="hljs-function"><span class="hljs-key
         });
     }
     <span class="hljs-keyword">return</span> controller;
+};
+
+dry.App.prototype.redirect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(controller, method, params)</span> </span>{
+    <span class="hljs-keyword">this</span>.controllers[controller].invokeMethod(method, params);
 };
 
 dry.App.prototype.view = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, templateData)</span> </span>{
@@ -752,18 +757,6 @@ dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
               </div>
               <h2 id="router">Router</h2>
 
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-33">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
-              </div>
-              
             </div>
             
             <div class="content"><div class='highlight'><pre>dry.Router = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(appName, routes)</span> </span>{
@@ -877,11 +870,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-34">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h2 id="model">Model</h2>
 
@@ -908,11 +901,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-35">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Generate a model method which will perform an ajax request
 for a given endpoint</p>
@@ -945,11 +938,51 @@ for a given endpoint</p>
         </li>
         
         
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <h2 id="filter">Filter</h2>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>dry.Filter = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, condition, action)</span> </span>{
+    <span class="hljs-keyword">this</span>.name = name;
+    <span class="hljs-keyword">this</span>.condition = condition;
+    <span class="hljs-keyword">this</span>.action = action;
+};</pre></div></div>
+            
+        </li>
+        
+        
         <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>Evaluate the condition. If it is true, then run the action.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>dry.Filter.prototype.runFilter = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">this</span>.condition();
+    <span class="hljs-keyword">if</span> (result &amp;&amp; <span class="hljs-keyword">this</span>.action) {
+        <span class="hljs-keyword">this</span>.action();
+    }
+    <span class="hljs-keyword">return</span> result;
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h2 id="controller">Controller</h2>
 
@@ -985,16 +1018,20 @@ dry.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         result.controller = result.controller || <span class="hljs-keyword">this</span>;
         result.render();
     }
+};
+
+dry.Controller.prototype.redirect = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName, params)</span> </span>{
+    <span class="hljs-keyword">this</span>.invokeMethod(methodName, params);
 };</pre></div></div>
             
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <h2 id="template">Template</h2>
 
@@ -1007,11 +1044,11 @@ dry.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Allow for pre-compiled funcions</p>
 
@@ -1053,11 +1090,11 @@ dry.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <h2 id="view">View</h2>
 
@@ -1094,11 +1131,11 @@ dry.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyw
         </li>
         
         
-        <li id="section-40">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>TODO: Finish, test</p>
 

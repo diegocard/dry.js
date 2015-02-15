@@ -1,3 +1,4 @@
+- Test filters and redirection methods (in app and controller)
 - Change routes array in App.js and make it an object which already contains the controller that must be called.
   This object is passed on to the router on init. Reflect this changes on Router.js
   in router.
