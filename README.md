@@ -209,7 +209,7 @@ function isLoggedIn() {
 }
 
 function redirectToHome() {
-    app1.redirect("Home", "Index");
+    dry.navigate("/home");
 }
 
 app1.filter('IsLoggedIn', isLoggedIn, redirectToHome);
@@ -223,6 +223,8 @@ app1.controller('main', {
     }
 });
 ```
+
+Note: filters are not required, so you can choose not to use them if you find them irrelevant or confusing.
 
 ## Thanks To
 
