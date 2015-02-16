@@ -198,6 +198,32 @@ The convention here is very simple: by default, once a user navigates to a route
 
 Notice that the view instance is created on the fly, and since the only parameter specified when creating the view is its name, it will simply follow the default behavior for views. More specifically, it look for a script with a data-dry attribute equal to its name (the template) and render it into the first non-script DOM element with the same attribute value.
 
+###Filters
+Filters are a simple and semantic way to reuse code inside your application (again, DRY principle). They check if a condition is fulfilled and execute a given action if it is. They can seve as annotations and make controller logic much easier to read.
+
+```js
+var app1 = dry.app('app1');
+
+function isLoggedIn() {
+    // some logic...
+}
+
+function redirectToHome() {
+    app1.redirect("Home", "Index");
+}
+
+app1.filter('IsLoggedIn', isLoggedIn, redirectToHome);
+
+// Home page
+app1.controller('main', {
+    'hello': function() {
+          app1.filter("IsLogedIn");
+        
+          // Continue controller logic...
+    }
+});
+```
+
 ## Thanks To
 
 - [chrisdavies](https://github.com/chrisdavies/) for his implementation of [rlite](https://github.com/chrisdavies/rlite) (used as default router behind the secenes)
