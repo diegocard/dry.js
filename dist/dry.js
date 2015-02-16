@@ -334,6 +334,14 @@ dry.App.prototype.redirect = function(controller, method, params) {
     this.controllers[controller].invokeMethod(method, params);
 };
 
+dry.App.prototype.filter = function(name, condition, action) {
+    if (dry.isUndefined(condition) && dry.isUndefined(action)) {
+        return this.views[name];
+    } else {
+        this.filters[name] = new dry.Filter(name, condition, action);
+    }
+};
+
 dry.App.prototype.view = function(name, templateData) {
     if (dry.isUndefined(templateData)) {
         return this.views[name];

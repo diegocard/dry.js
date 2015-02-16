@@ -723,6 +723,14 @@ dry.App.prototype.redirect = <span class="hljs-function"><span class="hljs-keywo
     <span class="hljs-keyword">this</span>.controllers[controller].invokeMethod(method, params);
 };
 
+dry.App.prototype.filter = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, condition, action)</span> </span>{
+    <span class="hljs-keyword">if</span> (dry.isUndefined(condition) &amp;&amp; dry.isUndefined(action)) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.views[name];
+    } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">this</span>.filters[name] = <span class="hljs-keyword">new</span> dry.Filter(name, condition, action);
+    }
+};
+
 dry.App.prototype.view = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, templateData)</span> </span>{
     <span class="hljs-keyword">if</span> (dry.isUndefined(templateData)) {
         <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.views[name];
