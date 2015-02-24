@@ -193,6 +193,12 @@ footer p, footer .bigicon {color: #7e7e7e;}
 .footersocial li a {color: #7e7e7e;}
 .footersocial li a:hover {color: #2B71BA;}
 
+.back-to-top {
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+
 /*================================
 FOLLOW BUTTON
 ================================*/
