@@ -124,7 +124,7 @@
                         <li><a href="#philosophy"><span class="btnicon icon-compass"></span>Philosophy</a></li>
                         <li><a href="#inspiration"><span class="btnicon icon-bulb"></span>Inspiration</a></li>
                         <li><a href="#getting-started"><span class="btnicon icon-rocket"></span>Getting Started</a></li>
-                        <li><a href="#testimonials"><span class="btnicon icon-puzzle"></span>Components</a></li>
+                        <li><a href="#components"><span class="btnicon icon-puzzle"></span>Components</a></li>
                         <li><a href="#utilities"><span class="btnicon icon-wrench"></span>Utilities</a></li>
 
                         <!--don't forget to replace my email address below with yours-->
@@ -306,79 +306,249 @@
     </div><!-- GETTING STARTED SECTION END -->
 
     <!-- ===========================
-    TESTIMONIAL SECTION START
+    COMPONENTS SECTION START
     =========================== -->
-    <div id="testimonials" class="container">
+    <div id="components" class="container">
         <div class="sectionhead wow bounceInUp" data-wow-duration="2s">
-           <span class="bigicon icon-bubbles"></span>
-           <h3>This is what I love to listen</h3>
-           <h4>Expedita nobis natus doloribus blanditiis quos, atque voluptatem, veritatis soluta eveniet ea!</h4>
+           <span class="bigicon icon-puzzle"></span>
+           <h3>Components</h3>
            <hr class="separetor">
-        </div><!-- TESTIMONIAL SECTIONHEAD END -->
+        </div><!-- COMPONENTS SECTIONHEAD END -->
 
-        <!-- TESTIMONIAL ITEMS START -->
+        <!-- COMPONENTS ITEMS START -->
+        
+        <!-- App -->
         <div class="row">
-            <!-- 1ST TESTIMONIAL ITEM -->
+            <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
+                <h4>App</h4>
+            </div>
+            
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
-                <div class="clientsphoto">
-                    <img src="img/dan.jpg" alt="Dan">
-                </div>
-
-                <div class="quote">
-                    <blockquote>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia et pariatur ipsam tempora officia ea iusto expedita, nulla, hic odit saepe repellat nesciunt dolorum, officiis laborum ad, aliquam. Quos, et.</p>
-                    </blockquote>
-                    <h5>Dan Cederholm</h5>
-                    <p>Co-Founder, Dribbble</p>
-                </div>
-            </div><!-- 1ST TESTIMONIAL ITEM END -->
-
-            <!-- 2ND TESTIMONIAL ITEM -->
-            <div class="col-md-6 wow bounceIn" data-wow-duration="3s">
-                <div class="clientsphoto">
-                    <img src="img/bill.jpg" alt="Bill">
-                </div>
-
-                <div class="quote">
-                    <blockquote>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia et pariatur ipsam tempora officia ea iusto expedita, nulla, hic odit saepe repellat nesciunt dolorum, officiis laborum ad, aliquam. Quos, et. lorem</p>
-                    </blockquote>
-                    <h5>Bill S Kenney</h5>
-                    <p>Art Director at Focus Lab LLC.</p>
-                </div>
-            </div><!-- 2ND TESTIMONIAL ITEM END -->
-
-            <!-- 3RD TESTIMONIAL ITEM -->
-            <div class="col-md-6 wow bounceIn" data-wow-duration="3s">
-                <div class="clientsphoto">
-                    <img src="img/eric.png" alt="Eric">
-                </div>
-
-                <div class="quote">
-                    <blockquote>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia et pariatur ipsam tempora officia ea iusto expedita, nulla, hic odit saepe repellat nesciunt dolorum, officiis laborum ad, aliquam. Quos, et.</p>
-                    </blockquote>
-                    <h5>Eric Hoffman</h5>
-                    <p>Principal Designer, JellyJar</p>
-                </div>
-            </div><!-- 3RD TESTIMONIAL ITEM END -->
-
-            <!-- 4TH TESTIMONIAL ITEM -->
+                <p>
+                    A website is divided in apps.
+                    Their goal is to provide structure to the code, and can be seen as modules.
+                    Each app contains its own controllers, views and models, and handles a specific set of routes.
+                </p>
+            </div>
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
-                <div class="clientsphoto">
-                    <img src="img/ramil.jpg" alt="Ramil">
-                </div>
-
-                <div class="quote">
-                    <blockquote>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia et pariatur ipsam tempora officia ea iusto expedita, nulla, hic odit saepe repellat nesciunt dolorum, officiis laborum ad, aliquam. Quos, et.</p>
-                    </blockquote>
-                    <h5>Ramil Derogongun</h5>
-                    <p>Visual Designer, Bluroon</p>
-                </div>
-            </div><!-- 4TH TESTIMONIAL ITEM END -->
+<pre><code class="language-javascript">
+// Create new app
+var app1 = dry.app('app1');
+// Start the app
+app1.init();
+</code></pre>
+            </div>
         </div>
-    </div><!-- TESTIMONIAL SECTION END -->
+
+        <!-- Controller -->
+        <div class="row">
+            <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
+                <h4>Controller</h4>
+            </div>
+            
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <p>
+                    A controller contains methods.
+                    Each method handles a specific route or event, returning a view instance if the result of the method's execution triggers UI changes.
+                    In this sense, Dry.js controllers are very similar to Rails or ASP.NET MVC.
+                </p>
+            </div>
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Handles a list of products
+app1.controller('products', {
+    // Triggered when navigating to /products/list
+    'list': function() {
+        return new dry.View('ProductList')
+    }
+});
+</code></pre>
+            </div>
+        </div>
+
+        <!-- Router -->
+        <div class="row">
+            <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
+                <h4>Router</h4>
+            </div>
+            
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <p>
+                    The router is responsible for directing page navigation actions to controllers.
+                    As the previous example hints, you do not need to specify routes anywhere. They are automatically generated from controller names and methods.
+                </p>
+            </div>
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Home page
+app1.controller('default', {
+    // Triggered on base url (root)
+    'default': function() {
+        return new dry.View('HomePage')
+    }
+});
+
+// Handles a list of products
+app1.controller('products', {
+    // Triggered when navigating to /products/:id
+    'default': function(id) {
+        return new dry.View('ProductDetails')
+    }
+    // Triggered when navigating to /products/list
+    'list': function() {
+        return new dry.View('ProductList')
+    }
+});
+</code></pre>
+            </div>
+        </div>
+
+        <!-- Model -->
+        <div class="row">
+            <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
+                <h4>Model</h4>
+            </div>
+            
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <p>
+                    In a typical fashion, models concentrate the responsibility of handling data structure, storage and server communication.
+                    They are injected into views through controller actions, and come with a convenient API for handling Ajax communication.
+                    Expanding on the previous example:
+                </p>
+            </div>
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Product model definition
+app1.model('Product', {
+    attributes: {
+        id: 1 // default
+    }
+    getAll: 'GET https://someUrl/products'
+    newProduct: 'POST https://someUrl/products/new',
+    updateProduct: 'PUT https://someUrl/products/{id}',
+    deleteProduct: 'DELETE https://someUrl/{id}'
+});
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return new dry.View('ProductList', allProducts);
+    }
+});
+</code></pre>
+            </div>
+        </div>
+
+        <!-- View -->
+        <div class="row">
+            <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
+                <h4>View</h4>
+            </div>
+            
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <p>
+                    Views contain presentation logic. Each view contains a model instance which stores the data that is rendered
+                    on the template. They are also responsible for handling events, and do so by calling methods from the controller
+                    that created the view.
+                </p>
+            </div>
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Product model definition
+app1.model('Product', {
+    getAll: 'GET https://someUrl/products'
+});
+
+app1.view('ProductList', {
+    events: {
+        // When the button with class .btn-new' is pressed,
+        // call the 'new' method in the controller
+        'click .btn-new': 'new'
+    }
+});
+
+// Handles a list of products
+app1.controller('products', {
+    'list': function() {
+        // Creates a new model instance and calls the getAll method
+        var allProducts = app1.model('Product').getAll();
+        // Pass the model to the view
+        return app1.view('ProductList', allProducts);
+    },
+    'new': function() {
+        // ...
+    }
+});
+</code></pre>
+            </div>
+        </div>
+
+        <!-- Template -->
+        <div class="row">
+            <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
+                <h4>Template</h4>
+            </div>
+            
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <p>
+                    Templates can be either strings or functinons which construct HTML code from the view data.
+                    Dry.js automatically finds template definitions in the dom looking for a script with a data-dry attribute,
+                    and then renders it to a DOM element with a data-dry attribute of the same value.
+                </p>
+
+                <p>
+                    The convention here is very simple: by default, once a user navigates to a route (say www.someUrl.com/<strong>main/hello</strong>),
+                    then the <strong>main</strong> controller executes the <strong>hello</strong> method, which will create a new instance of the <strong>main/hello</strong> view.
+                </p>
+
+                <p>
+                    Notice that the view instance is created on the fly, and since the only parameter specified when creating the view is its name, it will
+                    simply follow the default behavior for views. More specifically, it look for a script with a <strong>data-dry</strong> attribute equal to its name (the template) and render it into
+                    the first non-script DOM element with the same attribute value. Please read the <a href="#default-behavior-and-best-practices">Default behavior
+                    and best practices</a> section for additional info.
+                </p>
+            </div>
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+// Home page
+app1.controller('main', {
+    'hello': function() {
+        return new dry.View('main/hello');
+    }
+});
+</code></pre>
+
+<pre><code class="language-markup">
+&lt;!-- Template -->
+&lt;script data-dry="main/hello" type="text/template">
+    &lt;% for(var i=0; i<10; i++) { %>
+        <span>Lorem ipsum</span>
+    &lt;% } %>
+&lt;/script>
+
+&lt;!-- Template will be rendered here -->
+&lt;div data-dry="main/hello">&lt;/div>
+</code></pre>
+            </div>
+        </div>
+
+
+            </div><!-- 4TH COMPONENTS ITEM END -->
+        </div>
+    </div><!-- COMPONENTS SECTION END -->
 
     <!-- ===========================
     FOOTER START
