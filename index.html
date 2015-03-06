@@ -313,16 +313,13 @@
            <span class="bigicon icon-puzzle"></span>
            <h3>Components</h3>
            <hr class="separetor">
-        </div><!-- COMPONENTS SECTIONHEAD END -->
+        </div>
 
-        <!-- COMPONENTS ITEMS START -->
-        
-        <!-- App -->
         <div class="row">
             <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
                 <h4>App</h4>
             </div>
-            
+
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
                 <p>
                     A website is divided in apps.
@@ -345,7 +342,7 @@ app1.init();
             <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
                 <h4>Controller</h4>
             </div>
-            
+
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
                 <p>
                     A controller contains methods.
@@ -373,7 +370,7 @@ app1.controller('products', {
             <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
                 <h4>Router</h4>
             </div>
-            
+
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
                 <p>
                     The router is responsible for directing page navigation actions to controllers.
@@ -412,7 +409,7 @@ app1.controller('products', {
             <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
                 <h4>Model</h4>
             </div>
-            
+
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
                 <p>
                     In a typical fashion, models concentrate the responsibility of handling data structure, storage and server communication.
@@ -453,7 +450,7 @@ app1.controller('products', {
             <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
                 <h4>View</h4>
             </div>
-            
+
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
                 <p>
                     Views contain presentation logic. Each view contains a model instance which stores the data that is rendered
@@ -499,7 +496,7 @@ app1.controller('products', {
             <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
                 <h4>Template</h4>
             </div>
-            
+
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
                 <p>
                     Templates can be either strings or functinons which construct HTML code from the view data.
@@ -549,6 +546,154 @@ app1.controller('main', {
             </div><!-- 4TH COMPONENTS ITEM END -->
         </div>
     </div><!-- COMPONENTS SECTION END -->
+
+    <!-- ===========================
+    UTILITIES SECTION START
+    =========================== -->
+    <div id="utilities" class="container">
+        <div class="sectionhead wow bounceInUp" data-wow-duration="2s">
+           <span class="bigicon icon-wrench"></span>
+           <h3>Utilities</h3>
+           <p>
+               Dry.js also contains several utility functions which you can leverage in your own code.
+           </p>
+           <p>
+               Tip: You can open your browser's dev tools and check them out this page :)
+           </p>
+           <hr class="separetor">
+       </div>
+
+        <div class="row">
+
+            <!-- Type Checking -->
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <h4>Type Checking</h4>
+<pre><code class="language-javascript">
+// Check if the given parameter is an array
+dry.isArray([1,2,3]) => true
+
+// Check if the given parameter is an object
+dry.isObject({a:1, b:2}) => true
+
+// Check if the given parameter is strictly an object
+dry.isStrictlyObject({'a':1, 'b':2}) => true
+dry.isStrictlyObject([1,2,3]) => false
+
+// Check if the given parameter is boolean
+dry.isBoolean(true) => true
+
+// Check if the given parameter is a string
+dry.isString('Hi there') => true
+
+// Check if the given parameter is a function
+dry.isFunction(function(){}) => true
+
+// Check if the given parameter is undefined
+dry.isUndefined(undefined) => true
+
+// Check if the given parameter is numeric
+dry.isNumeric(1) => true
+</code></pre>
+            </div>
+
+            <!-- Object management -->
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <h4>Object management</h4>
+<pre><code class="language-javascript">
+// Returns an array with the property names for the given object
+dry.keys({'a':1, 'b': 2, 'c': 3}) => ['a', 'b', 'c'];
+
+// Concise and efficient forEach implementation
+var arr = [10, 20, 30];
+dry.each(arr, function(number) {
+    console.log(number)
+});
+// Logs 10 20 30
+</code></pre>
+<pre><code class="language-javascript">
+var context = {
+    valueMessage: 'The value is',
+    indexMessage: 'at index'
+};
+dry.each(arr, function(num, index) {
+    console.log(this.valueMessage, num, this.indexMessage, index);
+}, context);
+// Logs:
+// The number is 10 at index 0
+// The number is 20 at index 1
+// The number is 30 at index 2
+</code></pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Ajax communication -->
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <h4>Ajax communication</h4>
+<pre><code class="language-javascript">
+// Simple jQuery-like ajax implementation
+dry.ajax({
+    type: 'GET',
+    url: 'https://api.github.com/users/diegocard',
+    timeout: 5000,
+    success: function(data){
+        console.log(data);
+    },
+    error: function() {
+        console.log('error');
+    }
+});
+// There are also default values for most parameters
+dry.ajax({
+    url: 'https://api.github.com/users/diegocard'
+});
+</code></pre>
+            </div>
+
+            <!-- DOM Management -->
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <h4>DOM Management</h4>
+<pre><code class="language-javascript">
+// jQuery-like selectors
+dry.$('body');
+
+// jQuery-like html function
+dry.$('body').html('&lt;h1>Hi&lt;/h1>');
+
+// jQuery-like event handlers
+var clickHandler = function() {
+    console.log('clicked');
+}
+// Activate click event
+dry.$('body').on('click', clickHandler);
+// Trigger the click event
+dry.$('body').trigger('click', /* You can pass data here */);
+// Deactivate click event
+dry.$('body').off('click', clickHandler);
+</code></pre>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Other ajax shortcuts -->
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <h4>And other shortcuts</h4>
+                <ul>
+                    <li><strong>dry.getJSON</strong>(url, [success], [error]);</li>
+                    <li><strong>dry.get</strong>(url, [success], [error]);</li>
+                    <li><strong>dry.post</strong>(url, data, [success], [error])</li>
+                    <li><strong>dry.put</strong>(url, data, [success], [error])</li>
+                    <li><strong>dry.delete</strong>(url, data, [success], [error])</li>
+                    <li><strong>dry.jsonp</strong>(url, callback)</li>
+                </ul>
+            </div>
+        </div>
+
+    </div><!-- UTILITIES SECTION END -->
 
     <!-- ===========================
     FOOTER START
