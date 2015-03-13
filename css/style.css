@@ -112,6 +112,14 @@ HERO AREA
 }
 
 /*================================
+GITHUB BUTTONS
+================================*/
+.sub-hero {
+    padding: 30px;
+    background: none repeat scroll 0% 0% #EFEFEF;
+}
+
+/*================================
 PHILOSOPHY SECTION
 ================================*/
 h4 {
