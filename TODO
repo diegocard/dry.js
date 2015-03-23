@@ -1,6 +1,7 @@
 - Check promise and ajax method implementations to see if we can reuse other utilities methods in them
 - Check new ajax code against old one
 - Add or remove "_" to the start of private objects (but make it a convention)
+- Implement "set", "get", "validate(attribute, function)" and isValid methods in Model
 - Change existing tests to include promises
 - Test filters and redirection methods (in app and controller)
 - Change routes array in App.js and make it an object which already contains the controller that must be called.

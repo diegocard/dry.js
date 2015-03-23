@@ -518,6 +518,7 @@ dry.Model = function(name, params) {
     params = params || {};
     this.name = name;
     this.attributes = params.attributes || {};
+    this.validations = [];
     var self = this;
 
     /* Generate model methods for each given endpoint */
@@ -556,6 +557,53 @@ dry.Model.prototype.endpointMethod = function(httpMethod, url) {
         });
     };
 };
+
+// Set an attribute/s for the given model
+dry.Model.prototype.set = function(name, value) {
+    var attrs = dry.isStrictlyObject(name) ? name : {name: value},
+        self = this;
+    dry.each(attrs, function (val, attr) {
+        self.attributes[attr] = val;
+    });
+};
+
+// Get an attribute of the given model
+// TODO: test, doc
+dry.Model.prototype.get = function(name) {
+    return this.attributes[name];
+};
+
+// Register a validation function for an attribute
+// TODO: test, doc
+dry.Model.prototype.validate = function(attr, func) {
+    this.validations[attr].push(func);
+};
+
+// Check if the entire model or one of its attributes is valid
+// TODO: test, doc
+dry.Model.prototype.isValid = function(attr) {
+    var attributesToCheck = [attr] || dry.keys(this.attributes),
+        i = 0, // Attribute iterator
+        j = 0, // Attribute validation iterator
+        attributeCount = attributesToCheck.length,
+        isValid = true,
+        validationCount,
+        currentAttrValidations;
+    while (isValid && i<attributeCount) {
+        j = 0;
+        currentAttrValidations = this.validations[attributesToCheck[i]];
+        validationCount = currentAttrValidations.length;
+        while (isValid && j<validationCount) {
+            isValid = currentAttrValidations[j].apply(this);
+            j++;
+        }
+        i++;
+    }
+    return isValid;
+};
+
+
+
 
 // Filter
 // ------
