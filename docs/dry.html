@@ -164,8 +164,7 @@ dry = {</pre></div></div>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_METHOD: <span class="hljs-string">"default"</span>
-};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_METHOD: <span class="hljs-string">"default"</span>,</pre></div></div>
             
         </li>
         
@@ -176,9 +175,13 @@ dry = {</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
-              <h2 id="utilities">Utilities</h2>
+              <p>Time in milliseconds after which apending AJAX request is considered unresponsive and is aborted.
+Useful to deal with bad connectivity (e.g. on a mobile network).
+A 0 value disables AJAX timeouts.</p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre>    AJAX_TIMEOUT: <span class="hljs-number">10000</span>,</pre></div></div>
             
         </li>
         
@@ -188,6 +191,50 @@ dry = {</pre></div></div>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Error returned on promises when XHR is not implemented in the current browser</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    ENOXHR: <span class="hljs-number">1</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Error returned on promises when an Ajax call is timed out</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    ETIMEOUT: <span class="hljs-number">2</span>
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <h2 id="utilities">Utilities</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Check if the given parameter is an array</p>
 
@@ -200,11 +247,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Check if the given parameter is an object</p>
 
@@ -217,11 +264,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Check if the given parameter is strictly an object</p>
 
@@ -234,11 +281,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Check if the given parameter is boolean</p>
 
@@ -251,11 +298,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Check if the given parameter is a string</p>
 
@@ -268,11 +315,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Check if the given parameter is a function</p>
 
@@ -285,11 +332,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Check if the given parameter is undefined</p>
 
@@ -302,11 +349,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Check if the given parameter is numeric</p>
 
@@ -319,11 +366,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Returns an array with the property names for the given object</p>
 
@@ -343,11 +390,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Concise and efficient forEach implementation</p>
 
@@ -370,11 +417,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>JSONP requests</p>
 
@@ -396,11 +443,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Promises</p>
 
@@ -408,8 +455,6 @@ dry = {</pre></div></div>
             
             <div class="content"><div class='highlight'><pre>dry.Promise = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
     <span class="hljs-keyword">this</span>._callbacks = [];
-    <span class="hljs-keyword">this</span>.ENOXHR = <span class="hljs-number">1</span>;
-    <span class="hljs-keyword">this</span>.ETIMEOUT = <span class="hljs-number">2</span>;
 };
 
 dry.Promise.prototype.then = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(func, context)</span> </span>{
@@ -485,19 +530,17 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
         </li>
         
         
-        <li id="section-23">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Ajax methods</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-
-dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(method, url, data, headers)</span> </span>{
+            <div class="content"><div class='highlight'><pre>dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(method, url, data, headers)</span> </span>{
     data = data || {};
     headers = headers || {};
 
@@ -532,14 +575,14 @@ dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span
         },
         onTimeout = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
             xhr.abort();
-            p.done(dry.Promise.ETIMEOUT, <span class="hljs-string">""</span>, xhr);
+            p.done(dry.settings.ETIMEOUT, <span class="hljs-string">""</span>, xhr);
         },
         payload, h, timeout, tid;
     
     <span class="hljs-keyword">try</span> {
         xhr = newXhr();
     } <span class="hljs-keyword">catch</span> (e) {
-        p.done(promise.ENOXHR, <span class="hljs-string">""</span>);
+        p.done(dry.settings.ENOXHR, <span class="hljs-string">""</span>);
         <span class="hljs-keyword">return</span> p;
     }
 
@@ -558,7 +601,7 @@ dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span
         }
     }
 
-    timeout = dry.settings.ajaxTimeout;
+    timeout = dry.settings.AJAX_TIMEOUT;
     <span class="hljs-keyword">if</span> (timeout) {
         tid = setTimeout(onTimeout, timeout);
     }
@@ -583,11 +626,11 @@ dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span
         </li>
         
         
-        <li id="section-24">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Utility ajax method shortcuts for POST, PUT and DELETE requests</p>
 
@@ -602,11 +645,11 @@ dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span
         </li>
         
         
-        <li id="section-25">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <h2 id="dom-management-utilities">DOM Management Utilities</h2>
 
@@ -620,11 +663,11 @@ dry.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <p>jQuery-like html function</p>
 
@@ -642,11 +685,11 @@ dry.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>jQuery-like event handlers</p>
 
@@ -677,11 +720,11 @@ dry.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-28">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2 id="app">App</h2>
 
@@ -755,11 +798,11 @@ dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
         </li>
         
         
-        <li id="section-29">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <h2 id="router">Router</h2>
 
@@ -876,11 +919,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-30">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h2 id="model">Model</h2>
 
@@ -907,11 +950,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-31">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Generate a model method which will perform an ajax request
 for a given endpoint</p>
@@ -944,11 +987,11 @@ for a given endpoint</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <h2 id="filter">Filter</h2>
 
@@ -963,11 +1006,11 @@ for a given endpoint</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Evaluate the condition. If it is true, then run the action.</p>
 
@@ -984,11 +1027,11 @@ for a given endpoint</p>
         </li>
         
         
-        <li id="section-34">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h2 id="controller">Controller</h2>
 
@@ -1033,11 +1076,11 @@ dry.Controller.prototype.redirect = <span class="hljs-function"><span class="hlj
         </li>
         
         
-        <li id="section-35">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <h2 id="template">Template</h2>
 
@@ -1050,11 +1093,11 @@ dry.Controller.prototype.redirect = <span class="hljs-function"><span class="hlj
         </li>
         
         
-        <li id="section-36">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Allow for pre-compiled funcions</p>
 
@@ -1096,11 +1139,11 @@ dry.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
         </li>
         
         
-        <li id="section-37">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <h2 id="view">View</h2>
 
@@ -1137,11 +1180,11 @@ dry.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyw
         </li>
         
         
-        <li id="section-38">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>TODO: Finish, test</p>
 

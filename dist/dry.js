@@ -35,7 +35,15 @@ dry.settings = {
     // When a route is left empty, the router will look for this controller
     DEFAULT_CONTROLLER_NAME: "default",
     // When a route doesn't target any specific method, it will look for this one
-    DEFAULT_CONTROLLER_METHOD: "default"
+    DEFAULT_CONTROLLER_METHOD: "default",
+    // Time in milliseconds after which apending AJAX request is considered unresponsive and is aborted.
+    // Useful to deal with bad connectivity (e.g. on a mobile network).
+    // A 0 value disables AJAX timeouts.
+    AJAX_TIMEOUT: 10000,
+    // Error returned on promises when XHR is not implemented in the current browser
+    ENOXHR: 1,
+    // Error returned on promises when an Ajax call is timed out
+    ETIMEOUT: 2
 };
 
 // Utilities
@@ -125,8 +133,6 @@ dry.jsonp = function(url, callback) {
 // Promises
 dry.Promise = function() {
     this._callbacks = [];
-    this.ENOXHR = 1;
-    this.ETIMEOUT = 2;
 };
 
 dry.Promise.prototype.then = function(func, context) {
@@ -200,8 +206,6 @@ dry.Promise.chain = function(funcs, args) {
 };
 
 // Ajax methods
-
-
 dry.ajax = function (method, url, data, headers) {
     data = data || {};
     headers = headers || {};
@@ -237,14 +241,14 @@ dry.ajax = function (method, url, data, headers) {
         },
         onTimeout = function() {
             xhr.abort();
-            p.done(dry.Promise.ETIMEOUT, "", xhr);
+            p.done(dry.settings.ETIMEOUT, "", xhr);
         },
         payload, h, timeout, tid;
     
     try {
         xhr = newXhr();
     } catch (e) {
-        p.done(promise.ENOXHR, "");
+        p.done(dry.settings.ENOXHR, "");
         return p;
     }
 
@@ -263,7 +267,7 @@ dry.ajax = function (method, url, data, headers) {
         }
     }
 
-    timeout = dry.settings.ajaxTimeout;
+    timeout = dry.settings.AJAX_TIMEOUT;
     if (timeout) {
         tid = setTimeout(onTimeout, timeout);
     }

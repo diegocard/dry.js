@@ -1,35 +1,14 @@
-/*
- * Useful functions
- */
+// Promise tests
+// -------------
 
-function sync_return(value) {
-    var p = new dry.Promise();
-    p.done(null, value);
-    return p;
-}
-
-function async_return(value) {
-    var p = new dry.Promise();
-    setTimeout(function(){
-        p.done(null, value);
-    });
-    return p;
-}
-
-function late(n) {
-    var p = new dry.Promise();
-    setTimeout(function() {
-        p.done(null, n);
-    }, n);
-    return p;
-}
-
-/*
- * Tests
- */
-
- QUnit.test("Promise: simple synchronous test", function (assert) {
+QUnit.test("Promise: simple synchronous test", function (assert) {
     assert.expect(1);
+
+    function sync_return(value) {
+        var p = new dry.Promise();
+        p.done(null, value);
+        return p;
+    }
 
     sync_return(123).then(function(error, result) {
         assert.ok(result === 123, 'simple synchronous test');
@@ -39,6 +18,14 @@ function late(n) {
 QUnit.test("Promise: simple asynchronous test", function (assert) {
     assert.expect(1);
     var done = assert.async();
+
+    function async_return(value) {
+        var p = new dry.Promise();
+        setTimeout(function(){
+            p.done(null, value);
+        });
+        return p;
+    }
 
     async_return(123).then(function(error, result) {
         assert.ok(result === 123, 'simple asynchronous test');
@@ -71,6 +58,14 @@ QUnit.test("Promise: multiple results", function (assert) {
 });
 
 QUnit.test("Promise: Promise join", function (assert) {
+    function late(n) {
+        var p = new dry.Promise();
+        setTimeout(function() {
+            p.done(null, n);
+        }, n);
+        return p;
+    }
+
     assert.expect(2);
     var done = assert.async();
     var d = new Date();
@@ -107,6 +102,15 @@ QUnit.test("Promise: Empty join", function (assert) {
 QUnit.test("Promise: Several consecutive thens", function (assert) {
     assert.expect(2);
     var done = assert.async();
+
+    function late(n) {
+        var p = new dry.Promise();
+        setTimeout(function() {
+            p.done(null, n);
+        }, n);
+        return p;
+    }
+
     var p = new dry.Promise();
 
     var toChain = {
@@ -131,12 +135,20 @@ QUnit.test("Promise: Several consecutive thens", function (assert) {
         }
     };
 
-    p.then(toChain.f1).then(toChain.f2).then(toChain.f3).then(toChain.f4).then(toChain.check);
+    toChain.f1().then(toChain.f2).then(toChain.f3).then(toChain.f4).then(toChain.check);
 });
 
 QUnit.test("Promise: Chain test", function (assert) {
     assert.expect(2);
     var done = assert.async();
+
+    function late(n) {
+        var p = new dry.Promise();
+        setTimeout(function() {
+            p.done(null, n);
+        }, n);
+        return p;
+    }
 
     var toChain = {
         d: new Date(),
@@ -171,6 +183,8 @@ QUnit.test("Promise: Chain test", function (assert) {
 });
 
 QUnit.test("Promise: Test ajax timeout", function (assert) {
+    assert.expect(3);
+    var done = assert.async();
 
     var realXMLHttpRequest = window.XMLHttpRequest;
     var isAborted = false;
@@ -196,11 +210,12 @@ QUnit.test("Promise: Test ajax timeout", function (assert) {
     dry.get('/').then(
         function(err, text, xhr) {
             assert.ok(isAborted === true, 'Ajax timeout must abort xhr');
-            assert.ok(err === dry.Promise.ETIMEOUT, 'Ajax timeout must report error');
+            assert.ok(err === dry.settings.ETIMEOUT, 'Ajax timeout must report error');
             assert.ok(text === '', 'Ajax timeout must return empty response');
 
             window.XMLHttpRequest = realXMLHttpRequest;
             dry.settings.AJAX_TIMEOUT = defaultTimeout;
+            done();
         }
     );
 });

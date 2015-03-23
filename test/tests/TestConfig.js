@@ -1,4 +1,4 @@
-QUnit.config.testTimeout = 15000;
+QUnit.config.testTimeout = 5000;
 
 // Before each test
 var contains = function(str, element) {

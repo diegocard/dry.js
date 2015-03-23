@@ -85,8 +85,6 @@ dry.jsonp = function(url, callback) {
 // Promises
 dry.Promise = function() {
     this._callbacks = [];
-    this.ENOXHR = 1;
-    this.ETIMEOUT = 2;
 };
 
 dry.Promise.prototype.then = function(func, context) {
@@ -160,8 +158,6 @@ dry.Promise.chain = function(funcs, args) {
 };
 
 // Ajax methods
-
-
 dry.ajax = function (method, url, data, headers) {
     data = data || {};
     headers = headers || {};
@@ -197,14 +193,14 @@ dry.ajax = function (method, url, data, headers) {
         },
         onTimeout = function() {
             xhr.abort();
-            p.done(dry.Promise.ETIMEOUT, "", xhr);
+            p.done(dry.settings.ETIMEOUT, "", xhr);
         },
         payload, h, timeout, tid;
     
     try {
         xhr = newXhr();
     } catch (e) {
-        p.done(promise.ENOXHR, "");
+        p.done(dry.settings.ENOXHR, "");
         return p;
     }
 
@@ -223,7 +219,7 @@ dry.ajax = function (method, url, data, headers) {
         }
     }
 
-    timeout = dry.settings.ajaxTimeout;
+    timeout = dry.settings.AJAX_TIMEOUT;
     if (timeout) {
         tid = setTimeout(onTimeout, timeout);
     }
