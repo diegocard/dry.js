@@ -1,20 +1,10 @@
+- Add "_" to the start of private objects
+- Add promises test (from promisesjs)
+- Change existing tests to include promises
 - Test filters and redirection methods (in app and controller)
 - Change routes array in App.js and make it an object which already contains the controller that must be called.
   This object is passed on to the router on init. Reflect this changes on Router.js
   in router.
 - View.js -> add each event of options.events on view creation (test it)
-- Add more tests in general (events, page navigation, etc)
-- Test models with ajax endpoints
+- Add more tests in general (models, ajax, events, page navigation, etc)
 - Finish and test events
-- Improve documentation (check each source file) and create site
-    - Philosophy
-        - Minimal
-        - Lightweight
-        - Easy to learn and easy to use
-        - Standard way to join external components and libraries
-        - Easy to replace components -> reference http://www.breck-mckye.com/blog/2014/12/the-state-of-javascript-in-2015
-    - Components
-        - Internal
-        - External
-    - Default behavior and best practices
-    - Utilities

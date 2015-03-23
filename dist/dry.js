@@ -108,84 +108,6 @@ dry.each = function (obj, func, context) {
     }
 };
 
-// Simple jQuery-like ajax implementation
-dry.ajax = function(options) {
-    var type = options.type || 'GET',
-        upperCaseType = type.toUpperCase() || 'GET',
-        xhr = new XMLHttpRequest(),
-        jsonResponse, encodedRequestData;
-    xhr.open(upperCaseType, options.url, true);
-
-    xhr.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            if (this.status >= 200 && this.status < 400 && options.success) {
-                try {
-                    /* Try to convert the output to JSON */
-                    jsonResponse = JSON.parse(this.responseText);
-                    options.success(jsonResponse);
-                } catch(e) {
-                    /* If it fails, return the output as-is */
-                    options.success(this.responseText);
-                }
-            } else if (options.error) {
-                options.error(this);
-            }
-        }
-    };
-
-    // Timeout
-    xhr.timeout = options.timeout || 10000;
-    xhr.ontimeout = options.ontimeout || function(){
-        console.error('dry.ajax timeout for url', options.url);
-    };
-
-    if (upperCaseType === 'GET') {
-        xhr.send();
-    } else if (upperCaseType) { /* POST, PUT, DELETE */
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-        xhr.send(dry.param(options.data));
-    }
-    xhr = null;
-    return this;
-};
-
-// Send a GET request to retrieve JSON from a given URL
-dry.getJSON = function(url, callback, error) {
-    return dry.ajax({
-        type: 'GET',
-        url: url,
-        success: function(data) {
-            if (callback) {
-                callback(JSON.parse(data));
-            }
-        },
-        error: error
-    });
-};
-
-// Utility ajax method shortcut for GET requests
-dry.get = function(url, success, error) {
-    return dry.ajax({
-        type: 'GET',
-        url: url,
-        success: success,
-        error: error
-    });
-};
-
-// Utility ajax method shortcuts for POST, PUT and DELETE requests
-dry.each(['post', 'put', 'delete'], function(method){
-    dry[method] = function(url, data, success, error) {
-        return dry.ajax({
-            type: method,
-            url: url,
-            data: data,
-            success: success,
-            error: error
-        });
-    };
-});
-
 // JSONP requests
 dry.jsonp = function(url, callback) {
     var callbackName = 'dry_jsonp_callback_' + Math.round(100000 * Math.random());
@@ -200,64 +122,175 @@ dry.jsonp = function(url, callback) {
     document.body.appendChild(script);
 };
 
-// Serialize an array of form elements or a set of
-// key/values into a query string
-dry.param = function(obj) {
-    var r20 = /%20/g,
-        rbracket = /\[\]$/,
-        rCRLF = /\r?\n/g,
-        rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
-        rsubmittable = /^(?:input|select|textarea|keygen)/i,
-        arr = [],
-        prefix,
-        add = function(key, value) {
-            /* If value is a function, invoke it and return its value */
-            value = dry.isFunction(value) ? value() : (value == null ? "" : value);
-            arr[arr.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
-        },
-        buildParams = function (prefix, obj, add) {
-            var name;
+// Promises
+dry.Promise = function() {
+    this._callbacks = [];
+    this.ENOXHR = 1;
+    this.ETIMEOUT = 2;
+};
 
-            if (dry.isArray(obj)) {
-                /* Serialize array item */
-                dry.each(obj, function(value, index) {
-                    if (rbracket.test(prefix)) {
-                        /* Treat each array item as a scalar */
-                        add(prefix, value);
-                    } else {
-                        /* Item is non-scalar (array or object), encode its numeric index */
-                        buildParams(prefix + "[" + (typeof value === "object" ? index : "") + "]", value, add);
-                    }
-                });
+dry.Promise.prototype.then = function(func, context) {
+    var p, res;
+    if (this._isdone) {
+        p = func.apply(context, this.result);
+    } else {
+        p = new dry.Promise();
+        this._callbacks.push(function () {
+            res = func.apply(context, arguments);
+            if (res && typeof res.then === 'function')
+                res.then(p.done, p);
+        });
+    }
+    return p;
+};
 
-            } else if (dry.isObject(obj)) {
-                /* Serialize object item */
-                for (name in obj) {
-                    buildParams(prefix + "[" + name + "]", obj[name], add);
-                }
-            } else {
-                /* Serialize scalar item */
-                add(prefix, obj);
+dry.Promise.prototype.done = function() {
+    var i, len;
+    this.result = arguments;
+    this._isdone = true;
+    for (i=0, len=this._callbacks.length; i<len; i++) {
+        this._callbacks[i].apply(null, arguments);
+    }
+    this._callbacks = [];
+};
+
+dry.Promise.join = function(promises) {
+    var p = new dry.Promise(),
+        results = [],
+        numdone = 0,
+        total, i;
+
+    if (!promises || !promises.length) {
+        p.done(results);
+        return p;
+    }
+
+    total = promises.length;
+
+    function notifier(i) {
+        return function() {
+            numdone += 1;
+            results[i] = Array.prototype.slice.call(arguments);
+            if (numdone === total) {
+                p.done(results);
             }
         };
+    }
 
-    /* If an array was passed in, assume that it is an array of form elements */
-    if (dry.isArray(obj) || (!dry.isStrictlyObject(obj))) {
-        /* Serialize the form elements */
-        dry.each(obj, function() {
-            add(this.name, this.value);
-        });
+    for (i=0; i<total; i++) {
+        promises[i].then(notifier(i));
+    }
+
+    return p;
+};
+
+dry.Promise.chain = function(funcs, args) {
+    var p = new dry.Promise();
+    if (funcs.length === 0) {
+        p.done.apply(p, args);
     } else {
-        /* Encode params recursively */
-        for (prefix in obj) {
-            buildParams(prefix, obj[prefix], add);
+        funcs[0].apply(null, args).then(function() {
+            funcs.splice(0, 1);
+            dry.Promise.chain(funcs, arguments).then(function() {
+                p.done.apply(p, arguments);
+            });
+        });
+    }
+    return p;
+};
+
+// Ajax methods
+
+
+dry.ajax = function (method, url, data, headers) {
+    data = data || {};
+    headers = headers || {};
+
+    var p = new dry.Promise(),
+        xhr,
+        newXhr = function() {
+            var xhr;
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                try {
+                    xhr = new ActiveXObject("Msxml2.XMLHTTP");
+                } catch (e) {
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+            }
+            return xhr;
+        },
+        encode = function(data) {
+            var result = "";
+            if (typeof data === "string") {
+                result = data;
+            } else {
+                var e = encodeURIComponent;
+                for (var k in data) {
+                    if (data.hasOwnProperty(k)) {
+                        result += '&' + e(k) + '=' + e(data[k]);
+                    }
+                }
+            }
+            return result;
+        },
+        onTimeout = function() {
+            xhr.abort();
+            p.done(dry.Promise.ETIMEOUT, "", xhr);
+        },
+        payload, h, timeout, tid;
+    
+    try {
+        xhr = newXhr();
+    } catch (e) {
+        p.done(promise.ENOXHR, "");
+        return p;
+    }
+
+    payload = encode(data);
+    if (method === 'GET' && payload) {
+        url += '?' + payload;
+        payload = null;
+    }
+
+    xhr.open(method, url);
+    xhr.setRequestHeader('Content-type',
+                         'application/x-www-form-urlencoded');
+    for (h in headers) {
+        if (headers.hasOwnProperty(h)) {
+            xhr.setRequestHeader(h, headers[h]);
         }
     }
 
-    /* Return the resulting serialization */
-    return arr.join("&").replace(r20, "+");
+    timeout = dry.settings.ajaxTimeout;
+    if (timeout) {
+        tid = setTimeout(onTimeout, timeout);
+    }
+
+    xhr.onreadystatechange = function() {
+        var err;
+        if (timeout) {
+            clearTimeout(tid);
+        }
+        if (xhr.readyState === 4) { 
+            err = (!xhr.status ||
+                    (xhr.status < 200 || xhr.status >= 300) &&
+                    xhr.status !== 304);
+            p.done(err, xhr.responseText, xhr);
+        }
+    };
+
+    xhr.send(payload);
+    return p;
 };
 
+// Utility ajax method shortcuts for POST, PUT and DELETE requests
+dry.each(['GET', 'POST', 'PUT', 'DELETE'], function(method){
+    dry[method.toLowerCase()] = function(url, data, headers) {
+        return dry.ajax(method, url, data, headers);
+    };
+});
 // DOM Management Utilities
 // ------------------------
 
