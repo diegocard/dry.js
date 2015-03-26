@@ -1058,8 +1058,8 @@ TODO: test, doc</p>
             
             <div class="content"><div class='highlight'><pre>dry.Model.prototype.isValid = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(attr)</span> </span>{
     <span class="hljs-keyword">var</span> attributesToCheck = [attr] || dry.keys(<span class="hljs-keyword">this</span>.attributes),
-        i = <span class="hljs-number">0</span>, <span class="hljs-comment">// Attribute iterator</span>
-        j = <span class="hljs-number">0</span>, <span class="hljs-comment">// Attribute validation iterator</span>
+        i = <span class="hljs-number">0</span>, <span class="hljs-comment">/* Attribute iterator */</span>
+        j = <span class="hljs-number">0</span>, <span class="hljs-comment">/* Attribute validation iterator */</span>
         attributeCount = attributesToCheck.length,
         isValid = <span class="hljs-literal">true</span>,
         validationCount,
@@ -1074,7 +1074,8 @@ TODO: test, doc</p>
         }
         i++;
     }
-    <span class="hljs-keyword">return</span> isValid;
+    <span class="hljs-comment">/* If an invalid attribute is found, return which one */</span>
+    <span class="hljs-keyword">return</span> isValid || i;
 };</pre></div></div>
             
         </li>

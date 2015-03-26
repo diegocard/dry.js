@@ -1,5 +1,4 @@
-- Return which validation is failing if a model is not valid (instead of just returning true or false)
-  Change dry.Model.prototype.validate = function(attr, func) to dry.Model.prototype.validate = function(attr, name, func)
+TODO Coding:
 - Check promise and ajax method implementations to see if we can reuse other utilities methods in them
 - Check new ajax code against old one
 - Add or remove "_" to the start of private objects (but make it a convention)
@@ -10,5 +9,12 @@
   This object is passed on to the router on init. Reflect this changes on Router.js
   in router.
 - View.js -> add each event of options.events on view creation (test it)
+
+TODO Documentation:
+- Document validations
+- Document promises and new ajax methods
+
+TODO Testing:
+- Test validations (and return which validation is failing if a model is not valid)
+- Test events
 - Add more tests in general (models, ajax, events, page navigation, etc)
-- Finish and test events

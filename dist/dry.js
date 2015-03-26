@@ -583,8 +583,8 @@ dry.Model.prototype.validate = function(attr, func) {
 // TODO: test, doc
 dry.Model.prototype.isValid = function(attr) {
     var attributesToCheck = [attr] || dry.keys(this.attributes),
-        i = 0, // Attribute iterator
-        j = 0, // Attribute validation iterator
+        i = 0, /* Attribute iterator */
+        j = 0, /* Attribute validation iterator */
         attributeCount = attributesToCheck.length,
         isValid = true,
         validationCount,
@@ -599,7 +599,8 @@ dry.Model.prototype.isValid = function(attr) {
         }
         i++;
     }
-    return isValid;
+    /* If an invalid attribute is found, return which one */
+    return isValid || i;
 };
 
 
