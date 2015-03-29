@@ -95,7 +95,7 @@ dry.Promise.prototype.then = function(func, context) {
         p = new dry.Promise();
         this._callbacks.push(function () {
             res = func.apply(context, arguments);
-            if (res && typeof res.then === 'function')
+            if (res && dry.isFunction(res.then))
                 res.then(p.done, p);
         });
     }
@@ -179,7 +179,7 @@ dry.ajax = function (method, url, data, headers) {
         },
         encode = function(data) {
             var result = "";
-            if (typeof data === "string") {
+            if (dry.isString(data)) {
                 result = data;
             } else {
                 var e = encodeURIComponent;
