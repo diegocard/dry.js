@@ -1,4 +1,5 @@
 TODO Coding:
+- Make methods return "this" if they aren't returning anything
 - Check new ajax code against old one
 - Add or remove "_" to the start of private objects (but make it a convention)
 - Test filters and redirection methods (in app and controller)
@@ -13,6 +14,6 @@ TODO Documentation:
 
 TODO Testing:
 - Test validations (and return which validation is failing if a model is not valid)
-- Test events
 - Change existing tests to include promises
+- Test events
 - Add more tests in general (models, ajax, events, page navigation, etc)

@@ -462,15 +462,16 @@ dry.promise = <span class="hljs-function"><span class="hljs-keyword">function</s
 };
 
 dry.Promise.prototype.then = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(func, context)</span> </span>{
-    <span class="hljs-keyword">var</span> p, res;
+    <span class="hljs-keyword">var</span> p;
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._isdone) {
         p = func.apply(context, <span class="hljs-keyword">this</span>.result);
     } <span class="hljs-keyword">else</span> {
         p = <span class="hljs-keyword">new</span> dry.Promise();
         <span class="hljs-keyword">this</span>._callbacks.push(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-            res = func.apply(context, <span class="hljs-built_in">arguments</span>);
-            <span class="hljs-keyword">if</span> (res &amp;&amp; dry.isFunction(res.then))
+            <span class="hljs-keyword">var</span> res = func.apply(context, <span class="hljs-built_in">arguments</span>);
+            <span class="hljs-keyword">if</span> (res &amp;&amp; dry.isFunction(res.then)) {
                 res.then(p.done, p);
+            }
         });
     }
     <span class="hljs-keyword">return</span> p;
@@ -597,8 +598,7 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
     }
 
     xhr.open(method, url);
-    xhr.setRequestHeader(<span class="hljs-string">'Content-type'</span>,
-                         <span class="hljs-string">'application/x-www-form-urlencoded'</span>);
+    xhr.setRequestHeader(<span class="hljs-string">'Content-type'</span>, <span class="hljs-string">'application/x-www-form-urlencoded'</span>);
     <span class="hljs-keyword">for</span> (h <span class="hljs-keyword">in</span> headers) {
         <span class="hljs-keyword">if</span> (headers.hasOwnProperty(h)) {
             xhr.setRequestHeader(h, headers[h]);
@@ -819,7 +819,7 @@ dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
         routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
             <span class="hljs-keyword">var</span> split = route.url.split(<span class="hljs-string">'/'</span>),
                 <span class="hljs-comment">/* Find which controller should handle a given route */</span>
-                controllerName = split[<span class="hljs-number">0</span>] || dry.settings.DEFAULT_CONTROLLER_NAME,
+                controllerName = split[<span class="hljs-number">0</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] || dry.settings.DEFAULT_CONTROLLER_NAME,
                 <span class="hljs-comment">/* Find which method should be invoked in the controller that handles the given route */</span>
                 controllerMethod = split[<span class="hljs-number">1</span>] ? split[<span class="hljs-number">1</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] : dry.settings.DEFAULT_CONTROLLER_METHOD,
                 controller = dry.apps[self.appName].controllers[controllerName];

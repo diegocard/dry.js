@@ -140,15 +140,16 @@ dry.promise = function() {
 };
 
 dry.Promise.prototype.then = function(func, context) {
-    var p, res;
+    var p;
     if (this._isdone) {
         p = func.apply(context, this.result);
     } else {
         p = new dry.Promise();
         this._callbacks.push(function () {
-            res = func.apply(context, arguments);
-            if (res && dry.isFunction(res.then))
+            var res = func.apply(context, arguments);
+            if (res && dry.isFunction(res.then)) {
                 res.then(p.done, p);
+            }
         });
     }
     return p;
@@ -263,8 +264,7 @@ dry.ajax = function (method, url, data, headers) {
     }
 
     xhr.open(method, url);
-    xhr.setRequestHeader('Content-type',
-                         'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     for (h in headers) {
         if (headers.hasOwnProperty(h)) {
             xhr.setRequestHeader(h, headers[h]);
@@ -415,7 +415,7 @@ dry.Router = function(appName, routes) {
         routeCallback = function(route) {
             var split = route.url.split('/'),
                 /* Find which controller should handle a given route */
-                controllerName = split[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
+                controllerName = split[0].split('?')[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
                 /* Find which method should be invoked in the controller that handles the given route */
                 controllerMethod = split[1] ? split[1].split('?')[0] : dry.settings.DEFAULT_CONTROLLER_METHOD,
                 controller = dry.apps[self.appName].controllers[controllerName];
@@ -569,6 +569,7 @@ dry.Model.prototype.set = function(name, value) {
     dry.each(attrs, function (val, attr) {
         self.attributes[attr] = val;
     });
+    return this;
 };
 
 // Get an attribute of the given model
@@ -581,6 +582,7 @@ dry.Model.prototype.get = function(name) {
 // TODO: test, doc
 dry.Model.prototype.validate = function(attr, func) {
     this.validations[attr].push(func);
+    return this;
 };
 
 // Check if the entire model or one of its attributes is valid

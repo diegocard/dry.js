@@ -7,7 +7,7 @@ dry.Router = function(appName, routes) {
         routeCallback = function(route) {
             var split = route.url.split('/'),
                 /* Find which controller should handle a given route */
-                controllerName = split[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
+                controllerName = split[0].split('?')[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
                 /* Find which method should be invoked in the controller that handles the given route */
                 controllerMethod = split[1] ? split[1].split('?')[0] : dry.settings.DEFAULT_CONTROLLER_METHOD,
                 controller = dry.apps[self.appName].controllers[controllerName];

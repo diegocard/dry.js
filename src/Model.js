@@ -51,6 +51,7 @@ dry.Model.prototype.set = function(name, value) {
     dry.each(attrs, function (val, attr) {
         self.attributes[attr] = val;
     });
+    return this;
 };
 
 // Get an attribute of the given model
@@ -63,6 +64,7 @@ dry.Model.prototype.get = function(name) {
 // TODO: test, doc
 dry.Model.prototype.validate = function(attr, func) {
     this.validations[attr].push(func);
+    return this;
 };
 
 // Check if the entire model or one of its attributes is valid
