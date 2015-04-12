@@ -457,6 +457,10 @@ A 0 value disables AJAX timeouts.</p>
     <span class="hljs-keyword">this</span>._callbacks = [];
 };
 
+dry.promise = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> dry.Promise();
+};
+
 dry.Promise.prototype.then = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(func, context)</span> </span>{
     <span class="hljs-keyword">var</span> p, res;
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._isdone) {

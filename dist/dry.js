@@ -135,6 +135,10 @@ dry.Promise = function() {
     this._callbacks = [];
 };
 
+dry.promise = function() {
+    return new dry.Promise();
+};
+
 dry.Promise.prototype.then = function(func, context) {
     var p, res;
     if (this._isdone) {

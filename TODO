@@ -1,9 +1,6 @@
 TODO Coding:
-- Check promise and ajax method implementations to see if we can reuse other utilities methods in them
 - Check new ajax code against old one
 - Add or remove "_" to the start of private objects (but make it a convention)
-- Implement "set", "get", "validate(attribute, function)" and isValid methods in Model
-- Change existing tests to include promises
 - Test filters and redirection methods (in app and controller)
 - Change routes array in App.js and make it an object which already contains the controller that must be called.
   This object is passed on to the router on init. Reflect this changes on Router.js
@@ -17,4 +14,5 @@ TODO Documentation:
 TODO Testing:
 - Test validations (and return which validation is failing if a model is not valid)
 - Test events
+- Change existing tests to include promises
 - Add more tests in general (models, ajax, events, page navigation, etc)

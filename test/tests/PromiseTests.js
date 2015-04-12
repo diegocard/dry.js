@@ -5,7 +5,7 @@ QUnit.test("Promise: simple synchronous test", function (assert) {
     assert.expect(1);
 
     function sync_return(value) {
-        var p = new dry.Promise();
+        var p = dry.promise();
         p.done(null, value);
         return p;
     }
@@ -20,7 +20,7 @@ QUnit.test("Promise: simple asynchronous test", function (assert) {
     var done = assert.async();
 
     function async_return(value) {
-        var p = new dry.Promise();
+        var p = dry.promise();
         setTimeout(function(){
             p.done(null, value);
         });
@@ -36,7 +36,7 @@ QUnit.test("Promise: simple asynchronous test", function (assert) {
 
 QUnit.test("Promise: multiple results", function (assert) {
     assert.expect(3);
-    p = new dry.Promise();
+    p = dry.promise();
     var done = assert.async();
 
     p.then(function (res, a, b, c) {
@@ -59,7 +59,7 @@ QUnit.test("Promise: multiple results", function (assert) {
 
 QUnit.test("Promise: Promise join", function (assert) {
     function late(n) {
-        var p = new dry.Promise();
+        var p = dry.promise();
         setTimeout(function() {
             p.done(null, n);
         }, n);
@@ -104,14 +104,14 @@ QUnit.test("Promise: Several consecutive thens", function (assert) {
     var done = assert.async();
 
     function late(n) {
-        var p = new dry.Promise();
+        var p = dry.promise();
         setTimeout(function() {
             p.done(null, n);
         }, n);
         return p;
     }
 
-    var p = new dry.Promise();
+    var p = dry.promise();
 
     var toChain = {
         d: new Date(),
@@ -143,7 +143,7 @@ QUnit.test("Promise: Chain test", function (assert) {
     var done = assert.async();
 
     function late(n) {
-        var p = new dry.Promise();
+        var p = dry.promise();
         setTimeout(function() {
             p.done(null, n);
         }, n);

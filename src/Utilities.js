@@ -87,16 +87,21 @@ dry.Promise = function() {
     this._callbacks = [];
 };
 
+dry.promise = function() {
+    return new dry.Promise();
+};
+
 dry.Promise.prototype.then = function(func, context) {
-    var p, res;
+    var p;
     if (this._isdone) {
         p = func.apply(context, this.result);
     } else {
         p = new dry.Promise();
         this._callbacks.push(function () {
-            res = func.apply(context, arguments);
-            if (res && dry.isFunction(res.then))
+            var res = func.apply(context, arguments);
+            if (res && dry.isFunction(res.then)) {
                 res.then(p.done, p);
+            }
         });
     }
     return p;
@@ -211,8 +216,7 @@ dry.ajax = function (method, url, data, headers) {
     }
 
     xhr.open(method, url);
-    xhr.setRequestHeader('Content-type',
-                         'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     for (h in headers) {
         if (headers.hasOwnProperty(h)) {
             xhr.setRequestHeader(h, headers[h]);
