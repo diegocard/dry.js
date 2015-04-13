@@ -545,9 +545,11 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(method, url, data, headers)</span> </span>{
-    data = data || {};
-    headers = headers || {};
+            <div class="content"><div class='highlight'><pre>dry.ajax = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> </span>{
+    <span class="hljs-keyword">var</span> method = options.method || <span class="hljs-string">'GET'</span>,
+        data = options.data || {},
+        headers = options.headers || {},
+        url = options.url;
 
     <span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> dry.Promise(),
         xhr,
@@ -611,7 +613,7 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
     }
 
     xhr.onreadystatechange = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">var</span> err;
+        <span class="hljs-keyword">var</span> err, res;
         <span class="hljs-keyword">if</span> (timeout) {
             clearTimeout(tid);
         }
@@ -619,7 +621,14 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
             err = (!xhr.status ||
                     (xhr.status &lt; <span class="hljs-number">200</span> || xhr.status &gt;= <span class="hljs-number">300</span>) &amp;&amp;
                     xhr.status !== <span class="hljs-number">304</span>);
-            p.done(err, xhr.responseText, xhr);
+            <span class="hljs-keyword">try</span> {
+                <span class="hljs-comment">/* Try to convert the output to JSON */</span>
+                res = <span class="hljs-built_in">JSON</span>.parse(<span class="hljs-keyword">this</span>.responseText);
+            } <span class="hljs-keyword">catch</span>(e) {
+                <span class="hljs-comment">/* If it fails, return the output as-is */</span>
+                res = <span class="hljs-keyword">this</span>.responseText;
+            }
+            p.done(err, res, xhr);
         }
     };
 
@@ -642,7 +651,12 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
             
             <div class="content"><div class='highlight'><pre>dry.each([<span class="hljs-string">'GET'</span>, <span class="hljs-string">'POST'</span>, <span class="hljs-string">'PUT'</span>, <span class="hljs-string">'DELETE'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method)</span></span>{
     dry[method.toLowerCase()] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(url, data, headers)</span> </span>{
-        <span class="hljs-keyword">return</span> dry.ajax(method, url, data, headers);
+        <span class="hljs-keyword">return</span> dry.ajax({
+            method: method,
+            url: url,
+            data: data,
+            headers: headers
+        });
     };
 });</pre></div></div>
             
@@ -737,7 +751,8 @@ dry.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keywor
             <div class="content"><div class='highlight'><pre>dry.App = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
     <span class="hljs-keyword">this</span>.name = name;
     <span class="hljs-keyword">this</span>.options = options || {};
-    <span class="hljs-keyword">this</span>.routes = <span class="hljs-keyword">this</span>.options.routes || [];
+    <span class="hljs-keyword">this</span>.routes = <span class="hljs-keyword">this</span>.options.routes || {};
+    <span class="hljs-keyword">this</span>.router = <span class="hljs-keyword">new</span> dry.Router(<span class="hljs-keyword">this</span>.name);
     <span class="hljs-keyword">this</span>.filters = <span class="hljs-keyword">this</span>.options.filters || {};
     <span class="hljs-keyword">this</span>.controllers = <span class="hljs-keyword">this</span>.options.controllers || {};
     <span class="hljs-keyword">this</span>.views = <span class="hljs-keyword">this</span>.options.views || {};
@@ -751,14 +766,10 @@ dry.App.prototype.controller = <span class="hljs-function"><span class="hljs-key
         controller = <span class="hljs-keyword">this</span>.controllers[name];
     } <span class="hljs-keyword">else</span> {
         controller = <span class="hljs-keyword">new</span> dry.Controller(name, methods);
-        <span class="hljs-keyword">this</span>.controllers[name] = controller;
-        <span class="hljs-comment">/* Register routes for each controller method */</span>
+        <span class="hljs-keyword">this</span>.controllers[name] = controller;        
+        <span class="hljs-comment">/* Register the controller's routes */</span>
         dry.each(methods, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(method, methodName)</span></span>{
-            <span class="hljs-keyword">if</span> (methodName.toLowerCase() === dry.settings.DEFAULT_CONTROLLER_METHOD) {
-                self.routes.push(name);
-            } <span class="hljs-keyword">else</span> {
-                self.routes.push(name + <span class="hljs-string">'/'</span> + methodName);
-            }
+            self.router.addRoute(controller, methodName, method);
         });
     }
     <span class="hljs-keyword">return</span> controller;
@@ -785,8 +796,7 @@ dry.App.prototype.view = <span class="hljs-function"><span class="hljs-keyword">
 };
 
 dry.App.prototype.init = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-comment">/* Create and initialize the app's router */</span>
-    <span class="hljs-keyword">this</span>.router = <span class="hljs-keyword">new</span> dry.Router(<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>.routes);
+    <span class="hljs-comment">/* Initialize the app's router */</span>
     <span class="hljs-keyword">this</span>.router.init();
 };
 
@@ -814,30 +824,35 @@ dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
             
             <div class="content"><div class='highlight'><pre>dry.Router = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(appName, routes)</span> </span>{
     <span class="hljs-keyword">this</span>.rules = {};
-    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
-        <span class="hljs-comment">/* Main logic behind the execution of a route */</span>
-        routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
-            <span class="hljs-keyword">var</span> split = route.url.split(<span class="hljs-string">'/'</span>),
-                <span class="hljs-comment">/* Find which controller should handle a given route */</span>
-                controllerName = split[<span class="hljs-number">0</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] || dry.settings.DEFAULT_CONTROLLER_NAME,
-                <span class="hljs-comment">/* Find which method should be invoked in the controller that handles the given route */</span>
-                controllerMethod = split[<span class="hljs-number">1</span>] ? split[<span class="hljs-number">1</span>].split(<span class="hljs-string">'?'</span>)[<span class="hljs-number">0</span>] : dry.settings.DEFAULT_CONTROLLER_METHOD,
-                controller = dry.apps[self.appName].controllers[controllerName];
-            controller.invokeMethod(controllerMethod, route.params);
-        },
-        i, len, route;
-    <span class="hljs-keyword">this</span>.appName = appName;
+    <span class="hljs-keyword">this</span>.routes = [];
+};
 
-    <span class="hljs-comment">/* Empty routes are handled through the default action in the default controller */</span>
-    <span class="hljs-keyword">if</span> (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) &gt; -<span class="hljs-number">1</span>) {
-        routes.push(<span class="hljs-string">''</span>);
-    }
+dry.Router.prototype.routeCallback = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(controller, methodName)</span> </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route)</span> </span>{
+        controller.invokeMethod(methodName, route.params);
+    };
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Register a route, composed by controller and method</p>
 
-    <span class="hljs-comment">/* Register each route */</span>
-    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>, len = routes.length; i &lt; len; i++) {
-        route = routes[i];
-        <span class="hljs-keyword">this</span>.add(route, routeCallback);
-    }
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>dry.Router.prototype.addRoute = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(controller, methodName, method)</span> </span>{
+    <span class="hljs-keyword">var</span> firstPart = (controller.name === dry.settings.DEFAULT_CONTROLLER_NAME ? <span class="hljs-string">''</span> : controller.name),
+        secondPart = (methodName === dry.settings.DEFAULT_CONTROLLER_NAME ? <span class="hljs-string">''</span> : methodName),
+        route = secondPart ? firstPart + <span class="hljs-string">'/'</span> + secondPart : firstPart;
+
+    <span class="hljs-keyword">this</span>.routes.push(route);
+    <span class="hljs-keyword">this</span>.add(route, <span class="hljs-keyword">this</span>.routeCallback(controller, methodName));
 };
 
 dry.Router.prototype.add = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(route, handler)</span> </span>{
@@ -923,11 +938,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <h2 id="model">Model</h2>
 
@@ -955,11 +970,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <p>Generate a model method which will perform an ajax request
 for a given endpoint</p>
@@ -992,11 +1007,11 @@ for a given endpoint</p>
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Set an attribute/s for the given model</p>
 
@@ -1008,16 +1023,17 @@ for a given endpoint</p>
     dry.each(attrs, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(val, attr)</span> </span>{
         self.attributes[attr] = val;
     });
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
 };</pre></div></div>
             
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Get an attribute of the given model
 TODO: test, doc</p>
@@ -1031,11 +1047,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Register a validation function for an attribute
 TODO: test, doc</p>
@@ -1044,16 +1060,17 @@ TODO: test, doc</p>
             
             <div class="content"><div class='highlight'><pre>dry.Model.prototype.validate = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(attr, func)</span> </span>{
     <span class="hljs-keyword">this</span>.validations[attr].push(func);
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
 };</pre></div></div>
             
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Check if the entire model or one of its attributes is valid
 TODO: test, doc</p>
@@ -1085,11 +1102,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <h2 id="filter">Filter</h2>
 
@@ -1104,11 +1121,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <p>Evaluate the condition. If it is true, then run the action.</p>
 
@@ -1125,11 +1142,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <h2 id="controller">Controller</h2>
 
@@ -1174,11 +1191,11 @@ dry.Controller.prototype.redirect = <span class="hljs-function"><span class="hlj
         </li>
         
         
-        <li id="section-42">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <h2 id="template">Template</h2>
 
@@ -1191,11 +1208,11 @@ dry.Controller.prototype.redirect = <span class="hljs-function"><span class="hlj
         </li>
         
         
-        <li id="section-43">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <p>Allow for pre-compiled funcions</p>
 
@@ -1237,11 +1254,11 @@ dry.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
         </li>
         
         
-        <li id="section-44">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <h2 id="view">View</h2>
 
@@ -1278,11 +1295,11 @@ dry.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyw
         </li>
         
         
-        <li id="section-45">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <p>TODO: Finish, test</p>
 

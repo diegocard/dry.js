@@ -27,15 +27,22 @@
 	    });
 
 	app.controller('users', {
-		'default': function(params) { /* FIX: 'need a way to enter a route for users/23 instead of users?id=23' */
-			debugger;
+		'default': function(params) {
+			console.log('Should work for /users and /users?id=something');
+			return null;
+		},
+		':name': function(params) {
 			var userData = app.model('UserModel')
 				.set('name', params.name)
 				.getData()
 				.then(function (err, res) {
-					debugger;
+					console.log('Should work for /users/something');
 					return new dry.View('users/default');
 				});
+		},
+		'some/long/url': function (params) {
+			console.log('Should work for /users and /users/some/long/url');
+			return null;
 		}
 	});
 

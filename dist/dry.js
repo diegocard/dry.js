@@ -211,9 +211,11 @@ dry.Promise.chain = function(funcs, args) {
 };
 
 // Ajax methods
-dry.ajax = function (method, url, data, headers) {
-    data = data || {};
-    headers = headers || {};
+dry.ajax = function (options) {
+    var method = options.method || 'GET',
+        data = options.data || {},
+        headers = options.headers || {},
+        url = options.url;
 
     var p = new dry.Promise(),
         xhr,
@@ -277,7 +279,7 @@ dry.ajax = function (method, url, data, headers) {
     }
 
     xhr.onreadystatechange = function() {
-        var err;
+        var err, res;
         if (timeout) {
             clearTimeout(tid);
         }
@@ -285,7 +287,14 @@ dry.ajax = function (method, url, data, headers) {
             err = (!xhr.status ||
                     (xhr.status < 200 || xhr.status >= 300) &&
                     xhr.status !== 304);
-            p.done(err, xhr.responseText, xhr);
+            try {
+                /* Try to convert the output to JSON */
+                res = JSON.parse(this.responseText);
+            } catch(e) {
+                /* If it fails, return the output as-is */
+                res = this.responseText;
+            }
+            p.done(err, res, xhr);
         }
     };
 
@@ -296,7 +305,12 @@ dry.ajax = function (method, url, data, headers) {
 // Utility ajax method shortcuts for POST, PUT and DELETE requests
 dry.each(['GET', 'POST', 'PUT', 'DELETE'], function(method){
     dry[method.toLowerCase()] = function(url, data, headers) {
-        return dry.ajax(method, url, data, headers);
+        return dry.ajax({
+            method: method,
+            url: url,
+            data: data,
+            headers: headers
+        });
     };
 });
 // DOM Management Utilities
@@ -344,7 +358,8 @@ dry.Dom.prototype.trigger = function(eventName, data) {
 dry.App = function(name, options) {
     this.name = name;
     this.options = options || {};
-    this.routes = this.options.routes || [];
+    this.routes = this.options.routes || {};
+    this.router = new dry.Router(this.name);
     this.filters = this.options.filters || {};
     this.controllers = this.options.controllers || {};
     this.views = this.options.views || {};
@@ -358,14 +373,10 @@ dry.App.prototype.controller = function(name, methods) {
         controller = this.controllers[name];
     } else {
         controller = new dry.Controller(name, methods);
-        this.controllers[name] = controller;
-        /* Register routes for each controller method */
+        this.controllers[name] = controller;        
+        /* Register the controller's routes */
         dry.each(methods, function(method, methodName){
-            if (methodName.toLowerCase() === dry.settings.DEFAULT_CONTROLLER_METHOD) {
-                self.routes.push(name);
-            } else {
-                self.routes.push(name + '/' + methodName);
-            }
+            self.router.addRoute(controller, methodName, method);
         });
     }
     return controller;
@@ -392,8 +403,7 @@ dry.App.prototype.view = function(name, templateData) {
 };
 
 dry.App.prototype.init = function() {
-    /* Create and initialize the app's router */
-    this.router = new dry.Router(this.name, this.routes);
+    /* Initialize the app's router */
     this.router.init();
 };
 
@@ -410,30 +420,23 @@ dry.App.prototype.model = function(name, params) {
 // ------
 dry.Router = function(appName, routes) {
     this.rules = {};
-    var self = this,
-        /* Main logic behind the execution of a route */
-        routeCallback = function(route) {
-            var split = route.url.split('/'),
-                /* Find which controller should handle a given route */
-                controllerName = split[0].split('?')[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
-                /* Find which method should be invoked in the controller that handles the given route */
-                controllerMethod = split[1] ? split[1].split('?')[0] : dry.settings.DEFAULT_CONTROLLER_METHOD,
-                controller = dry.apps[self.appName].controllers[controllerName];
-            controller.invokeMethod(controllerMethod, route.params);
-        },
-        i, len, route;
-    this.appName = appName;
+    this.routes = [];
+};
 
-    /* Empty routes are handled through the default action in the default controller */
-    if (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) > -1) {
-        routes.push('');
-    }
+dry.Router.prototype.routeCallback = function(controller, methodName) {
+    return function(route) {
+        controller.invokeMethod(methodName, route.params);
+    };
+};
 
-    /* Register each route */
-    for (i = 0, len = routes.length; i < len; i++) {
-        route = routes[i];
-        this.add(route, routeCallback);
-    }
+// Register a route, composed by controller and method
+dry.Router.prototype.addRoute = function (controller, methodName, method) {
+    var firstPart = (controller.name === dry.settings.DEFAULT_CONTROLLER_NAME ? '' : controller.name),
+        secondPart = (methodName === dry.settings.DEFAULT_CONTROLLER_NAME ? '' : methodName),
+        route = secondPart ? firstPart + '/' + secondPart : firstPart;
+
+    this.routes.push(route);
+    this.add(route, this.routeCallback(controller, methodName));
 };
 
 dry.Router.prototype.add = function(route, handler) {

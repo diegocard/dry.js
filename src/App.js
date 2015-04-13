@@ -3,7 +3,8 @@
 dry.App = function(name, options) {
     this.name = name;
     this.options = options || {};
-    this.routes = this.options.routes || [];
+    this.routes = this.options.routes || {};
+    this.router = new dry.Router(this.name);
     this.filters = this.options.filters || {};
     this.controllers = this.options.controllers || {};
     this.views = this.options.views || {};
@@ -17,14 +18,10 @@ dry.App.prototype.controller = function(name, methods) {
         controller = this.controllers[name];
     } else {
         controller = new dry.Controller(name, methods);
-        this.controllers[name] = controller;
-        /* Register routes for each controller method */
+        this.controllers[name] = controller;        
+        /* Register the controller's routes */
         dry.each(methods, function(method, methodName){
-            if (methodName.toLowerCase() === dry.settings.DEFAULT_CONTROLLER_METHOD) {
-                self.routes.push(name);
-            } else {
-                self.routes.push(name + '/' + methodName);
-            }
+            self.router.addRoute(controller, methodName, method);
         });
     }
     return controller;
@@ -51,8 +48,7 @@ dry.App.prototype.view = function(name, templateData) {
 };
 
 dry.App.prototype.init = function() {
-    /* Create and initialize the app's router */
-    this.router = new dry.Router(this.name, this.routes);
+    /* Initialize the app's router */
     this.router.init();
 };
 

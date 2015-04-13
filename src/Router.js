@@ -2,30 +2,23 @@
 // ------
 dry.Router = function(appName, routes) {
     this.rules = {};
-    var self = this,
-        /* Main logic behind the execution of a route */
-        routeCallback = function(route) {
-            var split = route.url.split('/'),
-                /* Find which controller should handle a given route */
-                controllerName = split[0].split('?')[0] || dry.settings.DEFAULT_CONTROLLER_NAME,
-                /* Find which method should be invoked in the controller that handles the given route */
-                controllerMethod = split[1] ? split[1].split('?')[0] : dry.settings.DEFAULT_CONTROLLER_METHOD,
-                controller = dry.apps[self.appName].controllers[controllerName];
-            controller.invokeMethod(controllerMethod, route.params);
-        },
-        i, len, route;
-    this.appName = appName;
+    this.routes = [];
+};
 
-    /* Empty routes are handled through the default action in the default controller */
-    if (routes.indexOf(dry.settings.DEFAULT_CONTROLLER_NAME) > -1) {
-        routes.push('');
-    }
+dry.Router.prototype.routeCallback = function(controller, methodName) {
+    return function(route) {
+        controller.invokeMethod(methodName, route.params);
+    };
+};
 
-    /* Register each route */
-    for (i = 0, len = routes.length; i < len; i++) {
-        route = routes[i];
-        this.add(route, routeCallback);
-    }
+// Register a route, composed by controller and method
+dry.Router.prototype.addRoute = function (controller, methodName, method) {
+    var firstPart = (controller.name === dry.settings.DEFAULT_CONTROLLER_NAME ? '' : controller.name),
+        secondPart = (methodName === dry.settings.DEFAULT_CONTROLLER_NAME ? '' : methodName),
+        route = secondPart ? firstPart + '/' + secondPart : firstPart;
+
+    this.routes.push(route);
+    this.add(route, this.routeCallback(controller, methodName));
 };
 
 dry.Router.prototype.add = function(route, handler) {

@@ -163,9 +163,11 @@ dry.Promise.chain = function(funcs, args) {
 };
 
 // Ajax methods
-dry.ajax = function (method, url, data, headers) {
-    data = data || {};
-    headers = headers || {};
+dry.ajax = function (options) {
+    var method = options.method || 'GET',
+        data = options.data || {},
+        headers = options.headers || {},
+        url = options.url;
 
     var p = new dry.Promise(),
         xhr,
@@ -229,7 +231,7 @@ dry.ajax = function (method, url, data, headers) {
     }
 
     xhr.onreadystatechange = function() {
-        var err;
+        var err, res;
         if (timeout) {
             clearTimeout(tid);
         }
@@ -237,7 +239,14 @@ dry.ajax = function (method, url, data, headers) {
             err = (!xhr.status ||
                     (xhr.status < 200 || xhr.status >= 300) &&
                     xhr.status !== 304);
-            p.done(err, xhr.responseText, xhr);
+            try {
+                /* Try to convert the output to JSON */
+                res = JSON.parse(this.responseText);
+            } catch(e) {
+                /* If it fails, return the output as-is */
+                res = this.responseText;
+            }
+            p.done(err, res, xhr);
         }
     };
 
@@ -248,6 +257,11 @@ dry.ajax = function (method, url, data, headers) {
 // Utility ajax method shortcuts for POST, PUT and DELETE requests
 dry.each(['GET', 'POST', 'PUT', 'DELETE'], function(method){
     dry[method.toLowerCase()] = function(url, data, headers) {
-        return dry.ajax(method, url, data, headers);
+        return dry.ajax({
+            method: method,
+            url: url,
+            data: data,
+            headers: headers
+        });
     };
 });

@@ -1,6 +1,9 @@
 TODO Coding:
 - Make methods return "this" if they aren't returning anything
-- Check new ajax code against old one
+- Replace some for loops (specially in Router.js) with dry.each and test that it still works
+- Rename/merge addRoute and add (in Router)
+- Reverse parameter order in promises (err, res) -> (fulfilled, rejected) and add .catch method (make this A+ promises basically)
+- Check ajax code against old one
 - Add or remove "_" to the start of private objects (but make it a convention)
 - Test filters and redirection methods (in app and controller)
 - Change routes array in App.js and make it an object which already contains the controller that must be called.
@@ -13,6 +16,7 @@ TODO Documentation:
 - Document promises and new ajax methods
 
 TODO Testing:
+- UPDATE AJAX TESTS!!
 - Test validations (and return which validation is failing if a model is not valid)
 - Change existing tests to include promises
 - Test events
