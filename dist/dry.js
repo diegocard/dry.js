@@ -215,9 +215,9 @@ dry.ajax = function (options) {
     var method = options.method || 'GET',
         data = options.data || {},
         headers = options.headers || {},
-        url = options.url;
-
-    var p = new dry.Promise(),
+        url = options.url,
+        timeout = options.timeout || dry.settings.AJAX_TIMEOUT,
+        p = new dry.Promise(),
         xhr,
         newXhr = function() {
             var xhr;
@@ -250,7 +250,7 @@ dry.ajax = function (options) {
             xhr.abort();
             p.done(dry.settings.ETIMEOUT, "", xhr);
         },
-        payload, h, timeout, tid;
+        payload, h, tid;
     
     try {
         xhr = newXhr();
@@ -273,7 +273,6 @@ dry.ajax = function (options) {
         }
     }
 
-    timeout = dry.settings.AJAX_TIMEOUT;
     if (timeout) {
         tid = setTimeout(onTimeout, timeout);
     }

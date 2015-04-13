@@ -18,6 +18,7 @@ TODO Documentation:
 
 TODO Testing:
 - UPDATE AJAX TESTS!!
+- Test Ajax custom timeout (dry.ajax({timeout: 3000, ...}))
 - Test validations (and return which validation is failing if a model is not valid)
 - Change existing tests to include promises
 - Test events
