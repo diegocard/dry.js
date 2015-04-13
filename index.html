@@ -31,8 +31,8 @@
 			console.log('Should work for /users and /users?id=something');
 			return null;
 		},
-		':name': function(params) {
-			var userData = app.model('UserModel')
+		':name': function(params) { /* TODO: Make this work (refactor controller.invokeMethod to use promises) */
+			return app.model('UserModel')
 				.set('name', params.name)
 				.getData()
 				.then(function (err, res) {
