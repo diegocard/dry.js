@@ -6,7 +6,8 @@ dry.Controller = function(name, methods) {
 };
 
 dry.Controller.prototype.invokeMethod = function(methodName, params) {
-    var method = this.methods[methodName],
+    var self = this,
+        method = this.methods[methodName],
         result, defaultView, defaultViewName;
     if (method) {
         /* Invoke the method with the given parameters */
@@ -22,13 +23,20 @@ dry.Controller.prototype.invokeMethod = function(methodName, params) {
         }
         result = new dry.View(defaultViewName, {templateData: params, controller: this});
     }
-    /* If a view was returned, render it */
-    if (result && result.constructor === dry.View) {
-        /* If the controller's method execution resulted in the creation of a view,
-         * store this information in the view itself.
-         */
-        result.controller = result.controller || this;
-        result.render();
+    if (result) {
+        /* Treat all returned values as promises */
+        dry.Promise.promisify(result).then(function (res) {
+
+            /* If a view was returned, render it */
+            if (res.constructor === dry.View) {
+                /* If the controller's method execution resulted in the creation of a view,
+                 * store this information in the view itself.
+                 */
+                res.controller = res.controller || self;
+                res.render();
+            }
+
+        });
     }
 };
 

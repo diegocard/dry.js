@@ -8,6 +8,7 @@ var gulp = require('gulp'),
 
 gulp.task('compile', function() {
     gulp.src([
+        './node_modules/d.js/lib/D.min.js',
         './src/Core.js',
         './src/Settings.js',
         './src/Utilities.js',

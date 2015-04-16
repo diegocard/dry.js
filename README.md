@@ -230,6 +230,6 @@ Note: filters are not required, so you can choose not to use them if you find th
 
 - [chrisdavies](https://github.com/chrisdavies/) for his implementation of [rlite](https://github.com/chrisdavies/rlite) (used as default router behind the secenes)
 - [John Resig](http://ejohn.org/blog/javascript-micro-templating/) for his micro templating engine
-- [Pierre Duquesne](https://github.com/stackp) for his [promisejs](https://github.com/stackp/promisejs) implementation
+- [Malko](https://github.com/malko) for his [D.js](https://github.com/malko/D.js) implementation
 - [jQuery team](https://github.com/jquery/jquery) for their implementation of jQuery.param
 - [srizon](https://github.com/srizon) for his Drifolio template (used in the projects's site)

@@ -26,5 +26,12 @@ dry = {
         for (app in dry.apps) {
             dry.apps[app].router.run(route);
         }
+    },
+
+    // Promises (from D.js)
+    Promise: D,
+
+    promise: function() {
+        return D();
     }
 };

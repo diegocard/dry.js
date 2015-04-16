@@ -9,7 +9,7 @@
 <body>
 
 	<!-- Template -->
-	<script data-dry="'users/default'" type="text/template">
+	<script data-dry="users/:name" type="text/template">
 	    <% for(var i=0; i<10; i++) { %>
 	        Lorem ipsum
 	    <% } %>
@@ -31,13 +31,13 @@
 			console.log('Should work for /users and /users?id=something');
 			return null;
 		},
-		':name': function(params) { /* TODO: Make this work (refactor controller.invokeMethod to use promises) */
+		':name': function(params) { /* TODO: Not working */
 			return app.model('UserModel')
 				.set('name', params.name)
 				.getData()
-				.then(function (err, res) {
+				.then(function (data) {
 					console.log('Should work for /users/something');
-					return new dry.View('users/default');
+					return new dry.View('users/:name');
 				});
 		},
 		'some/long/url': function (params) {

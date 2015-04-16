@@ -82,86 +82,6 @@ dry.jsonp = function(url, callback) {
     document.body.appendChild(script);
 };
 
-// Promises
-dry.Promise = function() {
-    this._callbacks = [];
-};
-
-dry.promise = function() {
-    return new dry.Promise();
-};
-
-dry.Promise.prototype.then = function(func, context) {
-    var p;
-    if (this._isdone) {
-        p = func.apply(context, this.result);
-    } else {
-        p = new dry.Promise();
-        this._callbacks.push(function () {
-            var res = func.apply(context, arguments);
-            if (res && dry.isFunction(res.then)) {
-                res.then(p.done, p);
-            }
-        });
-    }
-    return p;
-};
-
-dry.Promise.prototype.done = function() {
-    var i, len;
-    this.result = arguments;
-    this._isdone = true;
-    for (i=0, len=this._callbacks.length; i<len; i++) {
-        this._callbacks[i].apply(null, arguments);
-    }
-    this._callbacks = [];
-};
-
-dry.Promise.join = function(promises) {
-    var p = new dry.Promise(),
-        results = [],
-        numdone = 0,
-        total, i;
-
-    if (!promises || !promises.length) {
-        p.done(results);
-        return p;
-    }
-
-    total = promises.length;
-
-    function notifier(i) {
-        return function() {
-            numdone += 1;
-            results[i] = Array.prototype.slice.call(arguments);
-            if (numdone === total) {
-                p.done(results);
-            }
-        };
-    }
-
-    for (i=0; i<total; i++) {
-        promises[i].then(notifier(i));
-    }
-
-    return p;
-};
-
-dry.Promise.chain = function(funcs, args) {
-    var p = new dry.Promise();
-    if (funcs.length === 0) {
-        p.done.apply(p, args);
-    } else {
-        funcs[0].apply(null, args).then(function() {
-            funcs.splice(0, 1);
-            dry.Promise.chain(funcs, arguments).then(function() {
-                p.done.apply(p, arguments);
-            });
-        });
-    }
-    return p;
-};
-
 // Ajax methods
 dry.ajax = function (options) {
     var method = options.method || 'GET',
@@ -169,7 +89,7 @@ dry.ajax = function (options) {
         headers = options.headers || {},
         url = options.url,
         timeout = options.timeout || dry.settings.AJAX_TIMEOUT,
-        p = new dry.Promise(),
+        p = dry.promise(),
         xhr,
         newXhr = function() {
             var xhr;
@@ -200,15 +120,15 @@ dry.ajax = function (options) {
         },
         onTimeout = function() {
             xhr.abort();
-            p.done(dry.settings.ETIMEOUT, "", xhr);
+            p.reject(dry.settings.ETIMEOUT, "", xhr);
         },
         payload, h, tid;
     
     try {
         xhr = newXhr();
     } catch (e) {
-        p.done(dry.settings.ENOXHR, "");
-        return p;
+        p.reject(dry.settings.ENOXHR, "");
+        return p.promise;
     }
 
     payload = encode(data);
@@ -245,12 +165,12 @@ dry.ajax = function (options) {
                 /* If it fails, return the output as-is */
                 res = this.responseText;
             }
-            p.done(err, res, xhr);
+            p.resolve(err, res, xhr);
         }
     };
 
     xhr.send(payload);
-    return p;
+    return p.promise;
 };
 
 // Utility ajax method shortcuts for POST, PUT and DELETE requests

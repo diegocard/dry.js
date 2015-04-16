@@ -27,6 +27,21 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-comment">/* (c) Jonathan Gotti - licence: https://github.com/malko/d.js/LICENCE.txt @version 0.7.0*/</span>
+!<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-string">"use strict"</span>;<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">(a)</span></span>{l(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">throw</span> a})}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">c</span><span class="hljs-params">(b)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.then(b,a)}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">d</span><span class="hljs-params">(b)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.then(a,b)}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">e</span><span class="hljs-params">(b,c)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> m(b)?b.apply(<span class="hljs-literal">null</span>,n(a)?a:[a]):v.onlyFuncs?a:b},c||a)}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">(a)</span></span>{<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">()</span></span>{a()}<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.then(b,b),<span class="hljs-keyword">this</span>}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">g</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(b)</span></span>{<span class="hljs-keyword">return</span> m(a)?a.apply(<span class="hljs-literal">null</span>,n(b)?b.splice(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-keyword">void</span> <span class="hljs-number">0</span>)&amp;&amp;b:[<span class="hljs-keyword">void</span> <span class="hljs-number">0</span>,b]):v.onlyFuncs?b:a},<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(b)</span></span>{<span class="hljs-keyword">return</span> a(b)})}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">h</span><span class="hljs-params">(c)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.then(a,c?<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">throw</span> c(a),a}:b)}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">i</span><span class="hljs-params">(a,b)</span></span>{<span class="hljs-keyword">var</span> c=q(a);<span class="hljs-keyword">if</span>(<span class="hljs-number">1</span>===c.length&amp;&amp;n(c[<span class="hljs-number">0</span>])){<span class="hljs-keyword">if</span>(!c[<span class="hljs-number">0</span>].length)<span class="hljs-keyword">return</span> v.fulfilled([]);c=c[<span class="hljs-number">0</span>]}<span class="hljs-keyword">var</span> d=[],e=v(),f=c.length;<span class="hljs-keyword">if</span>(f)<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> g=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{c[a]=v.promisify(c[a]),c[a].then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(g)</span></span>{d[a]=b?c[a]:g,--f||e.resolve(d)},<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(g)</span></span>{b?(d[a]=c[a],--f||e.resolve(d)):e.reject(g)})},h=<span class="hljs-number">0</span>,i=f;i&gt;h;h++)g(h);<span class="hljs-keyword">else</span> e.resolve(d);<span class="hljs-keyword">return</span> e.promise}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">j</span><span class="hljs-params">(a,b)</span></span>{<span class="hljs-keyword">return</span> a.then(m(b)?b:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> b})}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">k</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">var</span> b=q(a);<span class="hljs-number">1</span>===b.length&amp;&amp;n(b[<span class="hljs-number">0</span>])&amp;&amp;(b=b[<span class="hljs-number">0</span>]);<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> c=v(),d=<span class="hljs-number">0</span>,e=b.length,f=v.resolved();e&gt;d;d++)f=j(f,b[d]);<span class="hljs-keyword">return</span> c.resolve(f),c.promise}<span class="hljs-keyword">var</span> l,m=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span><span class="hljs-string">"function"</span>==<span class="hljs-keyword">typeof</span> a},n=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-built_in">Array</span>.isArray?<span class="hljs-built_in">Array</span>.isArray(a):a <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>},o=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span>!(!a||!(<span class="hljs-keyword">typeof</span> a).match(<span class="hljs-regexp">/function|object/</span>))},p=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(b)</span></span>{<span class="hljs-keyword">return</span> b===!<span class="hljs-number">1</span>||b===a||<span class="hljs-literal">null</span>===b},q=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span>{<span class="hljs-keyword">return</span>[].slice.call(a,b)},r=<span class="hljs-string">"undefined"</span>,s=<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">TypeError</span>===r?<span class="hljs-built_in">Error</span>:<span class="hljs-built_in">TypeError</span>;<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> process!==r&amp;&amp;process.nextTick)l=process.nextTick;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> MessageChannel!==r){<span class="hljs-keyword">var</span> t=<span class="hljs-keyword">new</span> MessageChannel,u=[];t.port1.onmessage=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{u.length&amp;&amp;u.shift()()},l=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{u.push(a),t.port2.postMessage(<span class="hljs-number">0</span>)}}<span class="hljs-keyword">else</span> l=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{setTimeout(a,<span class="hljs-number">0</span>)};<span class="hljs-keyword">var</span> v=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(b)</span></span>{<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">i</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">if</span>(<span class="hljs-number">0</span>!==r){<span class="hljs-keyword">var</span> a,b=t,c=<span class="hljs-number">0</span>,d=b.length,e=~r?<span class="hljs-number">0</span>:<span class="hljs-number">1</span>;<span class="hljs-keyword">for</span>(t=[];d&gt;c;c++)(a=b[c][e])&amp;&amp;a(n)}}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">j</span><span class="hljs-params">(a)</span></span>{<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(b)</span></span>{<span class="hljs-keyword">return</span> c?<span class="hljs-keyword">void</span> <span class="hljs-number">0</span>:(c=!<span class="hljs-number">0</span>,a(b))}}<span class="hljs-keyword">var</span> c=!<span class="hljs-number">1</span>;<span class="hljs-keyword">if</span>(r)<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;<span class="hljs-keyword">try</span>{<span class="hljs-keyword">var</span> d=o(a)&amp;&amp;a.then;<span class="hljs-keyword">if</span>(m(d)){<span class="hljs-keyword">if</span>(a===u)<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> s(<span class="hljs-string">"Promise can't resolve itself"</span>);<span class="hljs-keyword">return</span> d.call(a,b(j),b(k)),<span class="hljs-keyword">this</span>}}<span class="hljs-keyword">catch</span>(e){<span class="hljs-keyword">return</span> b(k)(e),<span class="hljs-keyword">this</span>}<span class="hljs-keyword">return</span> q(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{n=a,r=<span class="hljs-number">1</span>,i()}),<span class="hljs-keyword">this</span>}<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">k</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> r||q(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">try</span>{<span class="hljs-keyword">throw</span> a}<span class="hljs-keyword">catch</span>(b){n=b}r=-<span class="hljs-number">1</span>,i()}),<span class="hljs-keyword">this</span>}<span class="hljs-keyword">var</span> n,q=(a!==b?b:v.alwaysAsync)?l:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{a()},r=<span class="hljs-number">0</span>,t=[],u={then:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span>{<span class="hljs-keyword">var</span> c=v();<span class="hljs-keyword">return</span> t.push([<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(b)</span></span>{<span class="hljs-keyword">try</span>{p(a)?c.resolve(b):c.resolve(m(a)?a(b):v.onlyFuncs?b:a)}<span class="hljs-keyword">catch</span>(d){c.reject(d)}},<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">if</span>((p(b)||!m(b)&amp;&amp;v.onlyFuncs)&amp;&amp;c.reject(a),b)<span class="hljs-keyword">try</span>{c.resolve(m(b)?b(a):b)}<span class="hljs-keyword">catch</span>(d){c.reject(d)}}]),<span class="hljs-number">0</span>!==r&amp;&amp;q(i),c.promise},success:c,error:d,otherwise:d,apply:e,spread:e,ensure:f,nodify:g,rethrow:h,isPending:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>===r},getStatus:<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> r}};<span class="hljs-keyword">return</span> u.toSource=u.toString=u.valueOf=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> n===a?<span class="hljs-keyword">this</span>:n},{promise:u,resolve:j,fulfill:j,reject:k}};v.deferred=v.defer=v,v.nextTick=l,v.alwaysAsync=!<span class="hljs-number">0</span>,v.onlyFuncs=!<span class="hljs-number">0</span>,v.resolved=v.fulfilled=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> v(!<span class="hljs-number">0</span>).resolve(a).promise},v.rejected=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> v(!<span class="hljs-number">0</span>).reject(a).promise},v.wait=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">var</span> b=v();<span class="hljs-keyword">return</span> setTimeout(b.resolve,a||<span class="hljs-number">0</span>),b.promise},v.delay=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span>{<span class="hljs-keyword">var</span> c=v();<span class="hljs-keyword">return</span> setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">try</span>{c.resolve(m(a)?a.apply(<span class="hljs-literal">null</span>):a)}<span class="hljs-keyword">catch</span>(b){c.reject(b)}},b||<span class="hljs-number">0</span>),c.promise},v.promisify=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a)</span></span>{<span class="hljs-keyword">return</span> a&amp;&amp;m(a.then)?a:v.resolved(a)},v.all=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> i(<span class="hljs-built_in">arguments</span>,!<span class="hljs-number">1</span>)},v.resolveAll=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> i(<span class="hljs-built_in">arguments</span>,!<span class="hljs-number">0</span>)},v.sequence=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">return</span> k(<span class="hljs-built_in">arguments</span>)},v.nodeCapsule=<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span>{<span class="hljs-keyword">return</span> b||(b=a,a=<span class="hljs-keyword">void</span> <span class="hljs-number">0</span>),<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{<span class="hljs-keyword">var</span> c=v(),d=q(<span class="hljs-built_in">arguments</span>);d.push(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a,b)</span></span>{a?c.reject(a):c.resolve(<span class="hljs-built_in">arguments</span>.length&gt;<span class="hljs-number">2</span>?q(<span class="hljs-built_in">arguments</span>,<span class="hljs-number">1</span>):b)});<span class="hljs-keyword">try</span>{b.apply(a,d)}<span class="hljs-keyword">catch</span>(e){c.reject(e)}<span class="hljs-keyword">return</span> c.promise}},<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span>!==r&amp;&amp;(<span class="hljs-built_in">window</span>.D=v),<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">module</span>!==r&amp;&amp;<span class="hljs-built_in">module</span>.exports&amp;&amp;(<span class="hljs-built_in">module</span>.exports=v)}();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
               <h2 id="dry-js">DRY.JS</h2>
 
             </div>
@@ -37,11 +52,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-2">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>jQuery-like function</p>
 
@@ -54,11 +69,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-3">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Apps container</p>
 
@@ -69,11 +84,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Returns an app or create it if it doesn’t exist (Singleton)</p>
 
@@ -86,11 +101,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>Navigate to a certain url</p>
 
@@ -103,11 +118,11 @@ dry = {</pre></div></div>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Exexute a route without navigating</p>
 
@@ -118,23 +133,7 @@ dry = {</pre></div></div>
         <span class="hljs-keyword">for</span> (app <span class="hljs-keyword">in</span> dry.apps) {
             dry.apps[app].router.run(route);
         }
-    }
-};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <h2 id="settings">Settings</h2>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>dry.settings = {</pre></div></div>
+    },</pre></div></div>
             
         </li>
         
@@ -145,11 +144,16 @@ dry = {</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>When a route is left empty, the router will look for this controller</p>
+              <p>Promises (from D.js)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_NAME: <span class="hljs-string">"default"</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    Promise: D,
+
+    promise: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> D();
+    }
+};</pre></div></div>
             
         </li>
         
@@ -160,11 +164,11 @@ dry = {</pre></div></div>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
-              <p>When a route doesn’t target any specific method, it will look for this one</p>
+              <h2 id="settings">Settings</h2>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_METHOD: <span class="hljs-string">"default"</span>,</pre></div></div>
+            <div class="content"><div class='highlight'><pre>dry.settings = {</pre></div></div>
             
         </li>
         
@@ -174,6 +178,36 @@ dry = {</pre></div></div>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>When a route is left empty, the router will look for this controller</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_NAME: <span class="hljs-string">"default"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>When a route doesn’t target any specific method, it will look for this one</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    DEFAULT_CONTROLLER_METHOD: <span class="hljs-string">"default"</span>,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Time in milliseconds after which apending AJAX request is considered unresponsive and is aborted.
 Useful to deal with bad connectivity (e.g. on a mobile network).
@@ -186,11 +220,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Error returned on promises when XHR is not implemented in the current browser</p>
 
@@ -201,11 +235,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Error returned on promises when an Ajax call is timed out</p>
 
@@ -217,11 +251,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <h2 id="utilities">Utilities</h2>
 
@@ -230,11 +264,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Check if the given parameter is an array</p>
 
@@ -247,11 +281,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Check if the given parameter is an object</p>
 
@@ -264,11 +298,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Check if the given parameter is strictly an object</p>
 
@@ -281,11 +315,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Check if the given parameter is boolean</p>
 
@@ -298,11 +332,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Check if the given parameter is a string</p>
 
@@ -315,11 +349,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Check if the given parameter is a function</p>
 
@@ -332,11 +366,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Check if the given parameter is undefined</p>
 
@@ -349,11 +383,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Check if the given parameter is numeric</p>
 
@@ -366,11 +400,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>Returns an array with the property names for the given object</p>
 
@@ -390,11 +424,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Concise and efficient forEach implementation</p>
 
@@ -417,11 +451,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>JSONP requests</p>
 
@@ -443,103 +477,11 @@ A 0 value disables AJAX timeouts.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
-              </div>
-              <p>Promises</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>dry.Promise = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">this</span>._callbacks = [];
-};
-
-dry.promise = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> dry.Promise();
-};
-
-dry.Promise.prototype.then = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(func, context)</span> </span>{
-    <span class="hljs-keyword">var</span> p;
-    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._isdone) {
-        p = func.apply(context, <span class="hljs-keyword">this</span>.result);
-    } <span class="hljs-keyword">else</span> {
-        p = <span class="hljs-keyword">new</span> dry.Promise();
-        <span class="hljs-keyword">this</span>._callbacks.push(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
-            <span class="hljs-keyword">var</span> res = func.apply(context, <span class="hljs-built_in">arguments</span>);
-            <span class="hljs-keyword">if</span> (res &amp;&amp; dry.isFunction(res.then)) {
-                res.then(p.done, p);
-            }
-        });
-    }
-    <span class="hljs-keyword">return</span> p;
-};
-
-dry.Promise.prototype.done = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-    <span class="hljs-keyword">var</span> i, len;
-    <span class="hljs-keyword">this</span>.result = <span class="hljs-built_in">arguments</span>;
-    <span class="hljs-keyword">this</span>._isdone = <span class="hljs-literal">true</span>;
-    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>, len=<span class="hljs-keyword">this</span>._callbacks.length; i&lt;len; i++) {
-        <span class="hljs-keyword">this</span>._callbacks[i].apply(<span class="hljs-literal">null</span>, <span class="hljs-built_in">arguments</span>);
-    }
-    <span class="hljs-keyword">this</span>._callbacks = [];
-};
-
-dry.Promise.join = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(promises)</span> </span>{
-    <span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> dry.Promise(),
-        results = [],
-        numdone = <span class="hljs-number">0</span>,
-        total, i;
-
-    <span class="hljs-keyword">if</span> (!promises || !promises.length) {
-        p.done(results);
-        <span class="hljs-keyword">return</span> p;
-    }
-
-    total = promises.length;
-
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">notifier</span><span class="hljs-params">(i)</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-            numdone += <span class="hljs-number">1</span>;
-            results[i] = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>);
-            <span class="hljs-keyword">if</span> (numdone === total) {
-                p.done(results);
-            }
-        };
-    }
-
-    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>; i&lt;total; i++) {
-        promises[i].then(notifier(i));
-    }
-
-    <span class="hljs-keyword">return</span> p;
-};
-
-dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(funcs, args)</span> </span>{
-    <span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> dry.Promise();
-    <span class="hljs-keyword">if</span> (funcs.length === <span class="hljs-number">0</span>) {
-        p.done.apply(p, args);
-    } <span class="hljs-keyword">else</span> {
-        funcs[<span class="hljs-number">0</span>].apply(<span class="hljs-literal">null</span>, args).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-            funcs.splice(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>);
-            dry.Promise.chain(funcs, <span class="hljs-built_in">arguments</span>).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
-                p.done.apply(p, <span class="hljs-built_in">arguments</span>);
-            });
-        });
-    }
-    <span class="hljs-keyword">return</span> p;
-};</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-26">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Ajax methods</p>
 
@@ -549,9 +491,9 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
     <span class="hljs-keyword">var</span> method = options.method || <span class="hljs-string">'GET'</span>,
         data = options.data || {},
         headers = options.headers || {},
-        url = options.url;
-
-    <span class="hljs-keyword">var</span> p = <span class="hljs-keyword">new</span> dry.Promise(),
+        url = options.url,
+        timeout = options.timeout || dry.settings.AJAX_TIMEOUT,
+        p = dry.promise(),
         xhr,
         newXhr = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
             <span class="hljs-keyword">var</span> xhr;
@@ -582,15 +524,15 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
         },
         onTimeout = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
             xhr.abort();
-            p.done(dry.settings.ETIMEOUT, <span class="hljs-string">""</span>, xhr);
+            p.reject(dry.settings.ETIMEOUT, <span class="hljs-string">""</span>, xhr);
         },
-        payload, h, timeout, tid;
+        payload, h, tid;
     
     <span class="hljs-keyword">try</span> {
         xhr = newXhr();
     } <span class="hljs-keyword">catch</span> (e) {
-        p.done(dry.settings.ENOXHR, <span class="hljs-string">""</span>);
-        <span class="hljs-keyword">return</span> p;
+        p.reject(dry.settings.ENOXHR, <span class="hljs-string">""</span>);
+        <span class="hljs-keyword">return</span> p.promise;
     }
 
     payload = encode(data);
@@ -607,7 +549,6 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
         }
     }
 
-    timeout = dry.settings.AJAX_TIMEOUT;
     <span class="hljs-keyword">if</span> (timeout) {
         tid = setTimeout(onTimeout, timeout);
     }
@@ -628,22 +569,22 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
                 <span class="hljs-comment">/* If it fails, return the output as-is */</span>
                 res = <span class="hljs-keyword">this</span>.responseText;
             }
-            p.done(err, res, xhr);
+            p.resolve(err, res, xhr);
         }
     };
 
     xhr.send(payload);
-    <span class="hljs-keyword">return</span> p;
+    <span class="hljs-keyword">return</span> p.promise;
 };</pre></div></div>
             
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <p>Utility ajax method shortcuts for POST, PUT and DELETE requests</p>
 
@@ -663,11 +604,11 @@ dry.Promise.chain = <span class="hljs-function"><span class="hljs-keyword">funct
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="dom-management-utilities">DOM Management Utilities</h2>
 
@@ -681,11 +622,11 @@ dry.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>jQuery-like html function</p>
 
@@ -703,11 +644,11 @@ dry.Dom = <span class="hljs-function"><span class="hljs-keyword">function</span>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>jQuery-like event handlers</p>
 
@@ -738,11 +679,11 @@ dry.Dom.prototype.trigger = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <h2 id="app">App</h2>
 
@@ -812,11 +753,11 @@ dry.App.prototype.model = <span class="hljs-function"><span class="hljs-keyword"
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h2 id="router">Router</h2>
 
@@ -836,11 +777,11 @@ dry.Router.prototype.routeCallback = <span class="hljs-function"><span class="hl
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <p>Register a route, composed by controller and method</p>
 
@@ -938,11 +879,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-34">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <h2 id="model">Model</h2>
 
@@ -970,11 +911,11 @@ dry.Router.prototype.init = <span class="hljs-function"><span class="hljs-keywor
         </li>
         
         
-        <li id="section-35">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <p>Generate a model method which will perform an ajax request
 for a given endpoint</p>
@@ -1007,11 +948,11 @@ for a given endpoint</p>
         </li>
         
         
-        <li id="section-36">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <p>Set an attribute/s for the given model</p>
 
@@ -1029,11 +970,11 @@ for a given endpoint</p>
         </li>
         
         
-        <li id="section-37">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <p>Get an attribute of the given model
 TODO: test, doc</p>
@@ -1047,11 +988,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-38">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-38">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <p>Register a validation function for an attribute
 TODO: test, doc</p>
@@ -1066,11 +1007,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-39">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-39">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <p>Check if the entire model or one of its attributes is valid
 TODO: test, doc</p>
@@ -1102,11 +1043,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-40">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-40">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <h2 id="filter">Filter</h2>
 
@@ -1121,11 +1062,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-41">
+        <li id="section-42">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-41">&#182;</a>
+                <a class="pilcrow" href="#section-42">&#182;</a>
               </div>
               <p>Evaluate the condition. If it is true, then run the action.</p>
 
@@ -1142,11 +1083,11 @@ TODO: test, doc</p>
         </li>
         
         
-        <li id="section-42">
+        <li id="section-43">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-42">&#182;</a>
+                <a class="pilcrow" href="#section-43">&#182;</a>
               </div>
               <h2 id="controller">Controller</h2>
 
@@ -1158,7 +1099,8 @@ TODO: test, doc</p>
 };
 
 dry.Controller.prototype.invokeMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(methodName, params)</span> </span>{
-    <span class="hljs-keyword">var</span> method = <span class="hljs-keyword">this</span>.methods[methodName],
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>,
+        method = <span class="hljs-keyword">this</span>.methods[methodName],
         result, defaultView, defaultViewName;
     <span class="hljs-keyword">if</span> (method) {
         <span class="hljs-comment">/* Invoke the method with the given parameters */</span>
@@ -1174,13 +1116,20 @@ dry.Controller.prototype.invokeMethod = <span class="hljs-function"><span class=
         }
         result = <span class="hljs-keyword">new</span> dry.View(defaultViewName, {templateData: params, controller: <span class="hljs-keyword">this</span>});
     }
-    <span class="hljs-comment">/* If a view was returned, render it */</span>
-    <span class="hljs-keyword">if</span> (result &amp;&amp; result.constructor === dry.View) {
-        <span class="hljs-comment">/* If the controller's method execution resulted in the creation of a view,
-         * store this information in the view itself.
-         */</span>
-        result.controller = result.controller || <span class="hljs-keyword">this</span>;
-        result.render();
+    <span class="hljs-keyword">if</span> (result) {
+        <span class="hljs-comment">/* Treat all returned values as promises */</span>
+        dry.Promise.promisify(result).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(res)</span> </span>{
+
+            <span class="hljs-comment">/* If a view was returned, render it */</span>
+            <span class="hljs-keyword">if</span> (res.constructor === dry.View) {
+                <span class="hljs-comment">/* If the controller's method execution resulted in the creation of a view,
+                 * store this information in the view itself.
+                 */</span>
+                res.controller = res.controller || self;
+                res.render();
+            }
+
+        });
     }
 };
 
@@ -1191,11 +1140,11 @@ dry.Controller.prototype.redirect = <span class="hljs-function"><span class="hlj
         </li>
         
         
-        <li id="section-43">
+        <li id="section-44">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-43">&#182;</a>
+                <a class="pilcrow" href="#section-44">&#182;</a>
               </div>
               <h2 id="template">Template</h2>
 
@@ -1208,11 +1157,11 @@ dry.Controller.prototype.redirect = <span class="hljs-function"><span class="hlj
         </li>
         
         
-        <li id="section-44">
+        <li id="section-45">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-44">&#182;</a>
+                <a class="pilcrow" href="#section-45">&#182;</a>
               </div>
               <p>Allow for pre-compiled funcions</p>
 
@@ -1254,11 +1203,11 @@ dry.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
         </li>
         
         
-        <li id="section-45">
+        <li id="section-46">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-45">&#182;</a>
+                <a class="pilcrow" href="#section-46">&#182;</a>
               </div>
               <h2 id="view">View</h2>
 
@@ -1295,11 +1244,11 @@ dry.View.prototype.addEvent = <span class="hljs-function"><span class="hljs-keyw
         </li>
         
         
-        <li id="section-46">
+        <li id="section-47">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-46">&#182;</a>
+                <a class="pilcrow" href="#section-47">&#182;</a>
               </div>
               <p>TODO: Finish, test</p>
 
