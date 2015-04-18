@@ -34,36 +34,34 @@ QUnit.test("Model: generated GET endpoint method", function (assert) {
         };
 
     // GET request
-    testModel.getTest(
-        data,
-        function(data){ /* success callback */
+    testModel
+        .getTest(data)
+        .success(function(data){
             if (validateGitHubResponseFormat(data)) {
                 assert.ok(true, "get: correct request with all parameters");
             }
             done();
-        },
-        function() { /* error callback */
+        })
+        .error(function(err) {
             assert.ok(false, "get: entered error callback function");
-        }
-    );
+        });
 });
 
 QUnit.test("Model: generated POST endpoint method", function (assert) {
     assert.expect(1);
     var done = assert.async();
     // POST request
-    testModel.postTest(
-        data,
-        function(data){ /* success callback */
+    testModel
+        .postTest(data)
+        .success(function(data){
             if (validateHttpbinResponse(data)) {
                 assert.ok(true, "post: correct request with all parameters");
             }
             done();
-        },
-        function() { /* error callback */
+        })
+        .error(function(err) {
             assert.ok(false, "post: entered error callback function");
-        }
-    );
+        });
 });
 
 QUnit.test("Model: generated PUT endpoint method", function (assert) {
@@ -71,18 +69,17 @@ QUnit.test("Model: generated PUT endpoint method", function (assert) {
     var done = assert.async();
 
     // PUT request
-    testModel.putTest(
-        data,
-        function(data){ /* success callback */
+    testModel
+        .putTest(data)
+        .success(function(data){ /* success callback */
             if (validateHttpbinResponse(data)) {
                 assert.ok(true, "put: correct request with all parameters");
             }
             done();
-        },
-        function() { /* error callback */
+        })
+        .error(function(err) { /* error callback */
             assert.ok(false, "put: entered error callback function");
-        }
-    );
+        });
 });
 
 QUnit.test("Model: generated DELETE endpoint method", function (assert) {
@@ -90,16 +87,15 @@ QUnit.test("Model: generated DELETE endpoint method", function (assert) {
     var done = assert.async();
 
     // DELETE request
-    testModel.deleteTest(
-        data,
-        function(data){ /* success callback */
+    testModel
+        .deleteTest(data)
+        .success(function(data){
             if (validateHttpbinResponse(data)) {
                 assert.ok(true, "delete: correct request with all parameters");
             }
             done();
-        },
-        function() { /* error callback */
+        })
+        .error(function(err) { /* error callback */
             assert.ok(false, "delete: entered error callback function");
-        }
-    );
+        });
 });

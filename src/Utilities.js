@@ -84,7 +84,7 @@ dry.jsonp = function(url, callback) {
 
 // Ajax methods
 dry.ajax = function (options) {
-    var method = options.method || 'GET',
+    var method = options.type || 'GET',
         data = options.data || {},
         headers = options.headers || {},
         url = options.url,
@@ -104,34 +104,20 @@ dry.ajax = function (options) {
             }
             return xhr;
         },
-        encode = function(data) {
-            var result = "";
-            if (dry.isString(data)) {
-                result = data;
-            } else {
-                var e = encodeURIComponent;
-                for (var k in data) {
-                    if (data.hasOwnProperty(k)) {
-                        result += '&' + e(k) + '=' + e(data[k]);
-                    }
-                }
-            }
-            return result;
-        },
         onTimeout = function() {
             xhr.abort();
-            p.reject(dry.settings.ETIMEOUT, "", xhr);
+            p.reject(xhr);
         },
         payload, h, tid;
     
     try {
         xhr = newXhr();
     } catch (e) {
-        p.reject(dry.settings.ENOXHR, "");
+        p.reject("XHR not supported on this browser");
         return p.promise;
     }
 
-    payload = encode(data);
+    payload = dry.param(data);
     if (method === 'GET' && payload) {
         url += '?' + payload;
         payload = null;
@@ -158,29 +144,104 @@ dry.ajax = function (options) {
             err = (!xhr.status ||
                     (xhr.status < 200 || xhr.status >= 300) &&
                     xhr.status !== 304);
-            try {
-                /* Try to convert the output to JSON */
-                res = JSON.parse(this.responseText);
-            } catch(e) {
-                /* If it fails, return the output as-is */
-                res = this.responseText;
+            if (err) {
+                p.reject(xhr);
+            } else {
+                try {
+                    /* Try to convert the output to JSON */
+                    res = JSON.parse(this.responseText);
+                } catch(e) {
+                    /* If it fails, return the output as-is */
+                    res = this.responseText;
+                }
+                p.resolve(res);
             }
-            p.resolve(err, res, xhr);
         }
     };
 
     xhr.send(payload);
-    return p.promise;
+    return p.promise
+        .success(options.success)
+        .error(options.error);
 };
 
 // Utility ajax method shortcuts for POST, PUT and DELETE requests
 dry.each(['GET', 'POST', 'PUT', 'DELETE'], function(method){
-    dry[method.toLowerCase()] = function(url, data, headers) {
+    dry[method.toLowerCase()] = function(url, data, success, error) {
         return dry.ajax({
-            method: method,
+            type: method,
             url: url,
             data: data,
-            headers: headers
+            success: success,
+            error: error
         });
     };
 });
+
+// Send a GET request to retrieve JSON from a given URL
+dry.getJSON = function(url, success, error) {
+    return dry.ajax({
+        type: 'GET',
+        url: url,
+        success: success,
+        error: error
+    });
+};
+
+// Serialize an array of form elements or a set of
+// key/values into a query string
+dry.param = function(obj) {
+    var r20 = /%20/g,
+        rbracket = /\[\]$/,
+        rCRLF = /\r?\n/g,
+        rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
+        rsubmittable = /^(?:input|select|textarea|keygen)/i,
+        arr = [],
+        prefix,
+        add = function(key, value) {
+            /* If value is a function, invoke it and return its value */
+            value = dry.isFunction(value) ? value() : (value == null ? "" : value);
+            arr[arr.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        },
+        buildParams = function (prefix, obj, add) {
+            var name;
+
+            if (dry.isArray(obj)) {
+                /* Serialize array item */
+                dry.each(obj, function(value, index) {
+                    if (rbracket.test(prefix)) {
+                        /* Treat each array item as a scalar */
+                        add(prefix, value);
+                    } else {
+                        /* Item is non-scalar (array or object), encode its numeric index */
+                        buildParams(prefix + "[" + (typeof value === "object" ? index : "") + "]", value, add);
+                    }
+                });
+
+            } else if (dry.isObject(obj)) {
+                /* Serialize object item */
+                for (name in obj) {
+                    buildParams(prefix + "[" + name + "]", obj[name], add);
+                }
+            } else {
+                /* Serialize scalar item */
+                add(prefix, obj);
+            }
+        };
+
+    /* If an array was passed in, assume that it is an array of form elements */
+    if (dry.isArray(obj) || (!dry.isStrictlyObject(obj))) {
+        /* Serialize the form elements */
+        dry.each(obj, function() {
+            add(this.name, this.value);
+        });
+    } else {
+        /* Encode params recursively */
+        for (prefix in obj) {
+            buildParams(prefix, obj[prefix], add);
+        }
+    }
+
+    /* Return the resulting serialization */
+    return arr.join("&").replace(r20, "+");
+};

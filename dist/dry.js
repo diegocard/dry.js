@@ -34,7 +34,9 @@ dry = {
     Promise: D,
 
     promise: function() {
-        return D();
+        var deferred = D();
+        deferred.constructor = dry.Promise;
+        return deferred;
     }
 };
 
@@ -48,11 +50,7 @@ dry.settings = {
     // Time in milliseconds after which apending AJAX request is considered unresponsive and is aborted.
     // Useful to deal with bad connectivity (e.g. on a mobile network).
     // A 0 value disables AJAX timeouts.
-    AJAX_TIMEOUT: 10000,
-    // Error returned on promises when XHR is not implemented in the current browser
-    ENOXHR: 1,
-    // Error returned on promises when an Ajax call is timed out
-    ETIMEOUT: 2
+    AJAX_TIMEOUT: 10000
 };
 
 // Utilities
@@ -141,7 +139,7 @@ dry.jsonp = function(url, callback) {
 
 // Ajax methods
 dry.ajax = function (options) {
-    var method = options.method || 'GET',
+    var method = options.type || 'GET',
         data = options.data || {},
         headers = options.headers || {},
         url = options.url,
@@ -161,34 +159,20 @@ dry.ajax = function (options) {
             }
             return xhr;
         },
-        encode = function(data) {
-            var result = "";
-            if (dry.isString(data)) {
-                result = data;
-            } else {
-                var e = encodeURIComponent;
-                for (var k in data) {
-                    if (data.hasOwnProperty(k)) {
-                        result += '&' + e(k) + '=' + e(data[k]);
-                    }
-                }
-            }
-            return result;
-        },
         onTimeout = function() {
             xhr.abort();
-            p.reject(dry.settings.ETIMEOUT, "", xhr);
+            p.reject(xhr);
         },
         payload, h, tid;
     
     try {
         xhr = newXhr();
     } catch (e) {
-        p.reject(dry.settings.ENOXHR, "");
+        p.reject("XHR not supported on this browser");
         return p.promise;
     }
 
-    payload = encode(data);
+    payload = dry.param(data);
     if (method === 'GET' && payload) {
         url += '?' + payload;
         payload = null;
@@ -215,32 +199,108 @@ dry.ajax = function (options) {
             err = (!xhr.status ||
                     (xhr.status < 200 || xhr.status >= 300) &&
                     xhr.status !== 304);
-            try {
-                /* Try to convert the output to JSON */
-                res = JSON.parse(this.responseText);
-            } catch(e) {
-                /* If it fails, return the output as-is */
-                res = this.responseText;
+            if (err) {
+                p.reject(xhr);
+            } else {
+                try {
+                    /* Try to convert the output to JSON */
+                    res = JSON.parse(this.responseText);
+                } catch(e) {
+                    /* If it fails, return the output as-is */
+                    res = this.responseText;
+                }
+                p.resolve(res);
             }
-            p.resolve(err, res, xhr);
         }
     };
 
     xhr.send(payload);
-    return p.promise;
+    return p.promise
+        .success(options.success)
+        .error(options.error);
 };
 
 // Utility ajax method shortcuts for POST, PUT and DELETE requests
 dry.each(['GET', 'POST', 'PUT', 'DELETE'], function(method){
-    dry[method.toLowerCase()] = function(url, data, headers) {
+    dry[method.toLowerCase()] = function(url, data, success, error) {
         return dry.ajax({
-            method: method,
+            type: method,
             url: url,
             data: data,
-            headers: headers
+            success: success,
+            error: error
         });
     };
 });
+
+// Send a GET request to retrieve JSON from a given URL
+dry.getJSON = function(url, success, error) {
+    return dry.ajax({
+        type: 'GET',
+        url: url,
+        success: success,
+        error: error
+    });
+};
+
+// Serialize an array of form elements or a set of
+// key/values into a query string
+dry.param = function(obj) {
+    var r20 = /%20/g,
+        rbracket = /\[\]$/,
+        rCRLF = /\r?\n/g,
+        rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
+        rsubmittable = /^(?:input|select|textarea|keygen)/i,
+        arr = [],
+        prefix,
+        add = function(key, value) {
+            /* If value is a function, invoke it and return its value */
+            value = dry.isFunction(value) ? value() : (value == null ? "" : value);
+            arr[arr.length] = encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        },
+        buildParams = function (prefix, obj, add) {
+            var name;
+
+            if (dry.isArray(obj)) {
+                /* Serialize array item */
+                dry.each(obj, function(value, index) {
+                    if (rbracket.test(prefix)) {
+                        /* Treat each array item as a scalar */
+                        add(prefix, value);
+                    } else {
+                        /* Item is non-scalar (array or object), encode its numeric index */
+                        buildParams(prefix + "[" + (typeof value === "object" ? index : "") + "]", value, add);
+                    }
+                });
+
+            } else if (dry.isObject(obj)) {
+                /* Serialize object item */
+                for (name in obj) {
+                    buildParams(prefix + "[" + name + "]", obj[name], add);
+                }
+            } else {
+                /* Serialize scalar item */
+                add(prefix, obj);
+            }
+        };
+
+    /* If an array was passed in, assume that it is an array of form elements */
+    if (dry.isArray(obj) || (!dry.isStrictlyObject(obj))) {
+        /* Serialize the form elements */
+        dry.each(obj, function() {
+            add(this.name, this.value);
+        });
+    } else {
+        /* Encode params recursively */
+        for (prefix in obj) {
+            buildParams(prefix, obj[prefix], add);
+        }
+    }
+
+    /* Return the resulting serialization */
+    return arr.join("&").replace(r20, "+");
+};
+
 // DOM Management Utilities
 // ------------------------
 
@@ -579,10 +639,7 @@ dry.Controller.prototype.invokeMethod = function(methodName, params) {
          * The default template should be called controllerName/methodName or
          * simply controllerName if methodName is the default one.
          */
-        defaultViewName = this.name;
-        if (methodName && methodName != dry.settings.DEFAULT_CONTROLLER_METHOD) {
-            defaultViewName += '/' + methodName;
-        }
+        defaultViewName = this.name + '/' + methodName;
         result = new dry.View(defaultViewName, {templateData: params, controller: this});
     }
     if (result) {
@@ -650,7 +707,7 @@ dry.Template.prototype.compile = function compile(model) {
 dry.View = function(name, options) {
     options = options || {};
     this.name = name;
-    this.el = options.el || (':not(script)[data-dry="' + name + '"]');
+    this.el = options.el || (':not(script)[data-dry~="' + name + '"]');
     this.model = options.model || new dry.Model(name);
     this.template = new dry.Template(name, options.template);
     this.controller = options.controller;

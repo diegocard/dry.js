@@ -67,6 +67,7 @@ QUnit.test("Ajax: dry.get shortcut method", function (assert) {
     // Request with all parameters
     dry.get(
         url,
+        {},
         function(data){
             if (checkDataFormat(data)) {
                 assert.ok(true, "get: correct request with all parameters");

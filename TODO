@@ -16,6 +16,7 @@ TODO Documentation:
 - Document promises and new ajax methods
 
 TODO Testing:
+- Test rendering multiple controller methods in a same div
 - UPDATE AJAX TESTS!!
 - Test Ajax custom timeout (dry.ajax({timeout: 3000, ...}))
 - Test validations (and return which validation is failing if a model is not valid)

@@ -32,6 +32,8 @@ dry = {
     Promise: D,
 
     promise: function() {
-        return D();
+        var deferred = D();
+        deferred.constructor = dry.Promise;
+        return deferred;
     }
 };

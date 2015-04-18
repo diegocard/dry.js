@@ -17,10 +17,7 @@ dry.Controller.prototype.invokeMethod = function(methodName, params) {
          * The default template should be called controllerName/methodName or
          * simply controllerName if methodName is the default one.
          */
-        defaultViewName = this.name;
-        if (methodName && methodName != dry.settings.DEFAULT_CONTROLLER_METHOD) {
-            defaultViewName += '/' + methodName;
-        }
+        defaultViewName = this.name + '/' + methodName;
         result = new dry.View(defaultViewName, {templateData: params, controller: this});
     }
     if (result) {
