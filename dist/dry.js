@@ -707,7 +707,7 @@ dry.Template.prototype.compile = function compile(model) {
 dry.View = function(name, options) {
     options = options || {};
     this.name = name;
-    this.el = options.el || (':not(script)[data-dry~="' + name + '"]');
+    this.el = options.el || (':not(script)[data-dry*="' + name + '"]');
     this.model = options.model || new dry.Model(name);
     this.template = new dry.Template(name, options.template);
     this.controller = options.controller;

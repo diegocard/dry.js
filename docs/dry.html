@@ -1270,7 +1270,7 @@ dry.Template.prototype.compile = <span class="hljs-function"><span class="hljs-k
             <div class="content"><div class='highlight'><pre>dry.View = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name, options)</span> </span>{
     options = options || {};
     <span class="hljs-keyword">this</span>.name = name;
-    <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-dry~="'</span> + name + <span class="hljs-string">'"]'</span>);
+    <span class="hljs-keyword">this</span>.el = options.el || (<span class="hljs-string">':not(script)[data-dry*="'</span> + name + <span class="hljs-string">'"]'</span>);
     <span class="hljs-keyword">this</span>.model = options.model || <span class="hljs-keyword">new</span> dry.Model(name);
     <span class="hljs-keyword">this</span>.template = <span class="hljs-keyword">new</span> dry.Template(name, options.template);
     <span class="hljs-keyword">this</span>.controller = options.controller;
