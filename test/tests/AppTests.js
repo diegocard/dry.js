@@ -19,6 +19,8 @@ QUnit.test("App: Default route is called on application start", function(assert)
 
 QUnit.test("App: Default controller method renders appropriate content", function(assert) {
     assert.expect(1);
+    var done = assert.async();
+
     // Create new app
     var app2 = dry.app('app2');
 
@@ -30,6 +32,10 @@ QUnit.test("App: Default controller method renders appropriate content", functio
     // Start the app
     app2.init();
 
-    var htmlContent = jQuery('#qunit-fixture').html();
-    assert.ok(contains(htmlContent, 'Dry.js test page'), "default route was called and rendered the correct content");
+    // Check if the content was rendered (rendering is done asynchronously)
+    setTimeout(function() {
+        var htmlContent = jQuery('#qunit-fixture').html();
+        assert.ok(contains(htmlContent, 'Dry.js test page'), "default route was called and rendered the correct content");
+        done();
+    }, 500);
 });
