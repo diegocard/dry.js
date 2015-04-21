@@ -3,12 +3,14 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     size = require('gulp-size'),
+    header = require('gulp-header'),
     docco = require("gulp-docco"),
     qunit = require('gulp-qunit');
 
 gulp.task('compile', function() {
+    var heading = '/* (c) Diego Cardozo - licence: https://github.com/diegocard/dry.js/blob/master/LICENSE */\n';
+
     gulp.src([
-        './node_modules/d.js/lib/D.min.js',
         './src/Core.js',
         './src/Settings.js',
         './src/Utilities.js',
@@ -19,12 +21,16 @@ gulp.task('compile', function() {
         './src/Filter.js',
         './src/Controller.js',
         './src/Template.js',
-        './src/View.js'
+        './src/View.js',
+        './node_modules/d.js/lib/D.min.js',
+        './src/Promise.js',
     ])
         .pipe(concat('dry.js'))
+        .pipe(header(heading))
         .pipe(gulp.dest('dist'))
         .pipe(size({title: 'Unminified'}))
         .pipe(uglify())
+        .pipe(header(heading))
         .pipe(rename('dry.min.js'))
         .pipe(gulp.dest('dist'))
         .pipe(size({title: 'Minified'}))

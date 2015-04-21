@@ -20,20 +20,11 @@ dry = {
         window.location.href = url || '';
     },
 
-    // Exexute a route without navigating
+    // Execute a route without navigating
     run: function(route) {
         var app;
         for (app in dry.apps) {
             dry.apps[app].router.run(route);
         }
     },
-
-    // Promises (from D.js)
-    Promise: D,
-
-    promise: function() {
-        var deferred = D();
-        deferred.constructor = dry.Promise;
-        return deferred;
-    }
 };

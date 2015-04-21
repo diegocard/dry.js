@@ -89,7 +89,7 @@ dry.ajax = function (options) {
         headers = options.headers || {},
         url = options.url,
         timeout = options.timeout || dry.settings.AJAX_TIMEOUT,
-        p = dry.promise(),
+        p = dry.deferred(),
         xhr,
         newXhr = function() {
             var xhr;

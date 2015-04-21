@@ -21,10 +21,11 @@
     "url": "https://github.com/diegocard/dry.js/issues"
   },
   "devDependencies": {
-    "d.js": "^0.7.0",
+    "d.js": "^0.7.2",
     "gulp": "~3.8.7",
     "gulp-concat": "~2.3.4",
     "gulp-docco": "0.0.4",
+    "gulp-header": "^1.2.2",
     "gulp-qunit": "^0.3.3",
     "gulp-rename": "~1.2.0",
     "gulp-size": "^1.1.0",
