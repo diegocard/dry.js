@@ -355,7 +355,7 @@ var app1 = dry.app('app1');
 // Handles a list of products
 app1.controller('products', {
     // Triggered when navigating to /products/list
-    'list': function() {
+    ':id': function() {
         return new dry.View('ProductList')
     }
 });
@@ -390,7 +390,7 @@ app1.controller('default', {
 // Handles a list of products
 app1.controller('products', {
     // Triggered when navigating to /products/:id
-    'default': function(id) {
+    ':id': function(id) {
         return new dry.View('ProductDetails')
     }
     // Triggered when navigating to /products/list
@@ -434,9 +434,14 @@ app1.model('Product', {
 app1.controller('products', {
     'list': function() {
         // Creates a new model instance and calls the getAll method
-        var allProducts = app1.model('Product').getAll();
-        // Pass the model to the view
-        return new dry.View('ProductList', allProducts);
+        var allProducts = app1.model('Product');
+        return allProducts
+            .getAll() // Promises are built-in
+            .then(function (data) {
+                allProducts.set(data);
+                // Pass the model to the view
+                new dry.View('ProductList', {model: allProducts});
+            });
     }
 });
 </code></pre>
@@ -461,9 +466,7 @@ app1.controller('products', {
 var app1 = dry.app('app1');
 
 // Product model definition
-app1.model('Product', {
-    getAll: 'GET https://someUrl/products'
-});
+app1.model('Product');
 
 app1.view('ProductList', {
     events: {
@@ -475,14 +478,11 @@ app1.view('ProductList', {
 
 // Handles a list of products
 app1.controller('products', {
-    'list': function() {
-        // Creates a new model instance and calls the getAll method
-        var allProducts = app1.model('Product').getAll();
-        // Pass the model to the view
-        return app1.view('ProductList', allProducts);
-    },
     'new': function() {
-        // ...
+        // Creates a new model instance
+        var product = app1.model('Product');
+        // Pass the model to the view
+        return app1.view('ProductList', {model: product});
     }
 });
 </code></pre>
@@ -540,6 +540,47 @@ app1.controller('main', {
             </div>
         </div>
 
+        <!-- Filters -->
+        <div class="row">
+            <div class="col-md-12 wow bounceIn" data-wow-duration="2s">
+                <h4>Filters</h4>
+            </div>
+
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <p>
+                    Filters are a simple and semantic way to reuse code inside your application (again, DRY principle).
+                    They check if a condition is fulfilled and execute a given action if it is.
+                    They can seve as annotations and make controller logic much easier to read.
+                </p>
+                <p>
+                    Note: filters are not required, so you can choose not to use them if you find them irrelevant or confusing.
+                </p>
+            </div>
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+<pre><code class="language-javascript">
+var app1 = dry.app('app1');
+
+function isLoggedIn() {
+    // some logic...
+}
+
+function redirectToHome() {
+    dry.navigate("/home");
+}
+
+app1.filter('IsLoggedIn', isLoggedIn, redirectToHome);
+
+// Home page
+app1.controller('main', {
+    'hello': function() {
+          app1.filter("IsLogedIn");
+
+          // Continue controller logic...
+    }
+});
+</code></pre>
+            </div>
+        </div>
 
             </div><!-- 4TH COMPONENTS ITEM END -->
         </div>
@@ -631,7 +672,7 @@ dry.each(arr, function(num, index) {
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
                 <h4>Ajax communication</h4>
 <pre><code class="language-javascript">
-// Simple jQuery-like ajax implementation
+// jQuery-like ajax implementation
 dry.ajax({
     type: 'GET',
     url: 'https://api.github.com/users/diegocard',
@@ -643,10 +684,15 @@ dry.ajax({
         console.log('error');
     }
 });
+
 // There are also default values for most parameters
-dry.ajax({
-    url: 'https://api.github.com/users/diegocard'
-});
+function ajaxCall(someUrl) {
+    return dry.ajax({
+        url: someUrl
+    }).then(function(data){
+        console.log(data);
+    }) // Returns a promise
+}
 </code></pre>
             </div>
 
@@ -664,18 +710,49 @@ dry.$('body').html('&lt;h1>Hi&lt;/h1>');
 var clickHandler = function() {
     console.log('clicked');
 }
+
 // Activate click event
 dry.$('body').on('click', clickHandler);
+
 // Trigger the click event
 dry.$('body').trigger('click', /* You can pass data here */);
+
 // Deactivate click event
 dry.$('body').off('click', clickHandler);
+
+
 </code></pre>
             </div>
 
         </div>
 
         <div class="row">
+
+            <!-- Other ajax shortcuts -->
+            <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
+                <h4>A+ Promises</h4>
+<pre><code class="language-javascript">
+function randomOutcome(number) {
+    var deferred = dry.deferred();
+    setTimeout(function(){
+        if (Math.random() > number) {
+            deferred.resolve('Bigger');
+        } else {
+            deferred.reject('Smaller');
+        }
+    }, 1000);
+    return deferred.promise;
+}
+
+randomOutcome(0.5)
+.then(function(outcome){
+    console.log(outcome, 'than 0.5');
+})
+.error(function(outcome){
+    console.log(outcome, 'than 0.5');
+})
+</code></pre>
+            </div>
 
             <!-- Other ajax shortcuts -->
             <div class="col-md-6 wow bounceIn" data-wow-duration="2s">
