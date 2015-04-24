@@ -99,7 +99,7 @@ app1.controller('default', {
 // Handles a list of products
 app1.controller('products', {
     // Triggered when navigating to /products/:id
-    'default': function(id) {
+    ':id': function(id) {
         return new dry.View('ProductDetails')
     }
     // Triggered when navigating to /products/list
@@ -130,9 +130,14 @@ app1.model('Product', {
 app1.controller('products', {
     'list': function() {
         // Creates a new model instance and calls the getAll method
-        var allProducts = app1.model('Product').getAll();
-        // Pass the model to the view
-        return new dry.View('ProductList', allProducts);
+        var allProducts = app1.model('Product');
+        return allProducts
+            .getAll() // Promises are built-in
+            .then(function (data) {
+				allProducts.set(data);
+				// Pass the model to the view
+				return new dry.View('ProductList', {model: allProducts});
+			});
     }
 });
 ```
@@ -144,9 +149,7 @@ Views contain presentation logic. Each view contains a model instance which stor
 var app1 = dry.app('app1');
 
 // Product model definition
-app1.model('Product', {
-    getAll: 'GET https://someUrl/products'
-});
+app1.model('Product');
 
 app1.view('ProductList', {
     events: {
@@ -158,14 +161,11 @@ app1.view('ProductList', {
 
 // Handles a list of products
 app1.controller('products', {
-    'list': function() {
-        // Creates a new model instance and calls the getAll method
-        var allProducts = app1.model('Product').getAll();
-        // Pass the model to the view
-        return app1.view('ProductList', allProducts);
-    },
     'new': function() {
-        // ...
+        // Creates a new model instance
+        var product = app1.model('Product');
+        // Pass the model to the view
+        return app1.view('ProductList', {model: product});
     }
 });
 ```
