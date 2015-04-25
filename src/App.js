@@ -21,7 +21,7 @@ dry.App.prototype.controller = function(name, methods) {
         this.controllers[name] = controller;        
         /* Register the controller's routes */
         dry.each(methods, function(method, methodName){
-            self.router.addRoute(controller, methodName, method);
+            self.router.addRoute(controller, methodName);
         });
     }
     return controller;

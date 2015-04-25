@@ -1,8 +1,5 @@
 TODO Coding:
-- Create file header with license
 - Make methods return "this" if they aren't returning anything
-- Replace some for loops (specially in Router.js) with dry.each and test that it still works
-- Rename/merge addRoute and add (in Router)
 - Reverse parameter order in promises (err, res) -> (fulfilled, rejected) and add .catch method (make this A+ promises basically)
 - Check ajax code against old one
 - Add or remove "_" to the start of private objects (but make it a convention)

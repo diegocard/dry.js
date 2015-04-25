@@ -1,4 +1,4 @@
-/* (c) Diego Cardozo - licence: https://github.com/diegocard/dry.js/blob/master/LICENSE */
+/* (c) Diego Cardozo - license: https://github.com/diegocard/dry.js/blob/master/LICENSE */
 // DRY.JS
 // ------
 
@@ -170,11 +170,9 @@ dry.ajax = function (options) {
 
     xhr.open(method, url);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    for (h in headers) {
-        if (headers.hasOwnProperty(h)) {
-            xhr.setRequestHeader(h, headers[h]);
-        }
-    }
+    dry.each(headers, function (h) {
+        xhr.setRequestHeader(h, headers[h]);
+    });
 
     if (timeout) {
         tid = setTimeout(onTimeout, timeout);
@@ -354,7 +352,7 @@ dry.App.prototype.controller = function(name, methods) {
         this.controllers[name] = controller;        
         /* Register the controller's routes */
         dry.each(methods, function(method, methodName){
-            self.router.addRoute(controller, methodName, method);
+            self.router.addRoute(controller, methodName);
         });
     }
     return controller;
@@ -401,29 +399,29 @@ dry.Router = function(appName, routes) {
     this.routes = [];
 };
 
-dry.Router.prototype.routeCallback = function(controller, methodName) {
-    return function(route) {
-        controller.invokeMethod(methodName, route.params);
-    };
-};
-
 // Register a route, composed by controller and method
-dry.Router.prototype.addRoute = function (controller, methodName, method) {
+dry.Router.prototype.addRoute = function (controller, methodName) {
     var firstPart = (controller.name === dry.settings.DEFAULT_CONTROLLER_NAME ? '' : controller.name),
         secondPart = (methodName === dry.settings.DEFAULT_CONTROLLER_NAME ? '' : methodName),
-        route = secondPart ? firstPart + '/' + secondPart : firstPart;
+        route = secondPart ? firstPart + '/' + secondPart : firstPart,
+        // Callback to be executed on route navigation
+        routeCallback = function(controller, methodName) {
+            return function(route) {
+                /* Call the appropriate controller method */
+                controller.invokeMethod(methodName, route.params);
+            };
+        };
 
     this.routes.push(route);
-    this.add(route, this.routeCallback(controller, methodName));
+    this.register(route, routeCallback(controller, methodName));
 };
 
-dry.Router.prototype.add = function(route, handler) {
+dry.Router.prototype.register = function(route, handler) {
     var pieces = route.split('/'),
         rules = this.rules;
 
-    for (var i = 0; i < pieces.length; ++i) {
-        var piece = pieces[i],
-            name = piece.length && piece.charAt(0) == ':' ? ':' : piece;
+    dry.each(pieces, function (piece) {
+        var name = piece.length && piece.charAt(0) == ':' ? ':' : piece;
 
         if (!rules[name]) {
             rules = (rules[name] = {});
@@ -434,7 +432,7 @@ dry.Router.prototype.add = function(route, handler) {
         } else {
             rules = rules[name];
         }
-    }
+    });
 
     rules['@'] = handler;
 };
@@ -452,26 +450,23 @@ dry.Router.prototype.run = function(url) {
         params = {};
 
     (function parseUrl() {
-        for (var i = 0; i < pieces.length && rules; ++i) {
-            var piece = pieces[i],
-                rule = rules[piece.toLowerCase()];
+        dry.each(pieces, function (piece) {
+            var rule = rules[piece.toLowerCase()];
 
             if (!rule && (rule = rules[':'])) {
                 params[rule['@name']] = piece;
             }
 
             rules = rule;
-        }
+        });
     })();
 
     (function parseQuery(q) {
         var query = q.split('&', 50);
-
-        for (var i = 0; i < query.length; ++i) {
-            var nameValue = query[i].split('=', 2);
-
+        dry.each(query, function (component) {
+            var nameValue = component.split('=', 2);
             nameValue.length == 2 && (params[nameValue[0]] = nameValue[1]);
-        }
+        });
     })(querySplit.length == 2 ? querySplit[1] : '');
 
     if (rules && rules['@']) {

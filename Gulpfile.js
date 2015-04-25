@@ -4,11 +4,10 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     size = require('gulp-size'),
     header = require('gulp-header'),
-    docco = require("gulp-docco"),
     qunit = require('gulp-qunit');
 
 gulp.task('compile', function() {
-    var heading = '/* (c) Diego Cardozo - licence: https://github.com/diegocard/dry.js/blob/master/LICENSE */\n';
+    var heading = '/* (c) Diego Cardozo - license: https://github.com/diegocard/dry.js/blob/master/LICENSE */\n';
 
     gulp.src([
         './src/Core.js',
@@ -37,16 +36,8 @@ gulp.task('compile', function() {
         .pipe(size({title: 'Minified and gzipped', gzip: true}));
 });
 
-gulp.task('doc', function() {
-    return gulp.src("./dist/dry.js")
-        .pipe(docco({
-            // layout: 'linear'
-        }))
-        .pipe(gulp.dest('./docs'));
-});
-
 gulp.task('watch', function() {
-    return gulp.watch('src/*.js', ['default', 'doc']);
+    return gulp.watch('src/*.js', ['default']);
 });
 
 gulp.task('test', function() {
@@ -54,4 +45,4 @@ gulp.task('test', function() {
         .pipe(qunit());
 });
 
-gulp.task('default', ['compile', 'doc']);
+gulp.task('default', ['compile']);

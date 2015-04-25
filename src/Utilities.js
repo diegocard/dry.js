@@ -125,11 +125,9 @@ dry.ajax = function (options) {
 
     xhr.open(method, url);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    for (h in headers) {
-        if (headers.hasOwnProperty(h)) {
-            xhr.setRequestHeader(h, headers[h]);
-        }
-    }
+    dry.each(headers, function (h) {
+        xhr.setRequestHeader(h, headers[h]);
+    });
 
     if (timeout) {
         tid = setTimeout(onTimeout, timeout);
