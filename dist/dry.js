@@ -334,7 +334,6 @@ dry.Dom.prototype.trigger = function(eventName, data) {
 dry.App = function(name, options) {
     this.name = name;
     this.options = options || {};
-    this.routes = this.options.routes || {};
     this.router = new dry.Router(this.name);
     this.filters = this.options.filters || {};
     this.controllers = this.options.controllers || {};
