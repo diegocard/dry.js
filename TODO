@@ -1,6 +1,4 @@
 TODO Coding:
-- Make methods return "this" if they aren't returning anything
-- Compare ajax code against old one
 - Add or remove "_" to the start of private objects (but make it a convention)
 
 TODO Documentation:
