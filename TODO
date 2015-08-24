@@ -1,5 +1,9 @@
 TODO Coding:
 - Add or remove "_" to the start of private objects (but make it a convention)
+- Make dry.js universal/isomorphic
+  - Requires a bootstrappeable method which resolves Ajax model calls on the server.
+- Make it work as a npm module too -> require('dry-js')
+- Make it more lightweight if possible (never exceed 15kb minified)
 
 TODO Documentation:
 - Document validations
