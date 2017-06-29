@@ -134,10 +134,10 @@ app1.controller('products', {
         return allProducts
             .getAll() // Promises are built-in
             .then(function (data) {
-				allProducts.set(data);
-				// Pass the model to the view
-				return new dry.View('ProductList', {model: allProducts});
-			});
+		allProducts.set(data);
+		// Pass the model to the view
+		return new dry.View('ProductList', {model: allProducts});
+	});
     }
 });
 ```
