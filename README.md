@@ -58,7 +58,7 @@ You can download the minitied and development versions through any of these opti
 
 ## Components
 
-###App
+### App
 A website is divided in apps. Their goal is to provide structure to the code, and can be seen as modules. Each app contains its own controllers, views and models, and handles a specific set of routes.
 
 ```js
@@ -68,7 +68,7 @@ var app1 = dry.app('app1');
 app1.init();
 ```
 
-###Controller
+### Controller
 A controller contains methods. Each method handles a specific route or event, returning a view instance if the result of the method's execution triggers UI changes. In this sense, Dry.js controllers are very similar to Rails or ASP.NET MVC.
 
 ```js
@@ -82,7 +82,7 @@ app1.controller('products', {
 });
 ```
 
-###Router
+### Router
 The router is responsible for directing page navigation actions to controllers. As the previous example hints, you do not need to specify routes anywhere. They are automatically generated from controller names and methods.
 
 ```js
@@ -109,7 +109,7 @@ app1.controller('products', {
 });
 ```
 
-###Model
+### Model
 In a typical fashion, models concentrate the responsibility of handling data structure, storage and server communication. They are injected into views through controller actions, and come with a convenient API for handling Ajax communication. Expanding on the previous example:
 
 ```js
@@ -170,7 +170,7 @@ app1.controller('products', {
 });
 ```
 
-###Template
+### Template
 Templates can be either strings or functinons which construct HTML code from the view data. Dry.js automatically finds template definitions in the dom looking for a script with a data-dry attribute, and then renders it to a DOM element with a data-dry attribute of the same value.
 
 ```js
@@ -198,7 +198,7 @@ The convention here is very simple: by default, once a user navigates to a route
 
 Notice that the view instance is created on the fly, and since the only parameter specified when creating the view is its name, it will simply follow the default behavior for views. More specifically, it look for a script with a data-dry attribute equal to its name (the template) and render it into the first non-script DOM element with the same attribute value.
 
-###Filters
+### Filters
 Filters are a simple and semantic way to reuse code inside your application (again, DRY principle). They check if a condition is fulfilled and execute a given action if it is. They can seve as annotations and make controller logic much easier to read.
 
 ```js
