@@ -142,7 +142,7 @@ app1.controller('products', {
 });
 ```
 
-###View
+### View
 Views contain presentation logic. Each view contains a model instance which stores the data that is rendered on the template. They are also responsible for handling events, and do so by calling methods from the controller that created the view.
 
 ```js
