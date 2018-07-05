@@ -356,7 +356,7 @@ var app1 = dry.app('app1');
 // Handles a list of products
 app1.controller('products', {
     // Triggered when navigating to /products/list
-    ':id': function() {
+    'list': function() {
         return new dry.View('ProductList')
     }
 });
