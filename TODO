@@ -1,6 +1,8 @@
 TODO Coding:
 - Move to CommonJS modules and ES6/7
 - Use default promises (well supported now)
+- Move tests to Mocha/Chai
+- Set tests on TravisCI
 - Add or remove "_" to the start of private objects (but make it a convention)
 - Make dry.js universal/isomorphic
   - Requires a bootstrappeable method which resolves Ajax model calls on the server.
